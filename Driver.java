@@ -5,6 +5,7 @@ public class Driver{
 		System.out.println("Jake's questions are dumb!");
 		System.out.println("Branden's questions are dumb!");
 		System.out.println("Evan's questions are dumb!");
+		System.out.println("Evan's a brick!");
 	}
 
 
