@@ -1,11 +1,7 @@
 public class Driver{
 
-<<<<<<< HEAD
-	public static void main(String[] args){
-=======
 	public static void main(String[] args)
 	{
->>>>>>> refs/remotes/origin/dev
 		int testV = 1;
 		int testV2 = 2;
 		System.out.println("Jake's questions are dumb!");
