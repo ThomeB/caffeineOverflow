@@ -24,7 +24,7 @@ public class Map
 {
 	private int width;
 	private int height;
-	private String[][] tiles;
+	private String[][] map;
 	private String path = "";
 	
 	public Map( String path )
@@ -40,11 +40,13 @@ public class Map
 	
 	public void render( GraphicsContext gc )
 	{
+		System.out.println("hey" );
 		for( int y = 0; y < height; y++ )
 		{
 			for( int x = 0; x < width; x++ )
 			{
-				gc.drawImage( Asset.grassImage, x * Tile.TILEWIDTH, y*Tile.TILEHEIGHT, Tile.TILEWIDTH, Tile.TILEHEIGHT);
+				if( Tile.tiles.containsKey( map[y][x] ) )
+					Tile.tiles.get( map[y][x] ).render( gc, x, y );
 			}
 		}
 		
@@ -78,13 +80,13 @@ public class Map
 		width = Integer.parseInt( tokens[0] );
 		height = Integer.parseInt( tokens[1] );
 		
-		tiles = new String[height][width];
+		map = new String[height][width];
 		
 		for( int y = 0; y < height; y++ )
 		{
 			for( int x = 0; x < width; x++ )
 			{
-				tiles[y][x] = tokens[ (x + y * width) + 2 ].toString();
+				map[y][x] = tokens[ (x + y * width) + 2 ].toString();
 			}
 		}
 		
@@ -94,13 +96,13 @@ public class Map
 	//Will return an individual tile
 	public String getTile( int x, int y )
 	{
-		return tiles[y][x];
+		return map[y][x];
 	}
 	
 	//Can change an individual tile
 	public void setTile( String tileID, int x, int y )
 	{
-		tiles[y][x] = tileID;
+		map[y][x] = tileID;
 	}
 	
 	//GETTERS AND SETTERS
@@ -122,7 +124,7 @@ public class Map
 		{
 			for(int x = 0; x < width; x++)
 			{
-				System.out.print( tiles[y][x] );
+				System.out.print( map[y][x] );
 			}
 			System.out.println();
 		}
