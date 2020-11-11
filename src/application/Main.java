@@ -11,17 +11,19 @@ public class Main extends Application {
 	
 	AnimTimerExt t;
 	Game game;
+	private double defaultHeight = 400.0;
+	private double defaultWidth = 400.0;
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
+			Scene scene = new Scene(root,defaultHeight,defaultWidth);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			game = new Game();
+			game = new Game(primaryStage, defaultHeight, defaultWidth);
 			//GAME LOOP:
 			t = new AnimTimerExt() {
 				@Override
