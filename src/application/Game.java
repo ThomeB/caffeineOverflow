@@ -4,69 +4,40 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class Game {
 	
-	private boolean isInitialized = false;
+	private Stage stage;
+	private double height;
+	private double width;
 	
-	public void intialize(Scene scene) {
-		if (isInitialized)
-			return;
-		else
-			isInitialized = true;
-		
-		//key listeners
+	public Stage getStage() {
+		return stage;
+	}
+	public double getHeight() {
+		return height;
+	}
+	public double getWidth() {
+		return width;
+	}
+	public Game(Stage stage, double height, double width) {
+		this.stage = stage;
+		this.height = height;
+		this.width = width;
+		//key listeners (removed for now)
 		//see: https://stackoverflow.com/questions/29962395/how-to-write-a-keylistener-for-javafx
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    
-                }
-            }
-        });
-		
-		scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    
-                }
-            }
-        });
-		//end key listeners
-		
-		//mouse listeners
+		//mouse listeners (removed for now)
 		//see: https://stackoverflow.com/questions/16635514/how-to-get-location-of-mouse-in-javafx
-		scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
-		      @Override 
-		      public void handle(MouseEvent event) {
-		        String msg =
-		          "(x: "       + event.getX()      + ", y: "       + event.getY()       + ") -- " +
-		          "(sceneX: "  + event.getSceneX() + ", sceneY: "  + event.getSceneY()  + ") -- " +
-		          "(screenX: " + event.getScreenX()+ ", screenY: " + event.getScreenY() + ")";
-		      }
-		});
-		
-		scene.setOnMousePressed(new EventHandler<MouseEvent>() {
-		      @Override 
-		      public void handle(MouseEvent event) {
-		        
-		      }
-		});
-		
-		scene.setOnMouseReleased(new EventHandler<MouseEvent>() {
-		      @Override 
-		      public void handle(MouseEvent event) {
-		    	  
-		      }
-		});
-		
-		//end mouse listeners
+		//also see: lambda expressions (cleaner code)
 	}
 	
 	public void tick(double deltaTime) {
 		//update objects in game
+		
+		//update graphics here
+		
+		//update game data here
 	}
 }
 
