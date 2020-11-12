@@ -118,18 +118,4 @@ public class Map
 		return width * Tile.TILEWIDTH;
 	}
 	
-	//------ CODE FOR TESTING -------
-	public void printMap( )
-	{
-		
-		for(int y = 0; y < height; y++)
-		{
-			for(int x = 0; x < width; x++)
-			{
-				System.out.print( map[y][x] );
-			}
-			System.out.println();
-		}
-	}
-	
 }

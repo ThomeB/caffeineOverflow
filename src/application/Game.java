@@ -92,7 +92,7 @@ public class Game {
 		botBox.setBackground( blackBackground );
 		gameRoot.setBottom( botBox );
 		
-		//where map and all game objects should be displayed at
+		//where map and all game objects should be rendered at
 		canvas = new Canvas( map.getWidth(), map.getHeight() );
 		gc = canvas.getGraphicsContext2D();
 		
