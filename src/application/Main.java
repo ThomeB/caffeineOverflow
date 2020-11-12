@@ -4,6 +4,8 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 
 
@@ -11,19 +13,17 @@ public class Main extends Application {
 	
 	AnimTimerExt t;
 	Game game;
-	private double defaultHeight = 400.0;
-	private double defaultWidth = 400.0;
+	private double defaultHeight = 1200.0;
+	private double defaultWidth = 1600.0;
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,defaultHeight,defaultWidth);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
+			
 			primaryStage.show();
 			
 			game = new Game(primaryStage, defaultHeight, defaultWidth);
+			
 			//GAME LOOP:
 			t = new AnimTimerExt() {
 				@Override

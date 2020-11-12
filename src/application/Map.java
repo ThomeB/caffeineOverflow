@@ -40,11 +40,13 @@ public class Map
 	
 	public void render( GraphicsContext gc )
 	{
-		System.out.println("hey" );
+		System.out.println("Branden and Evan suck butts" );
 		for( int y = 0; y < height; y++ )
 		{
 			for( int x = 0; x < width; x++ )
 			{
+				//Check the hashMap to see if it contains a symbol associated with a tile type
+				//Can find or add tile types in the Tile Class
 				if( Tile.tiles.containsKey( map[y][x] ) )
 					Tile.tiles.get( map[y][x] ).render( gc, x, y );
 			}

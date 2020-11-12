@@ -1,14 +1,9 @@
 package application;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
+
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
-
 import javafx.scene.image.Image;
 
 
@@ -29,8 +24,9 @@ public class Asset
 	{
 		try {
 			return new Image( new FileInputStream( path ) );
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+		} catch (FileNotFoundException e) 
+		{
+			System.out.println( "Path to a texture file couldn't be found." );
 			e.printStackTrace();
 		}
 		

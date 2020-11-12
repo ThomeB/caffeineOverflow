@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -16,12 +15,10 @@ public class Tile
 	public static final int TILEHEIGHT = 32;
 	
 	private Image texture;
-	private String hashCode;
 	
 	public Tile( Image texture, String hashCode )
 	{
 		this.texture = texture;
-		this.hashCode = hashCode;
 		
 		tiles.put( hashCode, this );
 		
