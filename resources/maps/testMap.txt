@@ -25,3 +25,15 @@ L . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 L . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . V . . . . . R
 C B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B B C
 
+
+Image Codes
+
+"." - Floor Tiles
+"B" - Bottom Wall
+"T" - Top Wall
+"L" - Left Wall
+"R" - Right Wall
+"C" - Corner Wall
+"V" - Vertical Wall (for walls that are inside map)
+"H" - Horizontal Wall (for walls that are inside map)
+"D" - Door
