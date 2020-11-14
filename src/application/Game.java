@@ -27,6 +27,7 @@ public class Game {
 	
 	
 	private Map map;
+	private Character character;
 	private Canvas canvas;
 	//Paint component that should be passed to any render method
 	private GraphicsContext gc;
@@ -43,6 +44,8 @@ public class Game {
 		//Loads in all textures for the game
 		Asset.init();
 		map = new Map( "resources/maps/testMap.txt" );
+		character = new Character(1,1,1,1,1,1,1,"Bob", 1, Asset.bigASSKNIGHT);
+		
 		createScenes();
 		
 		stage.centerOnScreen();
@@ -63,6 +66,7 @@ public class Game {
 		
 		//update graphics here
 		map.render( gc );
+		character.render(gc);
 		
 		//update game data here
 	}

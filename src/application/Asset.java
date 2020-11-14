@@ -32,6 +32,7 @@ public class Asset
 	public static Image vertWallImage;
 	public static Image horzWallImage;
 	public static Image	doorImage;
+	public static Image bigASSKNIGHT;
 	
 	//Made it static so we don't have to instantiate this class to load all of our images in memory
 	public static void init()
@@ -46,6 +47,7 @@ public class Asset
 		vertWallImage = loadImage( "resources/textures/vertWall.png" );
 		horzWallImage = loadImage( "resources/textures/horzWall.png" );
 		doorImage = loadImage( "resources/textures/door.png" );
+		bigASSKNIGHT = loadImage("resources/textures/knight.png");
 	}
 	
 	
