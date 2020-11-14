@@ -40,7 +40,7 @@ public class Map
 	
 	public void render( GraphicsContext gc )
 	{
-		System.out.println("Branden and Evan suck butts" );
+		
 		for( int y = 0; y < height; y++ )
 		{
 			for( int x = 0; x < width; x++ )

@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -35,6 +36,15 @@ public class Game {
 	private double height;
 	private double width;
 	
+	
+	private boolean [] keysPressed = {
+			false,//W [0]
+			false,//A [1]
+			false,//S [2]
+			false,//D [3]
+			false //F [4]
+	};
+	
 	public Game(Stage stage, double height, double width) {
 		
 		this.stage = stage;
@@ -44,25 +54,78 @@ public class Game {
 		//Loads in all textures for the game
 		Asset.init();
 		map = new Map( "resources/maps/testMap.txt" );
-		character = new Character(1,1,1,1,1,1,1,"Bob", 1, Asset.bigASSKNIGHT);
+		character = new Character(1,1,1,1,1,1,1,"Bob", 0.25f, Asset.bigASSKNIGHT);
 		
 		createScenes();
 		
 		stage.centerOnScreen();
 		stage.setTitle( "Zombie Game" );
 		stage.setScene( gameScene );
-		
-		//key listeners (removed for now)
-		//see: https://stackoverflow.com/questions/29962395/how-to-write-a-keylistener-for-javafx
+
 		//mouse listeners (removed for now)
 		//see: https://stackoverflow.com/questions/16635514/how-to-get-location-of-mouse-in-javafx
 		//also see: lambda expressions (cleaner code)
+		
+		//Key Listeners: Stores keys in a table
+		Scene scene = stage.getScene();
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+            	String code = event.getCode().toString();
+                switch (code) {
+                	case "W":
+                		keysPressed[0] = true;
+                		break;
+                	case "A":
+                		keysPressed[1] = true;
+                		break;
+                	case "S":
+                		keysPressed[2] = true;
+                		break;
+                	case "D":
+                		keysPressed[3] = true;
+                		break;
+                	case "F":
+                		keysPressed[4] = true;
+                		break;
+                	default:
+                		break;
+                }
+                		
+            }
+        });
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+            	String code = event.getCode().toString();
+                switch (code) {
+                	case "W":
+                		keysPressed[0] = false;
+                		break;
+                	case "A":
+                		keysPressed[1] = false;
+                		break;
+                	case "S":
+                		keysPressed[2] = false;
+                		break;
+                	case "D":
+                		keysPressed[3] = false;
+                		break;
+                	case "F":
+                		keysPressed[4] = false;
+                		break;
+                	default:
+                		break;
+                }
+            }
+        });
+		
 	}
-	
-	
 	
 	public void tick(double deltaTime) {
 		//update objects in game
+		
+		character.update(keysPressed, map);
 		
 		//update graphics here
 		map.render( gc );
@@ -119,4 +182,3 @@ public class Game {
 		return width;
 	}
 }
-
