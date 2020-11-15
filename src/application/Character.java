@@ -8,7 +8,7 @@ public class Character extends Entity {
 	private int keys;
 	private float velocityX = 0;
 	private float velocityY = 0;
-	private final float ACCELERATION = 0.1f;
+	private final float ACCELERATION = 1;//0.1f;
 	
 	/******************
 	 * 	Constructors  *

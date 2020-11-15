@@ -108,14 +108,24 @@ public class Map
 	}
 	
 	//GETTERS AND SETTERS
-	public int getHeight()
+	public int getPixelHeight()
 	{
 		return height * Tile.TILEHEIGHT;
 	}
 	
-	public int getWidth()
+	public int getPixelWidth()
 	{
 		return width * Tile.TILEWIDTH;
+	}
+	
+	public int getHeight()
+	{
+		return height;
+	}
+	
+	public int getWidth()
+	{
+		return width;
 	}
 	
 }
