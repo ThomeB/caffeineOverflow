@@ -54,7 +54,7 @@ public class Game {
 		//Loads in all textures for the game
 		Asset.init();
 		map = new Map( "resources/maps/testMap.txt" );
-		character = new Character(1,1,1,1,1,1,1,"Bob", 0.25f, Asset.bigASSKNIGHT);
+		character = new Character(1,1,1,1,1,.5f,.5f,"Bob", 0.1f, Asset.bigASSKNIGHT);
 		
 		createScenes();
 		
@@ -160,7 +160,7 @@ public class Game {
 		gameRoot.setBottom( botBox );
 		
 		//where map and all game objects should be rendered at
-		canvas = new Canvas( map.getWidth(), map.getHeight() );
+		canvas = new Canvas( map.getPixelWidth(), map.getPixelHeight() );
 		gc = canvas.getGraphicsContext2D();
 		
 		gameRoot.setCenter( canvas );

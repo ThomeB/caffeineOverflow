@@ -6,8 +6,8 @@ public class GameObject {
 	//class variables
 	protected float xPos;
 	protected float yPos;
-	protected int height;
-	protected int width;
+	protected float height;
+	protected float width;
 	private Image img;
 	protected float[][] hitBoxCorners;
 	/*[0] = top left [1] = top right [2] = bottom left [3] = bottom right*/
@@ -15,7 +15,7 @@ public class GameObject {
 	/******************
 	 * 	Constructors  *
 	 ******************/
-	public GameObject(float xpos, float ypos, int height, int width, Image img) {
+	public GameObject(float xpos, float ypos, float height, float width, Image img) {
 		//allocate memory for hitbox upon creation
 		this.hitBoxCorners = new float[4][2];
 		this.yPos = ypos;
@@ -60,6 +60,6 @@ public class GameObject {
 	 *  Draw Whatever the GameObject Is  *
 	 *************************************/
 	public void render(GraphicsContext gc) {
-		gc.drawImage(img, xPos*Tile.TILEWIDTH, yPos*Tile.TILEHEIGHT, Tile.TILEWIDTH, Tile.TILEHEIGHT);
+		gc.drawImage(img, xPos*Tile.TILEWIDTH, yPos*Tile.TILEHEIGHT, width*Tile.TILEWIDTH, height*Tile.TILEHEIGHT);
 	}//close render method
 }//close GameObject
