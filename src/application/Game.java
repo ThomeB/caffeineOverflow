@@ -54,7 +54,7 @@ public class Game {
 		//Loads in all textures for the game
 		Asset.init();
 		map = new Map( "resources/maps/testMap.txt" );
-		character = new Character(1,1,1,1,1,1,1,"Bob", 0.1f, Asset.bigASSKNIGHT);
+		character = new Character(1,1,1,1,1,.5f,.5f,"Bob", 0.1f, Asset.bigASSKNIGHT);
 		
 		createScenes();
 		
