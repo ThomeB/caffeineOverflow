@@ -47,7 +47,7 @@ public class Asset
 		vertWallImage = loadImage( "resources/textures/vertWall.png" );
 		horzWallImage = loadImage( "resources/textures/horzWall.png" );
 		doorImage = loadImage( "resources/textures/door.png" );
-		bigASSKNIGHT = loadImage("resources/textures/knight.jpg");
+		bigASSKNIGHT = loadImage("resources/textures/knight.png");
 	}
 	
 	
