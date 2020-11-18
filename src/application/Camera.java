@@ -9,13 +9,18 @@ public class Camera
 	public float mapHeight;
 	public float mapWidth;
 	
+	public float viewHeight;
+	public float viewWidth;
+	
 	public float maxXOffset;
 	public float minXOffset = 0;
 	public float maxYOffset;
 	public float minYOffset = 0;
 	
-	public Camera( float mapWidth, float mapHeight )
+	public Camera(float viewWidth, float viewHeight, float mapWidth, float mapHeight )
 	{
+		this.viewWidth = viewWidth;
+		this.viewHeight = viewHeight;
 		this.mapHeight = mapHeight;
 		this.mapWidth = mapWidth;
 		
@@ -35,8 +40,8 @@ public class Camera
 	
 	public void centerOnCharacter( Character hero )
 	{
-		xOffset = hero.getxPos() * Tile.TILEWIDTH - mapWidth / 2 - hero.getWidth() / 2;
-		yOffset = hero.getyPos() * Tile.TILEHEIGHT - mapHeight / 2 - hero.getHeight() / 2;
+		xOffset = hero.getxPos() * Tile.TILEWIDTH - viewWidth / 2 - hero.getWidth() / 2;
+		yOffset = hero.getyPos() * Tile.TILEHEIGHT - viewHeight / 2 - hero.getHeight() / 2;
 		
 		if( xOffset > maxXOffset )
 			xOffset = maxXOffset;

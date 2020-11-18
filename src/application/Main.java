@@ -16,7 +16,7 @@ public class Main extends Application {
 	AnimTimerExt t;
 	Game game;
 	private double defaultHeight = 900;
-	private double defaultWidth = 1600.0;
+	private double defaultWidth = 1200.0;
 	
 	@Override
 	public void start(Stage primaryStage) {
