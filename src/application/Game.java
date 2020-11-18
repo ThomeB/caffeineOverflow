@@ -30,6 +30,7 @@ public class Game {
 	private Map map;
 	private Character character;
 	private Canvas canvas;
+	private Camera camera;
 	//Paint component that should be passed to any render method
 	private GraphicsContext gc;
 	
@@ -54,12 +55,16 @@ public class Game {
 		//Loads in all textures for the game
 		Asset.init();
 		map = new Map( "resources/maps/testMap.txt" );
-		character = new Character(1,1,1,1,1,.5f,.5f,"Bob", 0.1f, Asset.bigASSKNIGHT);
+		camera = new Camera( map.getPixelWidth(), map.getPixelHeight() );
+		character = new Character(1,1,1,1,1,1f,1f,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
+		camera.centerOnCharacter( character );
+		
+		
+		
 		
 		createScenes();
 		
-		stage.centerOnScreen();
-		stage.setTitle( "Zombie Game" );
+		
 		stage.setScene( gameScene );
 
 		//mouse listeners (removed for now)
@@ -123,11 +128,17 @@ public class Game {
 	}
 	
 	public void tick(double deltaTime) {
-		//update objects in game
+		//--- UPDATE OBJECT VARIABLES ---
 		
 		character.update(keysPressed, map);
 		
-		//update graphics here
+		
+		
+		//--- RENDER GRAPHICS ---
+		
+		//clears the graphics on the canvas
+		gc.clearRect( 0, 0, canvas.getWidth(), canvas.getHeight() );
+		
 		map.render( gc );
 		character.render(gc);
 		
@@ -180,5 +191,10 @@ public class Game {
 	}
 	public double getWidth() {
 		return width;
+	}
+	
+	public GraphicsContext getGC()
+	{
+		return gc;
 	}
 }

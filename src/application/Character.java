@@ -10,14 +10,18 @@ public class Character extends Entity {
 	private float velocityY = 0;
 	private final float ACCELERATION = 1;//0.1f;
 	
+	private Camera camera;
+	
 	/******************
 	 * 	Constructors  *
 	 ******************/
-	public Character(int hp, int str, int def, float xpos, float ypos, float height, float width, String name, float walkSpeed, Image img) {
+	public Character(int hp, int str, int def, float xpos, float ypos, float height, float width, String name, float walkSpeed, Image img, Camera camera ) {
 		super(hp, str, def, xpos, ypos, height, width, img);
 		this.name = name;
 		this.setWalkSpeed(walkSpeed);
 		keys = 0;
+		this.camera = camera;
+		
 	}
 	
 	/*******************************
@@ -86,8 +90,11 @@ public class Character extends Entity {
 			if (!canMove)
 				break;
 		}
-		if (canMove)
+		if (canMove) {
 			movement(xPos + moveX, yPos + moveY);
+			camera.update( moveX * Tile.TILEWIDTH, moveY * Tile.TILEHEIGHT );
+			
+		}
 		else {
 			dx = 0;
 			dy = 0;

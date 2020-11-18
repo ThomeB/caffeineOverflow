@@ -37,8 +37,8 @@ public class Tile
 	public static Tile doorTile = new Tile( Asset.doorImage, "D");
 	
 	
-	public static final int TILEWIDTH = 32;
-	public static final int TILEHEIGHT = 32;
+	public static final int TILEWIDTH = 64;
+	public static final int TILEHEIGHT = 64;
 	
 	private Image texture;
 	
@@ -53,7 +53,7 @@ public class Tile
 	
 	public void render( GraphicsContext gc, int x, int y )
 	{
-		gc.drawImage( texture,  x * TILEWIDTH, y * TILEHEIGHT, TILEWIDTH, TILEHEIGHT );
+		gc.drawImage( texture,  x * TILEWIDTH - Camera.xOffset, y * TILEHEIGHT - Camera.yOffset, TILEWIDTH, TILEHEIGHT );
 	}
 	
 }

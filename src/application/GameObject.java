@@ -45,6 +45,12 @@ public class GameObject {
 	public float getyPos() {
 			return yPos;
 	}
+	public float getWidth() {
+		return width;
+	}
+	public float getHeight() {
+		return height;
+	}
 	
 	/*************
 	 *  Setters  *
@@ -60,6 +66,6 @@ public class GameObject {
 	 *  Draw Whatever the GameObject Is  *
 	 *************************************/
 	public void render(GraphicsContext gc) {
-		gc.drawImage(img, xPos*Tile.TILEWIDTH, yPos*Tile.TILEHEIGHT, width*Tile.TILEWIDTH, height*Tile.TILEHEIGHT);
+		gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width*Tile.TILEWIDTH, height*Tile.TILEHEIGHT);
 	}//close render method
 }//close GameObject
