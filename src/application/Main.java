@@ -25,7 +25,7 @@ public class Main extends Application {
 			Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 			primaryStage.setX( bounds.getMinX() );
 			primaryStage.setY( bounds.getMinY() );
-			//primaryStage.centerOnScreen();
+			primaryStage.centerOnScreen();
 			primaryStage.setMaximized( true );
 			primaryStage.setFullScreen( true );
 			primaryStage.setTitle( "Zombie Game" );

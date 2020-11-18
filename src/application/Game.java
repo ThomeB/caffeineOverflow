@@ -55,9 +55,9 @@ public class Game {
 		//Loads in all textures for the game
 		Asset.init();
 		map = new Map( "resources/maps/testMap.txt" );
-		camera = new Camera( map.getPixelWidth(), map.getPixelHeight() );
+		camera = new Camera( map.getPixelWidth() / 2, map.getPixelHeight() / 2 );
 		character = new Character(1,1,1,1,1,1f,1f,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
-		camera.centerOnCharacter( character );
+		
 		
 		
 		
@@ -131,6 +131,7 @@ public class Game {
 		//--- UPDATE OBJECT VARIABLES ---
 		
 		character.update(keysPressed, map);
+		camera.centerOnCharacter( character );
 		
 		
 		
@@ -157,6 +158,7 @@ public class Game {
 		blackBackground = new Background( blackFill );
 		
 		//HBox will align all nodes horizontally
+		/*
 		topBox = new HBox();
 		topBox.setPrefHeight( 200 );
 		topBox.setPrefWidth( 400 );
@@ -169,7 +171,7 @@ public class Game {
 		botBox.setPrefWidth( 400 );
 		botBox.setBackground( blackBackground );
 		gameRoot.setBottom( botBox );
-		
+		*/
 		//where map and all game objects should be rendered at
 		canvas = new Canvas( map.getPixelWidth(), map.getPixelHeight() );
 		gc = canvas.getGraphicsContext2D();

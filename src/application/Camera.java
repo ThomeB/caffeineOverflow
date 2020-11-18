@@ -29,6 +29,8 @@ public class Camera
 		yOffset += yMove;
 		
 		
+		
+		
 	}
 	
 	public void centerOnCharacter( Character hero )
@@ -36,7 +38,6 @@ public class Camera
 		xOffset = hero.getxPos() * Tile.TILEWIDTH - mapWidth / 2 - hero.getWidth() / 2;
 		yOffset = hero.getyPos() * Tile.TILEHEIGHT - mapHeight / 2 - hero.getHeight() / 2;
 		
-		/*
 		if( xOffset > maxXOffset )
 			xOffset = maxXOffset;
 		
@@ -48,6 +49,6 @@ public class Camera
 		
 		if( yOffset < minYOffset )
 			yOffset = minYOffset;
-		*/
+		
 	}
 }
