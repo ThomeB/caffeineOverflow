@@ -92,7 +92,7 @@ public class Character extends Entity {
 		}
 		if (canMove) {
 			movement(xPos + moveX, yPos + moveY);
-			//camera.update( moveX * Tile.TILEWIDTH, moveY * Tile.TILEHEIGHT );
+			camera.centerOnCharacter( this );
 			
 		}
 		else {

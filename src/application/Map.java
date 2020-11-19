@@ -27,8 +27,6 @@ public class Map
 	private String[][] map;
 	private String path = "";
 	
-	int depth = 4;
-	
 	public Map( String path )
 	{
 		this.path = path;

@@ -15,23 +15,21 @@ public class Main extends Application {
 	
 	AnimTimerExt t;
 	Game game;
-	private double defaultHeight = 900;
-	private double defaultWidth = 1200.0;
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			
 			Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-			primaryStage.setX( bounds.getMinX() );
-			primaryStage.setY( bounds.getMinY() );
-			primaryStage.centerOnScreen();
+			primaryStage.setX( bounds.getMaxX() );
+			primaryStage.setY( bounds.getMaxY() );
+			
+			game = new Game(primaryStage, primaryStage.getMaxWidth() , primaryStage.getMaxHeight() );
+			
+			//These settings must be set after the game is instantiated 
 			primaryStage.setMaximized( true );
 			primaryStage.setFullScreen( true );
-			primaryStage.setTitle( "Zombie Game" );
 			primaryStage.show();
-			
-			game = new Game(primaryStage, defaultHeight, defaultWidth);
 			
 			//GAME LOOP:
 			t = new AnimTimerExt() {

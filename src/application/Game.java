@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -20,19 +22,15 @@ public class Game {
 	
 	private Stage stage;
 	private Scene gameScene;
-	private HBox topBox;
-	private HBox botBox;
-	
-	private BackgroundFill blackFill;
-	private Background blackBackground;
-	
 	
 	private Map map;
-	private Character character;
 	private Canvas canvas;
 	private Camera camera;
 	//Paint component that should be passed to any render method
 	private GraphicsContext gc;
+	
+	private Character character;
+	ArrayList<Enemy> enemies = new ArrayList<Enemy>( 5 );
 	
 	private double height;
 	private double width;
@@ -55,16 +53,26 @@ public class Game {
 		//Loads in all textures for the game
 		Asset.init();
 		map = new Map( "resources/maps/testMap.txt" );
+		/**Camera takes in width and height that we want our 
+		   canvas size to be, this is what will be visible to the player*/
 		camera = new Camera( 1200, 900, map.getPixelWidth(), map.getPixelHeight() );
-		character = new Character(1,1,1,1,1,1f,1f,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
+		character = new Character(1,1,1,1,1,.5f,.5f,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
 		
-		
+		//Create 5 enemies and link them to our enemies ArrayList
+		Enemy e1 = new Enemy( 2 , 3 );
+		enemies.add( e1 );
+		Enemy e2 = new Enemy( 5, 7  );
+		enemies.add( e2 );
+		Enemy e3 = new Enemy( 10, 10 );
+		enemies.add( e3 );
+		Enemy e4 = new Enemy( 25, 15 );
+		enemies.add( e4 );
+		Enemy e5 = new Enemy( 3 * Tile.TILEWIDTH, 6 * Tile.TILEHEIGHT );
+		enemies.add( e5 );
 		
 		
 		
 		createScenes();
-		
-		
 		stage.setScene( gameScene );
 
 		//mouse listeners (removed for now)
@@ -72,8 +80,7 @@ public class Game {
 		//also see: lambda expressions (cleaner code)
 		
 		//Key Listeners: Stores keys in a table
-		Scene scene = stage.getScene();
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
             	String code = event.getCode().toString();
@@ -99,7 +106,7 @@ public class Game {
                 		
             }
         });
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
             	String code = event.getCode().toString();
@@ -131,16 +138,21 @@ public class Game {
 		//--- UPDATE OBJECT VARIABLES ---
 		
 		character.update(keysPressed, map);
-		camera.centerOnCharacter( character );
-		
-		
 		
 		//--- RENDER GRAPHICS ---
 		
 		//clears the graphics on the canvas
 		gc.clearRect( 0, 0, canvas.getWidth(), canvas.getHeight() );
-		
+		//Canvas Background
+		gc.fillRect(0 , 0, canvas.getWidth(), canvas.getHeight() );
 		map.render( gc );
+		
+		for( int i = 0; i < enemies.size(); i++ )
+		{
+			if( enemies.get( i ) != null )
+				enemies.get( i ).render( gc );
+		}
+		
 		character.render(gc);
 		
 		//update game data here
@@ -152,34 +164,14 @@ public class Game {
 		
 		BorderPane gameRoot = new BorderPane();
 		
-		
-		//Background used for top and bottom of screen
-		blackFill = new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY );
-		blackBackground = new Background( blackFill );
-		
-		//HBox will align all nodes horizontally
-		/*
-		topBox = new HBox();
-		topBox.setPrefHeight( 200 );
-		topBox.setPrefWidth( 400 );
-		topBox.setBackground( blackBackground );
-		gameRoot.setTop( topBox );
-		
-		
-		botBox = new HBox();
-		botBox.setPrefHeight( 200 );
-		botBox.setPrefWidth( 400 );
-		botBox.setBackground( blackBackground );
-		gameRoot.setBottom( botBox );
-		*/
 		//where map and all game objects should be rendered at
-		canvas = new Canvas( 1200, 900 );
+		canvas = new Canvas( camera.viewWidth, camera.viewHeight );
 		gc = canvas.getGraphicsContext2D();
 		
 		gameRoot.setCenter( canvas );
 		
-		
 		gameScene = new Scene( gameRoot, width, height );
+	
 		
 
 		//*********************************************
