@@ -53,6 +53,7 @@ public class Game {
 		//Loads in all textures for the game
 		Asset.init();
 		map = new Map( "resources/maps/testMap.txt" );
+		Enemy.map = map;
 		/**Camera takes in width and height that we want our 
 		   canvas size to be, this is what will be visible to the player*/
 		camera = new Camera( 1200, 900, map.getPixelWidth(), map.getPixelHeight() );
@@ -138,6 +139,9 @@ public class Game {
 		//--- UPDATE OBJECT VARIABLES ---
 		
 		character.update(keysPressed, map);
+		for (Enemy e : enemies) {
+			e.update(character);
+		}
 		
 		//--- RENDER GRAPHICS ---
 		
