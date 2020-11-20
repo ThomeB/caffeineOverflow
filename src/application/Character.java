@@ -93,7 +93,6 @@ public class Character extends Entity {
 		if (canMove) {
 			movement(xPos + moveX, yPos + moveY);
 			camera.centerOnCharacter( this );
-			
 		}
 		else {
 			dx = 0;

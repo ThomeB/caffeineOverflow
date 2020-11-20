@@ -56,7 +56,7 @@ public class Game {
 		/**Camera takes in width and height that we want our 
 		   canvas size to be, this is what will be visible to the player*/
 		camera = new Camera( 1200, 900, map.getPixelWidth(), map.getPixelHeight() );
-		character = new Character(1,1,1,1,1,.5f,.5f,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
+		character = new Character(1,1,1,1,1,64,64,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
 		
 		//Create 5 enemies and link them to our enemies ArrayList
 		Enemy e1 = new Enemy( 2 , 3 );
@@ -170,7 +170,7 @@ public class Game {
 		
 		gameRoot.setCenter( canvas );
 		
-		gameScene = new Scene( gameRoot, width, height );
+		gameScene = new Scene( gameRoot, width, height , Color.BLACK);
 	
 		
 

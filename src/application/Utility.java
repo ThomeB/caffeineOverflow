@@ -29,14 +29,14 @@ public class Utility {
 	public static boolean collidesWithWall(float [][] hitboxCorners, int mapX, int mapY) {
 		float xp = hitboxCorners[0][0];    //x position
 		float yp = hitboxCorners[0][1];    //y position
-		float xs = hitboxCorners[1][0]-xp; //x size
-		float ys = hitboxCorners[2][1]-yp; //y height
+		float xs = (hitboxCorners[1][0]-xp) / Tile.TILEWIDTH; //x size
+		float ys = (hitboxCorners[2][1]-yp) / Tile.TILEHEIGHT; //y height
 		
 		float cxp = mapX; //tile x position
 		float cyp = mapY; //tile y position
-		float cxs = 1.0f;    //tile x width 
-		float cys = 1.0f;    //tile y height
-		return ((xp < cxp + cxs && xp + xs > cxp) && (yp < cyp + cys && yp + ys > cyp)); //ugly but it works! (AABB Test)
+		float cxs = 1;    //tile x width 
+		float cys = 1;    //tile y height
+		return ((xp < cxp + cxs && xp + xs > cxp) && (yp < cyp + cys && yp + ys > cyp)); //ugly but it works! (AABB Test);
 	}
 	
 	//https://www.journaldev.com/17129/java-deep-copy-object

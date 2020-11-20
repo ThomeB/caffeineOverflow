@@ -66,6 +66,6 @@ public class GameObject {
 	 *  Draw Whatever the GameObject Is  *
 	 *************************************/
 	public void render(GraphicsContext gc) {
-		gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width*Tile.TILEWIDTH, height*Tile.TILEHEIGHT);
+		gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
 	}//close render method
 }//close GameObject
