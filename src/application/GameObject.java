@@ -3,19 +3,21 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class GameObject {
+	
+	
 	//class variables
 	protected float xPos;
 	protected float yPos;
 	protected float height;
 	protected float width;
-	private Image img;
+	protected Image img;
 	protected float[][] hitBoxCorners;
 	/*[0] = top left [1] = top right [2] = bottom left [3] = bottom right*/
 	
 	/******************
 	 * 	Constructors  *
 	 ******************/
-	public GameObject(float xpos, float ypos, float height, float width, Image img) {
+	public GameObject(float xpos, float ypos, float width, float height, Image img) {
 		//allocate memory for hitbox upon creation
 		this.hitBoxCorners = new float[4][2];
 		this.yPos = ypos;

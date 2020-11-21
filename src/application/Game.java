@@ -30,7 +30,8 @@ public class Game {
 	private GraphicsContext gc;
 	
 	private Character character;
-	ArrayList<Enemy> enemies = new ArrayList<Enemy>( 5 );
+	private Gun gun;
+	private ArrayList<Enemy> enemies;
 	
 	private double height;
 	private double width;
@@ -56,10 +57,11 @@ public class Game {
 		Enemy.map = map;
 		/**Camera takes in width and height that we want our 
 		   canvas size to be, this is what will be visible to the player*/
-		camera = new Camera( 1200, 900, map.getPixelWidth(), map.getPixelHeight() );
+		camera = new Camera( 1200, 700, map.getPixelWidth(), map.getPixelHeight() );
 		character = new Character(1,1,1,1,1,64,64,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
 		
 		//Create 5 enemies and link them to our enemies ArrayList
+		enemies = new ArrayList<Enemy>(5);
 		Enemy e1 = new Enemy( 2 , 3 );
 		enemies.add( e1 );
 		Enemy e2 = new Enemy( 5, 7  );
@@ -71,6 +73,8 @@ public class Game {
 		Enemy e5 = new Enemy( 3 * Tile.TILEWIDTH, 6 * Tile.TILEHEIGHT );
 		enemies.add( e5 );
 		
+		//Create a gun on the map
+		gun = new Gun( 3, 1 );
 		
 		
 		createScenes();
@@ -79,6 +83,14 @@ public class Game {
 		//mouse listeners (removed for now)
 		//see: https://stackoverflow.com/questions/16635514/how-to-get-location-of-mouse-in-javafx
 		//also see: lambda expressions (cleaner code)
+		canvas.setOnMousePressed(new EventHandler<MouseEvent>() {
+		    @Override 
+		    public void handle(MouseEvent mouseEvent) {
+		      
+		    	gun.fire( (float) mouseEvent.getX(), (float) mouseEvent.getY() );
+		     
+		    }
+		  });
 		
 		//Key Listeners: Stores keys in a table
 		gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -143,6 +155,8 @@ public class Game {
 			e.update(character);
 		}
 		
+		gun.update();
+		
 		//--- RENDER GRAPHICS ---
 		
 		//clears the graphics on the canvas
@@ -156,6 +170,8 @@ public class Game {
 			if( enemies.get( i ) != null )
 				enemies.get( i ).render( gc );
 		}
+		
+		gun.render( gc );
 		
 		character.render(gc);
 		
