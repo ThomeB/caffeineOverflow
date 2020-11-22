@@ -1,6 +1,7 @@
 package application;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 
 public class GameObject {
 	
@@ -12,6 +13,7 @@ public class GameObject {
 	protected float width;
 	protected Image img;
 	protected float[][] hitBoxCorners;
+	protected Rectangle hitBox;
 	/*[0] = top left [1] = top right [2] = bottom left [3] = bottom right*/
 	
 	/******************
@@ -25,6 +27,7 @@ public class GameObject {
 		this.height = height;
 		this.width = width;
 		this.img = img;
+		this.hitBox = new Rectangle(xPos*Tile.TILEWIDTH,yPos*Tile.TILEHEIGHT,width,height);
 		
 		//might not need this here at all, less duplicate code if we don't need it
 		//set them upon creation - movement methods will take care of update

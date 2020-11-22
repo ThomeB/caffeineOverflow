@@ -34,6 +34,8 @@ public class Projectile extends GameObject
 		
 		xPos += xVelocity;
 		yPos += yVelocity;
+		hitBox.setX(xPos*Tile.TILEWIDTH);
+		hitBox.setY(yPos*Tile.TILEHEIGHT);
 		
 	}
 	

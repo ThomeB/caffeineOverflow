@@ -67,13 +67,22 @@ public abstract class Entity extends GameObject {
 	public abstract void attack();
 	
 	//take damage
-	public void takeDmg(Entity attacker) {
-		if(attacker != null) {
-			this.hp -= attacker.str;
-		}
-		
-		if(this.hp <= 0) {
+	private void takeDmg(int dmg) {
+		hp-=dmg;
+		if(hp <= 0) {
 			isAlive = false;
+		}
+	}
+	//strategy: there is a private takeDmg that uses an int, otherwise takes args based on what is doing the damage (attacker or projectile)
+	public void takeDmg(Entity attacker) {
+		if (attacker != null) {
+			takeDmg(attacker.str);
+		}
+	}
+	
+	public void takeDmg(Projectile projectile) {
+		if (projectile != null) {
+			takeDmg(projectile.damage);
 		}
 	}//close of damage
 	
@@ -87,5 +96,9 @@ public abstract class Entity extends GameObject {
 		hitBoxCorners[2][1] = yPos + height;
 		hitBoxCorners[3][0] = xPos + width;
 		hitBoxCorners[3][1] = yPos + height;
+		
+		hitBox.setX(xPos*Tile.TILEWIDTH);
+		hitBox.setY(yPos*Tile.TILEHEIGHT);
+		
 	}//close moveBox
 }//close entity

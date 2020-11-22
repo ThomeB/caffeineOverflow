@@ -31,7 +31,8 @@ public class Game {
 	
 	private Character character;
 	private Gun gun;
-	private ArrayList<Enemy> enemies;
+	//made static to make accessible to gun classes
+	public static ArrayList<Enemy> enemies;
 	
 	private double height;
 	private double width;
@@ -109,7 +110,7 @@ public class Game {
 					e.update(character);
 				}
 				
-				gun.update();
+				gun.update(map);
 	}
 	
 	
@@ -126,8 +127,9 @@ public class Game {
 				
 				for( int i = 0; i < enemies.size(); i++ )
 				{
-					if( enemies.get( i ) != null )
-						enemies.get( i ).render( gc );
+					Enemy enemy = enemies.get(i);
+					if( enemy != null && enemy.isAlive() ) //if we want bodies to stay after death, get rid of the isAlive part and instead just change the image somewhere
+						enemy.render( gc );
 				}
 				
 				gun.render( gc );

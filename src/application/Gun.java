@@ -34,7 +34,7 @@ public class Gun extends Interactable
 	}
 	
 	/** FUNCTIONS **/
-	public void update()
+	public void update(Map map)
 	{
 		for( int i = 0; i < projectiles.size(); i++ )
 		{
@@ -45,9 +45,28 @@ public class Gun extends Interactable
 				p.update();
 			}
 			
+			//first check: should we despawn from distance?
 			if( Utility.getDistance( this, p) > 8 )
 			{
 				projectiles.remove( i );
+			}//then check: did we hit an enemy?
+			else {
+				boolean didHit = false;
+				for (Enemy enemy : Game.enemies) {
+					//if the enemy exists, is alive, and we collide with it, then remove the projectile and damage the enemy
+					if ( enemy != null && enemy.isAlive() && Utility.collidesWithGameObject(p, enemy)) {
+						enemy.takeDmg(p);//takeDmg is in Entity
+						projectiles.remove(i);
+						didHit = true;
+						break;
+					}
+				}
+				if (!didHit) {//didn't hit an enemy? Let's see if we are in a wall
+					String tileOn = map.getTile((int)p.xPos, (int)p.yPos);//potential room for error here if we are out of bounds for some reason
+					if (!tileOn.equals(".")) {//if we are not in one of these tiles, then remove the projectile
+						projectiles.remove(i);
+					}
+				}
 			}
 		}
 	}

@@ -9,23 +9,11 @@ import java.util.HashMap;
 
 public class Utility {
 
-	public static boolean collisionDetection(float [][] hitboxCorners, float [][] checkHitboxCorners) {
-		//warning: unused and untested, might be useful for projectiles but probably has faulty logic
-		float x1 = hitboxCorners[0][0];
-		float y1 = hitboxCorners[0][1];
-		float x2 = hitboxCorners[1][0];
-		float y2 = hitboxCorners[2][1];
-		
-		float cx1 = checkHitboxCorners[0][0];
-		float cy1 = checkHitboxCorners[0][1];
-		float cx2 = checkHitboxCorners[1][0];
-		float cy2 = checkHitboxCorners[2][1];
-		
-		if (x1 > cx1 && y1 > cy1 && x1 < cx2 && y1 < cy2) {
-			return true;
-		}
-		
-		return false;
+	//returns true if a hitbox is colliding with another hitbox
+	//any GameObject should be fine to use with this method
+	//"The Rectangle Method"
+	public static boolean collidesWithGameObject(GameObject a, GameObject b) {
+		return a.hitBox.getBoundsInParent().intersects(b.hitBox.getBoundsInParent());
 	}
 	
 	//returns true if a hitbox is colliding with a wall. 
