@@ -45,6 +45,10 @@ public class Game {
 			false //F [4]
 	};
 	
+	/*************************************************************
+	 *                Constructors                               *
+	 ************************************************************/
+	
 	public Game(Stage stage, double height, double width) {
 		
 		this.stage = stage;
@@ -74,12 +78,80 @@ public class Game {
 		enemies.add( e5 );
 		
 		//Create a gun on the map
-		gun = new Gun( 3, 1 );
+		gun = new Gun( 5, 5 );
 		
 		
 		createScenes();
 		stage.setScene( gameScene );
 
+		
+		
+	}//close constructor
+	
+	/*************************************************************
+	 *                FUNCTIONS                                  *
+	 ************************************************************/
+	
+	public void tick(double deltaTime) {
+		
+		update();
+		render();
+	}
+	
+	
+	
+	public void update() {
+		//--- UPDATE OBJECT VARIABLES ---
+		
+				character.update(keysPressed, map);
+				
+				for (Enemy e : enemies) {
+					e.update(character);
+				}
+				
+				gun.update();
+	}
+	
+	
+	
+	public void render() {
+		
+		//--- RENDER GRAPHICS ---
+		
+				//clears the graphics on the canvas
+				gc.clearRect( 0, 0, canvas.getWidth(), canvas.getHeight() );
+				//Canvas Background
+				gc.fillRect(0 , 0, canvas.getWidth(), canvas.getHeight() );
+				map.render( gc );
+				
+				for( int i = 0; i < enemies.size(); i++ )
+				{
+					if( enemies.get( i ) != null )
+						enemies.get( i ).render( gc );
+				}
+				
+				gun.render( gc );
+				
+				character.render(gc);
+		
+	}
+	
+	
+	
+	public void createScenes() {
+		
+		//******* STRUCTURE FOR GAME SCENE *************
+		
+		BorderPane gameRoot = new BorderPane();
+		
+		//where map and all game objects should be rendered at
+		canvas = new Canvas( camera.viewWidth, camera.viewHeight );
+		gc = canvas.getGraphicsContext2D();
+		
+		gameRoot.setCenter( canvas );
+		
+		gameScene = new Scene( gameRoot, width, height , Color.BLACK);
+		
 		//mouse listeners (removed for now)
 		//see: https://stackoverflow.com/questions/16635514/how-to-get-location-of-mouse-in-javafx
 		//also see: lambda expressions (cleaner code)
@@ -144,58 +216,15 @@ public class Game {
                 }
             }
         });
-		
-	}
-	
-	public void tick(double deltaTime) {
-		//--- UPDATE OBJECT VARIABLES ---
-		
-		character.update(keysPressed, map);
-		for (Enemy e : enemies) {
-			e.update(character);
-		}
-		
-		gun.update();
-		
-		//--- RENDER GRAPHICS ---
-		
-		//clears the graphics on the canvas
-		gc.clearRect( 0, 0, canvas.getWidth(), canvas.getHeight() );
-		//Canvas Background
-		gc.fillRect(0 , 0, canvas.getWidth(), canvas.getHeight() );
-		map.render( gc );
-		
-		for( int i = 0; i < enemies.size(); i++ )
-		{
-			if( enemies.get( i ) != null )
-				enemies.get( i ).render( gc );
-		}
-		
-		gun.render( gc );
-		
-		character.render(gc);
-		
-		//update game data here
-	}
-	
-	public void createScenes() {
-		
-		//******* STRUCTURE FOR GAME SCENE *************
-		
-		BorderPane gameRoot = new BorderPane();
-		
-		//where map and all game objects should be rendered at
-		canvas = new Canvas( camera.viewWidth, camera.viewHeight );
-		gc = canvas.getGraphicsContext2D();
-		
-		gameRoot.setCenter( canvas );
-		
-		gameScene = new Scene( gameRoot, width, height , Color.BLACK);
-	
+
 		
 
 		//*********************************************
 	}
+	
+	/*************************************************************
+	 *                Getters / Setters                          *
+	 ************************************************************/
 	
 	public Stage getStage() {
 		return stage;

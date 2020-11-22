@@ -21,6 +21,7 @@ package application;
 
 public class Camera 
 {
+	
 	public static float xOffset;
 	public static float yOffset;
 	

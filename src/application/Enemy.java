@@ -25,7 +25,7 @@ public class Enemy extends Entity{
 	/******************
 	 * 	Constructors  *
 	 ******************/
-	public Enemy( int xPos, int yPos)
+	public Enemy( float xPos, float yPos)
 	{
 		super( ENEMY_HP, ENEMY_STR, ENEMY_DEF,  xPos, yPos, ENEMY_WIDTH, ENEMY_HEIGHT, Asset.ghostAlive );
 	}

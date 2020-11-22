@@ -55,7 +55,7 @@ public class Asset
 		ghostAlive = loadImage("resources/textures/ghostAlive.png");
 		pistol = loadImage("resources/textures/pistol.png");
 		grayPotion = loadImage("resources/textures/grayPotion.png");
-		bullet = loadImage("resources/textures/bullet.png");
+		bullet = loadImage("resources/textures/fireball.png");
 		
 	}
 	

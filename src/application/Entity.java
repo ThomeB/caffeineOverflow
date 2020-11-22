@@ -14,7 +14,7 @@ public abstract class Entity extends GameObject {
 	/******************
 	 * 	Constructors  *
 	 ******************/
-	public Entity(int hp, int str, int def, float xpos, float ypos, float height, float width, Image img) {
+	public Entity(int hp, int str, int def, float xpos, float ypos, float width, float height, Image img) {
 		super(xpos, ypos, height, width, img);
 		this.hp = hp;
 		this.str = str;
