@@ -1,5 +1,6 @@
 package application;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Character extends Entity {
@@ -8,6 +9,7 @@ public class Character extends Entity {
 	private int keys;
 	private float velocityX = 0;
 	private float velocityY = 0;
+	private Gun gun;
 	private final float ACCELERATION = 1;//0.1f;
 	
 	private Camera camera;
@@ -21,6 +23,8 @@ public class Character extends Entity {
 		this.setWalkSpeed(walkSpeed);
 		keys = 0;
 		this.camera = camera;
+		
+		gun = new Gun( xPos, yPos );
 		
 	}
 	
@@ -145,6 +149,31 @@ public class Character extends Entity {
 		moveInput(keysPressed, map);
 		//keysPressed[4] is for interaction (F key)
 		//put interaction function here, maybe?
+		
+		if( gun != null )
+		{
+			gun.setxPos( xPos + 0.6f );
+			gun.setyPos( yPos + 0.5f );
+			gun.update( map );
+		}
+			
+	}
+	
+	public void render( GraphicsContext gc )
+	{
+		gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+		
+		if( gun != null )
+			gun.render( gc );
+	}
+	
+	/*****************************
+	 *        GETTERS / SETTERS
+	 ****************************/
+	
+	public Gun getGun()
+	{
+		return gun;
 	}
 	
 }//close character

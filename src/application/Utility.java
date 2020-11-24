@@ -40,6 +40,7 @@ public class Utility {
 		double by = b.getyPos();
 		return Math.sqrt(Math.pow(ax-bx,2)+Math.pow(ay-by,2));
 	}
+	
 	//this but for a coordinate and an object
 	public static double getDistance(GameObject a, float[] coords) {
 		double ax = a.getxPos();
@@ -47,6 +48,11 @@ public class Utility {
 		double bx = coords[0];
 		double by = coords[1];
 		return Math.sqrt(Math.pow(ax-bx,2)+Math.pow(ay-by,2));
+	}
+	
+	public static double getDistance( double x1, double y1, double x2, double y2 )
+	{
+		return Math.sqrt( Math.pow( x1 - x2, 2) + Math.pow( y1 - y2, 2) );
 	}
 	
 	//helper methods for pathfinding

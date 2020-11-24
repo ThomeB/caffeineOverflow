@@ -10,7 +10,7 @@ public class Enemy extends Entity{
 	public static final int ENEMY_STR = 3;
 	public static final int ENEMY_DEF = 0;
 	
-	public static final float ENEMY_SPEED = 0.1f;
+	public static final float ENEMY_SPEED = 0.05f;
 	public static final float ENEMY_WIDTH = 64;
 	public static final float ENEMY_HEIGHT = 64;
 	public static final float ENEMY_AGGRO_RANGE = 5;

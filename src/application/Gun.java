@@ -10,7 +10,7 @@ public class Gun extends Interactable
 {
 	
 	public static final int DEFAULT_AMMO_CAPACITY = 30;
-	public static final float DEFAULT_GUN_VELOCITY = 0.06f;
+	public static final float DEFAULT_GUN_VELOCITY = 0.15f;
 	public static final float DEFAULT_GUN_HEIGHT = 20;
 	public static final float DEFAULT_GUN_WIDTH = 30;
 	
@@ -46,7 +46,7 @@ public class Gun extends Interactable
 			}
 			
 			//first check: should we despawn from distance?
-			if( Utility.getDistance( this, p) > 8 )
+			if( Utility.getDistance( p.initialXPos, p.initialYPos, p.xPos, p.yPos ) > 6 )
 			{
 				projectiles.remove( i );
 			}//then check: did we hit an enemy?
@@ -120,6 +120,7 @@ public class Gun extends Interactable
 		angle -= 1.8;
 		
 		//Slowly increase our angle, to fire in an arc
+		/*
 		for( int i = 0; i < 30; i++ )
 		{
 			angle += .12;
@@ -128,6 +129,7 @@ public class Gun extends Interactable
 		    vy = Math.sin( angle ) * maxVelocity;
 			projectiles.add( new Projectile( xPos, yPos, (float) vx, (float) vy ) );
 		}
+		*/
 		
 		
 		

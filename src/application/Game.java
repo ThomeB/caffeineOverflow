@@ -30,7 +30,6 @@ public class Game {
 	private GraphicsContext gc;
 	
 	private Character character;
-	private Gun gun;
 	//made static to make accessible to gun classes
 	public static ArrayList<Enemy> enemies;
 	
@@ -73,13 +72,17 @@ public class Game {
 		enemies.add( e2 );
 		Enemy e3 = new Enemy( 10, 10 );
 		enemies.add( e3 );
-		Enemy e4 = new Enemy( 25, 15 );
+		Enemy e4 = new Enemy( 8, 4 );
 		enemies.add( e4 );
-		Enemy e5 = new Enemy( 3 * Tile.TILEWIDTH, 6 * Tile.TILEHEIGHT );
+		Enemy e5 = new Enemy( 3 , 6  );
 		enemies.add( e5 );
+		Enemy e6 = new Enemy( 10 , 11  );
+		enemies.add( e6 );
+		Enemy e7 = new Enemy( 9 , 8  );
+		enemies.add( e7 );
 		
 		//Create a gun on the map
-		gun = new Gun( 5, 5 );
+		
 		
 		
 		createScenes();
@@ -110,7 +113,7 @@ public class Game {
 					e.update(character);
 				}
 				
-				gun.update(map);
+				
 	}
 	
 	
@@ -132,7 +135,6 @@ public class Game {
 						enemy.render( gc );
 				}
 				
-				gun.render( gc );
 				
 				character.render(gc);
 		
@@ -161,7 +163,8 @@ public class Game {
 		    @Override 
 		    public void handle(MouseEvent mouseEvent) {
 		      
-		    	gun.fire( (float) mouseEvent.getX(), (float) mouseEvent.getY() );
+		    	if( character.getGun() != null )
+		    		character.getGun().fire( (float) mouseEvent.getX() + Camera.xOffset, (float) mouseEvent.getY() + Camera.yOffset );
 		     
 		    }
 		  });

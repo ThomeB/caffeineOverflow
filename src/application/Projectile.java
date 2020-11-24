@@ -6,12 +6,14 @@ public class Projectile extends GameObject
 {
 	public static final float DEFAULT_PROJECTILE_WIDTH = 50;
 	public static final float DEFAULT_PROJECTILE_HEIGHT = 30;
-	public static final int DEFAULT_PROJECTILE_DAMAGE = 5;
+	public static final int DEFAULT_PROJECTILE_DAMAGE = 10;
 
-	
+	protected float initialXPos;
+	protected float initialYPos;
 	protected float maxVelocity;
 	protected float xVelocity;
 	protected float yVelocity;
+	
 	
 	
 	
@@ -22,6 +24,8 @@ public class Projectile extends GameObject
 	{
 		super(xpos, ypos, DEFAULT_PROJECTILE_WIDTH, DEFAULT_PROJECTILE_HEIGHT, Asset.bullet);
 		
+		this.initialXPos = xpos;
+		this.initialYPos = ypos;
 		this.xVelocity = xVelocity;
 		this.yVelocity = yVelocity;
 		damage = DEFAULT_PROJECTILE_DAMAGE;
