@@ -11,6 +11,7 @@ public class Character extends Entity {
 	private float velocityY = 0;
 	private Gun gun;
 	private final float ACCELERATION = 1;//0.1f;
+	private boolean hasKey = false;
 	
 	private Camera camera;
 	
@@ -24,7 +25,7 @@ public class Character extends Entity {
 		keys = 0;
 		this.camera = camera;
 		
-		gun = new Gun( xPos, yPos );
+		gun = new Pistol( xPos, yPos );
 		
 	}
 	
@@ -84,7 +85,7 @@ public class Character extends Entity {
 				if (coordY > map.getHeight()-1)
 					coordY = map.getHeight()-1;
 				String tileType = map.getTile( coordX , coordY );
-				if (!tileType.equals(".") && !tileType.equals("D")) {// we ignore certain wall types for collision checking
+				if (!tileType.equals(".")) {// we ignore certain wall types for collision checking
 					canMove = !Utility.collidesWithWall(newHitbox, coordX, coordY); //if we don't collide with a wall, we can still move (inverse relationship)
 					if (!canMove) {
 						break;
@@ -143,6 +144,13 @@ public class Character extends Entity {
 		else if (n < -1)
 			n = -1;
 		velocityY = n;
+	}
+	
+	public boolean getKey() {
+		return hasKey;
+	}
+	public void setKey(boolean keyVal) {
+		hasKey = keyVal;
 	}
 	
 	public void update(boolean [] keysPressed, Map map) {

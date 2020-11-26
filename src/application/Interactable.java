@@ -1,18 +1,21 @@
 package application;
 
+import java.util.HashMap;
+
+import javafx.scene.image.Image;
 
 public abstract class Interactable extends GameObject
 {
-	public static final float DEFAULT_INTERACTABLE_WIDTH = 30;
-	public static final float DEFAULT_INTERACTABLE_HEIGHT = 30;
-
-	public Interactable(float xpos, float ypos ) 
+	
+	public boolean despawn = false; //flag to tell the game that this interactable is not needed
+	
+	public Interactable(float xpos, float ypos, float width, float height, Image image) 
 	{
-		super(xpos, ypos, DEFAULT_INTERACTABLE_WIDTH, DEFAULT_INTERACTABLE_HEIGHT, Asset.grayPotion);
+		super(xpos, ypos, width, height, image);
 
 
 	}
 	
-	public abstract void pickup();
+	public abstract void pickup(Character hero);
 
 }

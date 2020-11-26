@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 
 public class Gun extends Interactable 
@@ -11,8 +12,7 @@ public class Gun extends Interactable
 	
 	public static final int DEFAULT_AMMO_CAPACITY = 30;
 	public static final float DEFAULT_GUN_VELOCITY = 0.15f;
-	public static final float DEFAULT_GUN_HEIGHT = 20;
-	public static final float DEFAULT_GUN_WIDTH = 30;
+	
 	
 	protected int ammoCapacity;
 	protected float maxVelocity;
@@ -20,12 +20,10 @@ public class Gun extends Interactable
 	
 	/** CONSTRUCTOR **/
 		
-	public Gun(float xpos, float ypos ) 
+	public Gun(float xpos, float ypos, float width, float height, Image image) 
 	{
-		super( xpos, ypos );
+		super( xpos, ypos , width, height, image);
 		
-		height = DEFAULT_GUN_HEIGHT;
-		width = DEFAULT_GUN_WIDTH;
 		ammoCapacity = DEFAULT_AMMO_CAPACITY;
 		maxVelocity = DEFAULT_GUN_VELOCITY;
 		img = Asset.pistol;
@@ -137,9 +135,11 @@ public class Gun extends Interactable
 
 
 	@Override
-	public void pickup() 
+	public void pickup(Character hero) 
 	{
-		
+		if (!despawn && !hero.getGun().equals(this)) { //if we are not marked for deletion and the gun the character is holding is not what we are trying to pick up
+			//set gun on character, TODO
+		}
 		
 	}
 	

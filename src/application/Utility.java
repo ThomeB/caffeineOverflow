@@ -111,7 +111,7 @@ public class Utility {
 			return steps;
 		}
  		
-		while (round < 500 && !pathFound) {
+		while (round < 100 && !pathFound) {
 			round++;
 			//add neighbors to check set
 			for (float [] neighborCoords : getNeighbors(current.coords,map)) {
@@ -177,7 +177,7 @@ public class Utility {
 			}while(current != null);
 			//System.out.println("Path found in " + pathLength + " steps! ");
 		}else {
-			System.out.println("Pathfinding failed! (" + startCoords[0] + ", " + startCoords[1] + ") -> (" + endCoords[0] + ", " + endCoords[1] + ")" );
+			//System.out.println("Pathfinding failed! (" + startCoords[0] + ", " + startCoords[1] + ") -> (" + endCoords[0] + ", " + endCoords[1] + ")" );
 			return null;
 		}
 		

@@ -32,6 +32,7 @@ public class Game {
 	private Character character;
 	//made static to make accessible to gun classes
 	public static ArrayList<Enemy> enemies;
+	public static ArrayList<Interactable> interactables;
 	
 	private double height;
 	private double width;
@@ -83,7 +84,11 @@ public class Game {
 		
 		//Create a gun on the map
 		
-		
+		interactables = new ArrayList<Interactable>(10);
+		Key i1 = new Key( 10, 10 );
+		interactables.add( i1 );
+		Door i2 = new Door( 44, 20, map );
+		interactables.add( i2 );
 		
 		createScenes();
 		stage.setScene( gameScene );
@@ -107,10 +112,30 @@ public class Game {
 	public void update() {
 		//--- UPDATE OBJECT VARIABLES ---
 		
+				//update the character
 				character.update(keysPressed, map);
 				
+				//update the enemies
 				for (Enemy e : enemies) {
-					e.update(character);
+					if (e.isAlive()) {
+						e.update(character);
+					}
+				}
+				
+				//check for interactions
+				for (int i = 0; i < interactables.size(); i++) {
+					
+					Interactable interactable = interactables.get(i);
+					//check first if we should remove the interactable. Is it tagged to be removed? is it null? 
+					if (interactable == null || interactable.despawn) {
+						interactables.remove(i);
+					}else {
+						//if the key[4] is true, F is being held down. Then do a complicated distance equation to get the centers of entities and characters so the top right of the image isn't the only thing being factored in. (Comparing centers)
+						if (keysPressed[4] == true && Utility.getDistance(character.xPos + character.getWidth()/Tile.TILEWIDTH/2, character.yPos + character.getHeight()/Tile.TILEHEIGHT/2, interactable.xPos + interactable.getWidth()/Tile.TILEWIDTH/2, interactable.yPos + interactable.getHeight()/Tile.TILEHEIGHT/2) < 1) {
+							interactable.pickup(character);
+						}
+					}
+					
 				}
 				
 				
@@ -133,6 +158,14 @@ public class Game {
 					Enemy enemy = enemies.get(i);
 					if( enemy != null && enemy.isAlive() ) //if we want bodies to stay after death, get rid of the isAlive part and instead just change the image somewhere
 						enemy.render( gc );
+				}
+				
+				for ( int i = 0; i < interactables.size(); i++ )
+				{
+					Interactable interactable = interactables.get(i);
+					if (interactable != null && !interactable.despawn)
+						interactable.render( gc );
+					
 				}
 				
 				

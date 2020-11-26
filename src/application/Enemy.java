@@ -20,7 +20,7 @@ public class Enemy extends Entity{
 	//path related variables
 	private ArrayList<float[]> path;
 	private int iterator;
-	private float [] goalCoords;
+	private float [] goalCoords = new float [2];
 	
 	/******************
 	 * 	Constructors  *
@@ -66,6 +66,11 @@ public class Enemy extends Entity{
 						iterator = path.size()-2; //basically, get the first relevant point
 						goalCoords = path.get(iterator); 
 						this.path = path;
+						
+					}
+					else {
+						goalCoords[0] = charCoords[0];
+						goalCoords[1] = charCoords[1];
 					}
 				}else {//if we've already calculated a path, use it
 					usePath = true;

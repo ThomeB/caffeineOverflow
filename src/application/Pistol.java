@@ -2,9 +2,12 @@ package application;
 
 //not much to this class
 public class Pistol extends Gun{
+	
+	public static final float GUN_HEIGHT = 20;
+	public static final float GUN_WIDTH = 30;
+	
 	public Pistol(float xpos, float ypos) {
-		super(xpos, ypos);
-		// TODO Auto-generated constructor stub
+		super(xpos, ypos, GUN_WIDTH, GUN_HEIGHT, Asset.pistol);
 	}
 	//class variables
 	final int fireRate = 1; //these are pretty set
