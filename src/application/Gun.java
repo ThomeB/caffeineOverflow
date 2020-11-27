@@ -137,8 +137,15 @@ public class Gun extends Interactable
 	@Override
 	public void pickup(Character hero) 
 	{
-		if (!despawn && !hero.getGun().equals(this)) { //if we are not marked for deletion and the gun the character is holding is not what we are trying to pick up
-			//set gun on character, TODO
+		if (!despawn) { //if we are not marked for deletion and the gun the character is holding is not what we are trying to pick up
+			boolean canPickUp = false;
+			
+			if (hero.getGun() == null || !hero.getGun().equals(this))
+				canPickUp = true;
+			
+			if (canPickUp) 
+				hero.swapGun(this);
+			
 		}
 		
 	}

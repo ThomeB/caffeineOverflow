@@ -12,7 +12,6 @@ public class Character extends Entity {
 	private Gun gun;
 	private final float ACCELERATION = 1;//0.1f;
 	private boolean hasKey = false;
-	
 	private Camera camera;
 	
 	/******************
@@ -25,7 +24,7 @@ public class Character extends Entity {
 		keys = 0;
 		this.camera = camera;
 		
-		gun = new Pistol( xPos, yPos );
+		//gun = new Pistol( xPos, yPos );
 		
 	}
 	
@@ -49,6 +48,10 @@ public class Character extends Entity {
 			//punch
 		}
 	}//close attack
+	
+	public void swapGun(Gun toGet) {
+		gun = toGet;
+	}
 	
 	private void moveInput(boolean [] keysPressed,Map map) {
 		//explanation: movement is gradually increased as the character moves continuously in one direction

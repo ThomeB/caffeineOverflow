@@ -89,6 +89,13 @@ public class Game {
 		interactables.add( i1 );
 		Door i2 = new Door( 44, 20, map );
 		interactables.add( i2 );
+		HealthPack i3 = new HealthPack( 8, 8 , 10 );
+		interactables.add( i3 );
+		
+		Pistol pistol1 = new Pistol( 15, 15 );
+		interactables.add( pistol1 );
+		
+		
 		
 		createScenes();
 		stage.setScene( gameScene );

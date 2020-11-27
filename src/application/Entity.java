@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 public abstract class Entity extends GameObject {
 	//class variables
 	protected int hp = 1;
+	protected int maxHp = 1;
 	protected int str = 0;
 	protected int def = 0;
 	//protected Gun wpnEquip = null;
@@ -17,6 +18,7 @@ public abstract class Entity extends GameObject {
 	public Entity(int hp, int str, int def, float xpos, float ypos, float width, float height, Image img) {
 		super(xpos, ypos, height, width, img);
 		this.hp = hp;
+		this.maxHp = hp;
 		this.str = str;
 		this.def = def;
 	}//close of entity constructor
@@ -44,6 +46,8 @@ public abstract class Entity extends GameObject {
 		this.wpnEquip = wpnEquip;
 	}
 */	public void setHp(int hp) {
+		if (hp > maxHp)
+			hp = maxHp;
 		this.hp = hp;
 	}
 	public void setAlive(boolean isAlive) {
