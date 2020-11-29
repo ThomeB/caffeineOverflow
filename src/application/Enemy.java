@@ -52,6 +52,16 @@ public class Enemy extends Entity{
 		//guns and things
 	}
 	
+	//what to do when enemy dies
+	public void death() {
+	
+	}
+	
+	public boolean isATrap() {
+		return false;
+	}
+	
+	@Override
 	public void update(Character character) {
 		double distance = Utility.getDistance(character, this);
 		if (distance < ENEMY_AGGRO_RANGE) {//if we are within the range of sight

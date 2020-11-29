@@ -187,4 +187,15 @@ public class Character extends Entity {
 		return gun;
 	}
 	
+	public boolean isATrap() {
+		return false;
+	}
 }//close character
+
+
+
+
+
+
+
+

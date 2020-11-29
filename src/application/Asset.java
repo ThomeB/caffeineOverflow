@@ -37,6 +37,7 @@ public class Asset
 	public static Image pistol;
 	public static Image grayPotion;
 	public static Image bullet;
+	public static Image barrel;
 	
 	//Made it static so we don't have to instantiate this class to load all of our images in memory
 	public static void init()
@@ -56,6 +57,7 @@ public class Asset
 		pistol = loadImage("resources/textures/pistol.png");
 		grayPotion = loadImage("resources/textures/grayPotion.png");
 		bullet = loadImage("resources/textures/fireball.png");
+		barrel = loadImage("resources/textures/Barrel.png");
 		
 	}
 	

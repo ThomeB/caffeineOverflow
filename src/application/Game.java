@@ -29,9 +29,9 @@ public class Game {
 	//Paint component that should be passed to any render method
 	private GraphicsContext gc;
 	
-	private Character character;
+	private static Character character;
 	//made static to make accessible to gun classes
-	public static ArrayList<Enemy> enemies;
+	public static ArrayList<Entity> enemies;
 	public static ArrayList<Interactable> interactables;
 	
 	private double height;
@@ -66,21 +66,29 @@ public class Game {
 		character = new Character(1,1,1,1,1,64,64,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
 		
 		//Create 5 enemies and link them to our enemies ArrayList
-		enemies = new ArrayList<Enemy>(5);
-		Enemy e1 = new Enemy( 2 , 3 );
+		enemies = new ArrayList<Entity>(5);
+		Entity e1 = new Enemy( 2 , 3 );
 		enemies.add( e1 );
-		Enemy e2 = new Enemy( 5, 7  );
+		Entity e2 = new Enemy( 5, 7  );
 		enemies.add( e2 );
-		Enemy e3 = new Enemy( 10, 10 );
+		Entity e3 = new Enemy( 10, 10 );
 		enemies.add( e3 );
-		Enemy e4 = new Enemy( 8, 4 );
+		Entity e4 = new Enemy( 8, 4 );
 		enemies.add( e4 );
-		Enemy e5 = new Enemy( 3 , 6  );
+		Entity e5 = new Enemy( 3 , 6  );
 		enemies.add( e5 );
-		Enemy e6 = new Enemy( 10 , 11  );
+		Entity e6 = new Enemy( 10 , 11  );
 		enemies.add( e6 );
-		Enemy e7 = new Enemy( 9 , 8  );
+		Entity e7 = new Enemy( 9 , 8  );
 		enemies.add( e7 );
+		Entity e8 = new ExplodingBarrel(2, 2);
+		enemies.add(e8);
+		Entity e9 = new ExplodingBarrel(2, 5);
+		enemies.add(e9);
+		Entity e10 = new ExplodingBarrel(2, 8);
+		enemies.add(e10);
+		
+		
 		
 		//Create a gun on the map
 		
@@ -92,8 +100,9 @@ public class Game {
 		HealthPack i3 = new HealthPack( 8, 8 , 10 );
 		interactables.add( i3 );
 		
-		Pistol pistol1 = new Pistol( 15, 15 );
+		Pistol pistol1 = new Pistol( 1, 1 );
 		interactables.add( pistol1 );
+		
 		
 		
 		
@@ -123,7 +132,7 @@ public class Game {
 				character.update(keysPressed, map);
 				
 				//update the enemies
-				for (Enemy e : enemies) {
+				for (Entity e : enemies) {
 					if (e.isAlive()) {
 						e.update(character);
 					}
@@ -162,9 +171,18 @@ public class Game {
 				
 				for( int i = 0; i < enemies.size(); i++ )
 				{
-					Enemy enemy = enemies.get(i);
+					Entity enemy = enemies.get(i);
 					if( enemy != null && enemy.isAlive() ) //if we want bodies to stay after death, get rid of the isAlive part and instead just change the image somewhere
 						enemy.render( gc );
+					else if (enemy != null) {
+						if(enemy.counter <= 120 && enemy.isATrap()) { //change this to timer class when made -- this is located in Entity as a public int
+							enemy.render(gc);
+							enemy.counter++;
+						} else {
+							enemy = null;
+							enemies.remove(i);
+						}
+					}
 				}
 				
 				for ( int i = 0; i < interactables.size(); i++ )

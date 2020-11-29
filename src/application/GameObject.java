@@ -28,17 +28,6 @@ public class GameObject {
 		this.width = width;
 		this.img = img;
 		this.hitBox = new Rectangle(xPos*Tile.TILEWIDTH,yPos*Tile.TILEHEIGHT,width,height);
-		
-		//might not need this here at all, less duplicate code if we don't need it
-		//set them upon creation - movement methods will take care of update
-		/*hitBoxCorners[0][0] = xPos;
-		hitBoxCorners[0][1] = yPos;
-		hitBoxCorners[1][0] = xPos + width;
-		hitBoxCorners[1][1] = yPos;
-		hitBoxCorners[2][0] = xPos;
-		hitBoxCorners[2][1] = yPos + height;
-		hitBoxCorners[3][0] = xPos + width;
-		hitBoxCorners[3][1] = yPos + height;*/
 	}//close constructor
 
 	/*************

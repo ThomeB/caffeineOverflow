@@ -12,6 +12,8 @@ public abstract class Entity extends GameObject {
 	private boolean isAlive = true;
 	private float walkSpeed = 1.0f;
 	
+	public int counter = 0;
+	
 	/******************
 	 * 	Constructors  *
 	 ******************/
@@ -64,17 +66,30 @@ public abstract class Entity extends GameObject {
 	 *  Entity Utility Methods  *
 	 * @return 					*
 	 ****************************/
+	//update methods that can be overwritten so that game can handle an arraylist of entity
+	public void update() {}
+	public void update(Character character) {}
+	
+	//what happens after they die
+	public void death() {}
+	
 	//abstract movement method
 	public abstract void movement(float xPos, float yPos);
 	
 	//deal damage
 	public abstract void attack();
 	
+	//quick checker method
+	public abstract boolean isATrap();
+	
 	//take damage
 	private void takeDmg(int dmg) {
 		hp-=dmg;
 		if(hp <= 0) {
-			isAlive = false;
+			if(isAlive) {
+				isAlive = false;
+				this.death();
+			}
 		}
 	}
 	//strategy: there is a private takeDmg that uses an int, otherwise takes args based on what is doing the damage (attacker or projectile)
@@ -105,4 +120,6 @@ public abstract class Entity extends GameObject {
 		hitBox.setY(yPos*Tile.TILEHEIGHT);
 		
 	}//close moveBox
+
+	
 }//close entity

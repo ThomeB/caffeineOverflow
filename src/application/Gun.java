@@ -50,7 +50,7 @@ public class Gun extends Interactable
 			}//then check: did we hit an enemy?
 			else {
 				boolean didHit = false;
-				for (Enemy enemy : Game.enemies) {
+				for (Entity enemy : Game.enemies) {
 					//if the enemy exists, is alive, and we collide with it, then remove the projectile and damage the enemy
 					if ( enemy != null && enemy.isAlive() && Utility.collidesWithGameObject(p, enemy)) {
 						enemy.takeDmg(p);//takeDmg is in Entity

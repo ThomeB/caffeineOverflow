@@ -6,6 +6,9 @@ public class Pistol extends Gun{
 	public static final float GUN_HEIGHT = 20;
 	public static final float GUN_WIDTH = 30;
 	
+	/*****************
+	 *  Constructor  *
+	 *****************/
 	public Pistol(float xpos, float ypos) {
 		super(xpos, ypos, GUN_WIDTH, GUN_HEIGHT, Asset.pistol);
 	}
@@ -13,9 +16,7 @@ public class Pistol extends Gun{
 	final int fireRate = 1; //these are pretty set
 	float bulletVelocity = 1.0f;
 	
-	/*****************
-	 *  Constructor  *
-	 *****************/
+	
 	
 
 }//close pistol class
