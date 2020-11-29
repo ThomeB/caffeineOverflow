@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 
 public class Character extends Entity {
 	//class variables
+	public static final int MAX_HEALTH = 100;
+	
+	
 	private String name;
 	private int keys;
 	private float velocityX = 0;

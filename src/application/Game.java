@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +29,7 @@ public class Game {
 	private Camera camera;
 	//Paint component that should be passed to any render method
 	private GraphicsContext gc;
+	private ProgressBar healthBar;
 	
 	private static Character character;
 	//made static to make accessible to gun classes
@@ -62,8 +64,8 @@ public class Game {
 		Enemy.map = map;
 		/**Camera takes in width and height that we want our 
 		   canvas size to be, this is what will be visible to the player*/
-		camera = new Camera( 1200, 700, map.getPixelWidth(), map.getPixelHeight() );
-		character = new Character(1,1,1,1,1,64,64,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
+		camera = new Camera( 1200, 600, map.getPixelWidth(), map.getPixelHeight() );
+		character = new Character(96,1,1,1,1,64,64,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
 		
 		//Create 5 enemies and link them to our enemies ArrayList
 		enemies = new ArrayList<Entity>(5);
@@ -153,9 +155,11 @@ public class Game {
 					}
 					
 				}
-				
-				
-	}
+		if( character != null)	{
+			healthBar.setProgress(((double)character.getHp() / (double)Character.MAX_HEALTH));
+		}
+		
+	}//close update
 	
 	
 	
@@ -210,7 +214,18 @@ public class Game {
 		canvas = new Canvas( camera.viewWidth, camera.viewHeight );
 		gc = canvas.getGraphicsContext2D();
 		
-		gameRoot.setCenter( canvas );
+		gameRoot.setTop( canvas );
+		
+		//Create structure for UI
+		HBox ui = new HBox();
+		//Create and add health bar to HBox
+		healthBar = new ProgressBar( 100 );
+		healthBar.setStyle( "-fx-accent: red;" );
+		healthBar.setPrefWidth(300);
+		healthBar.setPrefHeight(50);
+		ui.getChildren().add( healthBar );
+		
+		gameRoot.setBottom( ui );
 		
 		gameScene = new Scene( gameRoot, width, height , Color.BLACK);
 		
