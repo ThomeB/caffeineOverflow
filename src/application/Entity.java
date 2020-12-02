@@ -1,13 +1,18 @@
 package application;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 public abstract class Entity extends GameObject {
 	//class variables
+	protected Timer dmgTakenTimer;
 	protected int hp = 1;
 	protected int maxHp = 1;
 	protected int str = 0;
 	protected int def = 0;
+	protected int dmgTaken;
+	protected boolean tookDmg;
 	//protected Gun wpnEquip = null;
 	private boolean isAlive = true;
 	private float walkSpeed = 1.0f;
@@ -17,12 +22,19 @@ public abstract class Entity extends GameObject {
 	/******************
 	 * 	Constructors  *
 	 ******************/
-	public Entity(int hp, int str, int def, float xpos, float ypos, float width, float height, Image img) {
+	public Entity(int hp, int str, int def, float xpos, float ypos, float width, float height, float walkSpeed, Image img) {
 		super(xpos, ypos, height, width, img);
 		this.hp = hp;
 		this.maxHp = hp;
 		this.str = str;
 		this.def = def;
+		this.walkSpeed = walkSpeed;
+		
+		tookDmg = false;
+		dmgTaken = 0;
+		dmgTakenTimer = new Timer( .5 );
+		dmgTakenTimer.setOnCooldown( true );
+		
 	}//close of entity constructor
 	
 	/*************
@@ -30,6 +42,9 @@ public abstract class Entity extends GameObject {
 	 *************/
 	public int getHp() {
 		return hp;
+	}
+	public int getMaxHP() {
+		return maxHp;
 	}
 /*	public Gun getWpnEquip() {
 		return wpnEquip;
@@ -82,15 +97,38 @@ public abstract class Entity extends GameObject {
 	//quick checker method
 	public abstract boolean isATrap();
 	
+	public void render(GraphicsContext gc) {
+		gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+		
+		if( tookDmg )
+		{
+			gc.setFill( Color.RED );
+			gc.fillText( "" + dmgTaken, xPos * Tile.TILEWIDTH - Camera.xOffset, yPos * Tile.TILEHEIGHT - Camera.yOffset);
+			gc.setFill(Color.BLACK);
+		}
+	}//close render method
+	
 	//take damage
 	private void takeDmg(int dmg) {
+		
+		//Needed for dmg indicators
+		tookDmg = true;
+		dmgTaken = dmg;
+		dmgTakenTimer.reset();
+		dmgTakenTimer.setOnCooldown( true );
+		
 		hp-=dmg;
+		
+		Game.gc.strokeText( "hello", xPos * Tile.TILEHEIGHT - Camera.xOffset, yPos * Tile.TILEWIDTH - Camera.yOffset );
 		if(hp <= 0) {
+			hp = 0;
 			if(isAlive) {
 				isAlive = false;
 				this.death();
 			}
 		}
+		
+		
 	}
 	//strategy: there is a private takeDmg that uses an int, otherwise takes args based on what is doing the damage (attacker or projectile)
 	public void takeDmg(Entity attacker) {
@@ -104,6 +142,15 @@ public abstract class Entity extends GameObject {
 			takeDmg(projectile.damage);
 		}
 	}//close of damage
+	
+	public void updateDmgTakenTimer()
+	{
+		if( tookDmg )
+			dmgTakenTimer.tick();
+		
+		if( !dmgTakenTimer.isOnCooldown() )
+			tookDmg = false;
+	}
 	
 	//update hitbox - called when movement occurs
 	public void moveBox() {

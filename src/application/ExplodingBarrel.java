@@ -10,6 +10,7 @@ public class ExplodingBarrel extends Traps{
 	public static final float BARREL_HEIGHT = 60;
 	public static final float BARREL_WIDTH = 60;
 	public static final int BARREL_STR = 5000;
+	public static final int BARREL_BLAST_RADIUS = 8;
 	public static final Image BARREL_IMAGE = Asset.barrel;
 	public static final Image BARREL_EXPLODED = Asset.bigASSKNIGHT;
 
@@ -17,7 +18,7 @@ public class ExplodingBarrel extends Traps{
 	 * 	Constructor  *
 	 *****************/
 	public ExplodingBarrel(float xpos, float ypos) {
-		super(BARREL_STR, xpos, ypos, BARREL_WIDTH, BARREL_HEIGHT, BARREL_IMAGE);
+		super(BARREL_STR, xpos, ypos, BARREL_WIDTH, BARREL_HEIGHT, BARREL_BLAST_RADIUS, BARREL_IMAGE);
 	}
 	
 	@Override

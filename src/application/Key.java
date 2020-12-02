@@ -2,11 +2,11 @@ package application;
 
 public class Key extends Interactable {
 
-	public static final float KEY_WIDTH = 64;
-	public static final float KEY_HEIGHT = 64;
+	public static final float KEY_WIDTH = 20;
+	public static final float KEY_HEIGHT = 15;
 	
 	public Key(float xpos, float ypos) {
-		super(xpos, ypos, KEY_WIDTH, KEY_HEIGHT, Asset.grayPotion);
+		super(xpos, ypos, KEY_WIDTH, KEY_HEIGHT, Asset.key);
 	}
 
 	@Override

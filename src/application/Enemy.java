@@ -18,6 +18,7 @@ public class Enemy extends Entity{
 	public static Map map; //one time setup, could've been in the constructor but this might make things quicker
 	
 	//path related variables
+	private Timer meleeAbilityTimer;
 	private ArrayList<float[]> path;
 	private int iterator;
 	private float [] goalCoords = new float [2];
@@ -27,12 +28,9 @@ public class Enemy extends Entity{
 	 ******************/
 	public Enemy( float xPos, float yPos)
 	{
-		super( ENEMY_HP, ENEMY_STR, ENEMY_DEF,  xPos, yPos, ENEMY_WIDTH, ENEMY_HEIGHT, Asset.ghostAlive );
-	}
-	
-	public Enemy(int hp, int str, int def, float xpos, float ypos, int height, int width, Image img) {
-		super(hp, str, def, xpos, ypos, height, width, img);
-		// TODO Auto-generated constructor stub
+		super( ENEMY_HP, ENEMY_STR, ENEMY_DEF,  xPos, yPos, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_SPEED, Asset.ghostAlive );
+		
+		meleeAbilityTimer = new Timer(6);
 	}
 	
 
@@ -63,6 +61,11 @@ public class Enemy extends Entity{
 	
 	@Override
 	public void update(Character character) {
+		
+		//Tick our ability timer and dmg taken timer
+		meleeAbilityTimer.tick();
+		updateDmgTakenTimer();
+		
 		double distance = Utility.getDistance(character, this);
 		if (distance < ENEMY_AGGRO_RANGE) {//if we are within the range of sight
 			boolean usePath = false;
@@ -100,6 +103,15 @@ public class Enemy extends Entity{
 			}else { //if we are practically touching the character, don't move at all (prevents jitter)
 				goalCoords[0] = xPos;
 				goalCoords[1] = yPos;
+				
+				//enemies are also close enough to damage the character
+				if( !meleeAbilityTimer.isOnCooldown() )
+				{
+					character.takeDmg( this );
+					
+					//set ability on cooldown as well
+					meleeAbilityTimer.setOnCooldown( true );
+				}
 			}
 			
 			float dx = goalCoords[0] - xPos; //get difference in x position

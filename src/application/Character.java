@@ -2,12 +2,21 @@ package application;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 public class Character extends Entity {
+	
+	
+	//Default hero values
+	public static final float CHARACTER_WIDTH = 64;
+	public static final float CHARACTER_HEIGHT = 64;
+	public static final float CHARACTER_WALKSPEED = 0.1f;
+	public static final String CHARACTER_NAME = "Bob";
+	public static final int CHARACTER_HEALTH = 300;
+	public static final int CHARACTER_STR = 5;
+	public static final int CHARACTER_DEF = 1;
+	
 	//class variables
-	public static final int MAX_HEALTH = 100;
-	
-	
 	private String name;
 	private int keys;
 	private float velocityX = 0;
@@ -20,10 +29,10 @@ public class Character extends Entity {
 	/******************
 	 * 	Constructors  *
 	 ******************/
-	public Character(int hp, int str, int def, float xpos, float ypos, float height, float width, String name, float walkSpeed, Image img, Camera camera ) {
-		super(hp, str, def, xpos, ypos, height, width, img);
-		this.name = name;
-		this.setWalkSpeed(walkSpeed);
+	public Character( float xpos, float ypos, Camera camera ) {
+		
+		super(CHARACTER_HEALTH, CHARACTER_STR, CHARACTER_DEF, xpos, ypos, CHARACTER_WIDTH, CHARACTER_HEIGHT, CHARACTER_WALKSPEED, Asset.bigASSKNIGHT);
+		this.name = CHARACTER_NAME;
 		keys = 0;
 		this.camera = camera;
 		
@@ -160,6 +169,10 @@ public class Character extends Entity {
 	}
 	
 	public void update(boolean [] keysPressed, Map map) {
+		
+		//update damage taken timer
+		updateDmgTakenTimer();
+		
 		moveInput(keysPressed, map);
 		//keysPressed[4] is for interaction (F key)
 		//put interaction function here, maybe?
@@ -170,6 +183,10 @@ public class Character extends Entity {
 			gun.setyPos( yPos + 0.5f );
 			gun.update( map );
 		}
+		
+		//If character is dead, change texture
+		if( !this.isAlive() )
+			img = Asset.doorImage;
 			
 	}
 	
@@ -179,6 +196,13 @@ public class Character extends Entity {
 		
 		if( gun != null )
 			gun.render( gc );
+		
+		if( tookDmg )
+		{
+			gc.setFill( Color.RED );
+			gc.fillText( "" + dmgTaken, xPos * Tile.TILEWIDTH - Camera.xOffset, yPos * Tile.TILEHEIGHT - Camera.yOffset);
+			gc.setFill( Color.BLACK );
+		}
 	}
 	
 	/*****************************
@@ -193,6 +217,7 @@ public class Character extends Entity {
 	public boolean isATrap() {
 		return false;
 	}
+	
 }//close character
 
 

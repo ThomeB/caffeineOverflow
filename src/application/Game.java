@@ -16,7 +16,11 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Game {
@@ -27,11 +31,12 @@ public class Game {
 	private Map map;
 	private Canvas canvas;
 	private Camera camera;
-	//Paint component that should be passed to any render method
-	private GraphicsContext gc;
 	private ProgressBar healthBar;
+	private Text healthText;
+	//Paint component that should be passed to any render method
 	
-	private static Character character;
+	public static GraphicsContext gc;
+	public static Character character;
 	//made static to make accessible to gun classes
 	public static ArrayList<Entity> enemies;
 	public static ArrayList<Interactable> interactables;
@@ -39,6 +44,7 @@ public class Game {
 	private double height;
 	private double width;
 	
+	Timer timer = new Timer( 6 );
 	
 	private boolean [] keysPressed = {
 			false,//W [0]
@@ -65,7 +71,7 @@ public class Game {
 		/**Camera takes in width and height that we want our 
 		   canvas size to be, this is what will be visible to the player*/
 		camera = new Camera( 1200, 600, map.getPixelWidth(), map.getPixelHeight() );
-		character = new Character(96,1,1,1,1,64,64,"Bob", 0.1f, Asset.bigASSKNIGHT, camera );
+		character = new Character(1, 1, camera );
 		
 		//Create 5 enemies and link them to our enemies ArrayList
 		enemies = new ArrayList<Entity>(5);
@@ -99,7 +105,7 @@ public class Game {
 		interactables.add( i1 );
 		Door i2 = new Door( 44, 20, map );
 		interactables.add( i2 );
-		HealthPack i3 = new HealthPack( 8, 8 , 10 );
+		HealthPack i3 = new HealthPack( 8, 8 );
 		interactables.add( i3 );
 		
 		Pistol pistol1 = new Pistol( 1, 1 );
@@ -155,11 +161,12 @@ public class Game {
 					}
 					
 				}
-		if( character != null)	{
-			healthBar.setProgress(((double)character.getHp() / (double)Character.MAX_HEALTH));
-		}
-		
-	}//close update
+				
+				//Update health bar and text
+				healthBar.setProgress( (double) character.getHp() / (double) character.getMaxHP() );
+				healthText.setText( "" + character.getHp() + " / " + character.getMaxHP() );
+					
+	}
 	
 	
 	
@@ -168,8 +175,9 @@ public class Game {
 		//--- RENDER GRAPHICS ---
 		
 				//clears the graphics on the canvas
-				gc.clearRect( 0, 0, canvas.getWidth(), canvas.getHeight() );
-				//Canvas Background
+				//gc.clearRect( 0, 0, canvas.getWidth(), canvas.getHeight() );
+				
+				//Render the map
 				gc.fillRect(0 , 0, canvas.getWidth(), canvas.getHeight() );
 				map.render( gc );
 				
@@ -199,6 +207,7 @@ public class Game {
 				
 				
 				character.render(gc);
+				
 		
 	}
 	
@@ -213,19 +222,35 @@ public class Game {
 		//where map and all game objects should be rendered at
 		canvas = new Canvas( camera.viewWidth, camera.viewHeight );
 		gc = canvas.getGraphicsContext2D();
+		gc.setFont( Font.font( "Verdana", 40 ) );
+		gc.setStroke( Color.RED );
 		
-		gameRoot.setTop( canvas );
+	
 		
-		//Create structure for UI
-		HBox ui = new HBox();
-		//Create and add health bar to HBox
+		
+		gameRoot.setCenter( canvas );
+		
+		//Add bottom node for UI
+		StackPane ui = new StackPane();
+		
+		//Create and add healthbar
 		healthBar = new ProgressBar( 100 );
 		healthBar.setStyle( "-fx-accent: red;" );
 		healthBar.setPrefWidth(300);
 		healthBar.setPrefHeight(50);
-		ui.getChildren().add( healthBar );
+		StackPane.setMargin( healthBar, new Insets( 0, 0, 700, 0) );
+		//Create txt for healthbar
+		healthText = new Text( " -- / -- " );
+		healthText.setFont( Font.font( "Verdana", 20 ) );
+		StackPane.setMargin( healthText, new Insets( 0, 0, 700, 0) );
+		
+		
+		ui.getChildren().addAll( healthBar, healthText );
+		
 		
 		gameRoot.setBottom( ui );
+		gameRoot.setBackground( new Background( new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY ) ) );
+				
 		
 		gameScene = new Scene( gameRoot, width, height , Color.BLACK);
 		

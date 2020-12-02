@@ -8,14 +8,19 @@ public class Traps extends Entity{
 	 *********************/
 	public static final int TRAP_HP = 1;
 	public static final int TRAP_DEF = 0;
-	public static final int TRAP_BLAST_RADIUS = 8;
+	public static final float TRAP_WALKSPEED = 0.0f;
+	
+	protected int blastRadius;
+	
 	
 	/*****************
 	 *  Constructor  *
 	 *****************/
 	//specific traps will need to implement their Strength, Position, Size and Image
-	public Traps(int str, float xpos, float ypos, float width, float height, Image img) {
-		super(TRAP_HP, str, TRAP_DEF, xpos, ypos, width, height, img);
+	public Traps(int str, float xpos, float ypos, float width, float height, int blastRadius, Image img) {
+		super(TRAP_HP, str, TRAP_DEF, xpos, ypos, width, height, TRAP_WALKSPEED, img);
+		
+		this.blastRadius = blastRadius;
 	}
 	
 	/*********************
@@ -24,10 +29,13 @@ public class Traps extends Entity{
 	@Override
 	public void death() {
 		for(int x = 0; x < Game.enemies.size(); x++) {
-			if(Game.enemies.get(x) != null && Game.enemies.get(x).isAlive() && !Game.enemies.get(x).equals(this) && Utility.getDistance(Game.enemies.get(x), this) < TRAP_BLAST_RADIUS )
+			if(Game.enemies.get(x) != null && Game.enemies.get(x).isAlive() && !Game.enemies.get(x).equals(this) && Utility.getDistance(Game.enemies.get(x), this) <= blastRadius )
 				Game.enemies.get(x).takeDmg(this);
 			
 		}
+		
+		if( Game.character.isAlive() && Utility.getDistance( Game.character, this ) <= blastRadius )
+			Game.character.takeDmg( this );
 	}
 	
 	public boolean isATrap() {

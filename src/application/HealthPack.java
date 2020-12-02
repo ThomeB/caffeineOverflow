@@ -2,15 +2,19 @@ package application;
 
 public class HealthPack extends Interactable{
 	//class variables
+	public static final float HEALTHPACK_WIDTH = 20;
+	public static final float HEALTHPACK_HEIGHT = 20;
+	public static final int HEAL_AMOUNT = 50;
+	
 	private int healthRestored;
-	public static final float HEALTHPACK_WIDTH = 32;
-	public static final float HEALTHPACK_HEIGHT = 32;
+	
+	
 	/*****************
 	 *  Constructor  *
 	 *****************/
-	public HealthPack(float xpos, float ypos, int healthAmt) {
+	public HealthPack(float xpos, float ypos ) {
 		super(xpos, ypos, HEALTHPACK_WIDTH, HEALTHPACK_HEIGHT, Asset.grayPotion);
-		this.healthRestored = healthAmt;
+		this.healthRestored = HEAL_AMOUNT;
 	}
 	
 	//should be referenced when character picks up pack
