@@ -40,6 +40,9 @@ public class Game {
 	//made static to make accessible to gun classes
 	public static ArrayList<Entity> enemies;
 	public static ArrayList<Interactable> interactables;
+	public static GameObject[] torch;
+	public Timer torchTimer;
+	public static int imgSelect = 0;
 	
 	private double height;
 	private double width;
@@ -111,7 +114,10 @@ public class Game {
 		Pistol pistol1 = new Pistol( 1, 1 );
 		interactables.add( pistol1 );
 		
-		
+		torch = new GameObject[10];
+		for(int x = 0; x < torch.length; x++) {
+			torch[x] = new GameObject((x+1)*2, 0, 32, 90, Asset.torchLight, 0.05);
+		}
 		
 		
 		createScenes();
@@ -206,10 +212,16 @@ public class Game {
 				}
 				
 				
-				character.render(gc);
+				/*
+				 * Torches
+				 */
+				for(int x = 0; x < torch.length; x++) {
+					torch[x].dynamicRender(gc);
+				}
 				
+				character.render(gc);
 		
-	}
+	}//close render
 	
 	
 	

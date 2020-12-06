@@ -39,6 +39,16 @@ public class Asset
 	public static Image bullet;
 	public static Image barrel;
 	public static Image key;
+	public static Image[] torchLight;
+	public static Image torchLight1;
+	public static Image torchLight2;
+	public static Image torchLight3;
+	public static Image torchLight4;
+	public static Image torchLight5;
+	public static Image torchLight6;
+	public static Image torchLight7;
+	public static Image torchLight8;
+	
 	
 	//Made it static so we don't have to instantiate this class to load all of our images in memory
 	public static void init()
@@ -60,6 +70,10 @@ public class Asset
 		bullet = loadImage("resources/textures/fireball.png");
 		barrel = loadImage("resources/textures/Barrel.png");
 		key = loadImage("resources/textures/key.png");
+		torchLight = new Image[9];
+		for(int x = 0; x < torchLight.length; x++) {
+			torchLight[x] = loadImage("resources/textures/torch" + (x+1) + ".png");
+		}
 		
 	}
 	
