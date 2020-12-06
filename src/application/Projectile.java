@@ -1,34 +1,28 @@
 package application;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
-public class Projectile extends GameObject
+public abstract class Projectile extends GameObject
 {
-	public static final float DEFAULT_PROJECTILE_WIDTH = 50;
-	public static final float DEFAULT_PROJECTILE_HEIGHT = 30;
-	public static final int DEFAULT_PROJECTILE_DAMAGE = 10;
-
 	protected float initialXPos;
 	protected float initialYPos;
 	protected float maxVelocity;
 	protected float xVelocity;
 	protected float yVelocity;
 	
-	
-	
-	
 	protected int damage;
 
 
-	public Projectile(float xpos, float ypos, float xVelocity, float yVelocity ) 
+	public Projectile(float xpos, float ypos, float xVelocity, float yVelocity, float width, float height, Image img, int damage ) 
 	{
-		super(xpos, ypos, DEFAULT_PROJECTILE_WIDTH, DEFAULT_PROJECTILE_HEIGHT, Asset.bullet);
+		super(xpos, ypos, width, height, img);
 		
 		this.initialXPos = xpos;
 		this.initialYPos = ypos;
 		this.xVelocity = xVelocity;
 		this.yVelocity = yVelocity;
-		damage = DEFAULT_PROJECTILE_DAMAGE;
+		this.damage = damage;
 		
 	}
 	

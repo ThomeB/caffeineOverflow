@@ -15,7 +15,7 @@ public abstract class Entity extends GameObject {
 	protected boolean tookDmg;
 	//protected Gun wpnEquip = null;
 	private boolean isAlive = true;
-	private float walkSpeed = 1.0f;
+	protected float walkSpeed = 1.0f;
 	
 	public int counter = 0;
 	

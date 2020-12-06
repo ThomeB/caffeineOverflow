@@ -10,7 +10,7 @@ public class Character extends Entity {
 	//Default hero values
 	public static final float CHARACTER_WIDTH = 64;
 	public static final float CHARACTER_HEIGHT = 64;
-	public static final float CHARACTER_WALKSPEED = 0.1f;
+	public static final float CHARACTER_WALKSPEED = 0.08f;
 	public static final String CHARACTER_NAME = "Bob";
 	public static final int CHARACTER_HEALTH = 300;
 	public static final int CHARACTER_STR = 5;
@@ -18,7 +18,6 @@ public class Character extends Entity {
 	
 	//class variables
 	private String name;
-	private int keys;
 	private float velocityX = 0;
 	private float velocityY = 0;
 	private Gun gun;
@@ -33,7 +32,6 @@ public class Character extends Entity {
 		
 		super(CHARACTER_HEALTH, CHARACTER_STR, CHARACTER_DEF, xpos, ypos, CHARACTER_WIDTH, CHARACTER_HEIGHT, CHARACTER_WALKSPEED, Asset.bigASSKNIGHT);
 		this.name = CHARACTER_NAME;
-		keys = 0;
 		this.camera = camera;
 		
 		//gun = new Pistol( xPos, yPos );
