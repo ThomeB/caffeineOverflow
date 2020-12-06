@@ -1,21 +1,23 @@
 package application;
 
-import javafx.scene.canvas.GraphicsContext;
+import java.security.SecureRandom;
 
-//not much to this class
-public class Pistol extends Gun{
+public class Shotgun extends Gun
+{
+	public static final float SHOTGUN_HEIGHT = 20;
+	public static final float SHOTGUN_WIDTH = 30;
+	public static final int SHOTGUN_AMMO_CAPACITY = 30;
+	public static final float SHOTGUN_VELOCITY = .08f;
 	
-	public static final float PISTOL_HEIGHT = 20;
-	public static final float PISTOL_WIDTH = 30;
-	public static final int PISTOL_AMMO_CAPACITY = 30;
-	public static final float PISTOL_VELOCITY = .3f;
+	private SecureRandom sr;
 	
 	/*****************
 	 *  Constructor  *
 	 *****************/
-	public Pistol(float xpos, float ypos) 
+	public Shotgun(float xpos, float ypos) 
 	{
-		super(xpos, ypos, PISTOL_WIDTH, PISTOL_HEIGHT, Asset.pistol, PISTOL_AMMO_CAPACITY, PISTOL_VELOCITY );
+		super(xpos, ypos, SHOTGUN_WIDTH, SHOTGUN_HEIGHT, Asset.pistol, SHOTGUN_AMMO_CAPACITY, SHOTGUN_VELOCITY );
+		sr = new SecureRandom();
 		
 	}
 	
@@ -45,27 +47,26 @@ public class Pistol extends Gun{
 	    vx = Math.cos( angle ) * maxVelocity;
 	    vy = Math.sin( angle ) * maxVelocity;
 
-		projectiles.add( new PistolProjectile( xPos, yPos, (float) vx, (float) vy ) );
+		projectiles.add( new ShotgunProjectile( xPos, yPos, (float) vx, (float) vy ) );
 		
 		
-		angle -= 1.8;
+		angle -= 0.26175;
 		
 		//Slowly increase our angle, to fire in an arc
-		/*
 		for( int i = 0; i < 30; i++ )
 		{
-			angle += .12;
+			double variation = -.05 + sr.nextDouble() * .05;
+			angle += .01745;
 			
-			vx = Math.cos( angle ) * maxVelocity;
-		    vy = Math.sin( angle ) * maxVelocity;
-			projectiles.add( new Projectile( xPos, yPos, (float) vx, (float) vy ) );
+			vx = Math.cos( angle ) * (maxVelocity + variation);
+		    vy = Math.sin( angle ) * (maxVelocity + variation);
+			projectiles.add( new ShotgunProjectile( xPos, yPos, (float) vx, (float) vy ) );
 		}
-		*/
+		
 		
 		
 		
 	}
 
 
-
-}//close pistol class
+}

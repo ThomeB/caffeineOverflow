@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -18,6 +20,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -33,6 +36,7 @@ public class Game {
 	private Camera camera;
 	private ProgressBar healthBar;
 	private Text healthText;
+	private ImageView keyView;
 	//Paint component that should be passed to any render method
 	
 	public static GraphicsContext gc;
@@ -75,19 +79,19 @@ public class Game {
 		
 		//Create 5 enemies and link them to our enemies ArrayList
 		enemies = new ArrayList<Entity>(5);
-		Entity e1 = new Enemy( 2 , 3 );
+		Entity e1 = new BasicEnemy( 2 , 3 );
 		enemies.add( e1 );
-		Entity e2 = new Enemy( 5, 7  );
+		Entity e2 = new BasicEnemy( 5, 7  );
 		enemies.add( e2 );
-		Entity e3 = new Enemy( 10, 10 );
+		Entity e3 = new ZippyEnemy( 10, 10 );
 		enemies.add( e3 );
-		Entity e4 = new Enemy( 8, 4 );
+		Entity e4 = new BasicEnemy( 8, 4 );
 		enemies.add( e4 );
-		Entity e5 = new Enemy( 3 , 6  );
+		Entity e5 = new BruteEnemy( 3 , 6  );
 		enemies.add( e5 );
-		Entity e6 = new Enemy( 10 , 11  );
+		Entity e6 = new ZippyEnemy( 10 , 11  );
 		enemies.add( e6 );
-		Entity e7 = new Enemy( 9 , 8  );
+		Entity e7 = new ZippyEnemy( 9 , 8  );
 		enemies.add( e7 );
 		Entity e8 = new ExplodingBarrel(2, 2);
 		enemies.add(e8);
@@ -108,11 +112,15 @@ public class Game {
 		HealthPack i3 = new HealthPack( 8, 8 );
 		interactables.add( i3 );
 		
-		Pistol pistol1 = new Pistol( 1, 1 );
+		Gun pistol1 = new Pistol( 1, 1 );
 		interactables.add( pistol1 );
+		Gun shotgun = new Shotgun( 1, 2 );
+		interactables.add( shotgun );
 		
 		
-		
+		MediaPlayer backgroundMusic = Asset.hauntedForest;
+		backgroundMusic.setAutoPlay(true);
+		backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
 		
 		createScenes();
 		stage.setScene( gameScene );
@@ -165,6 +173,12 @@ public class Game {
 				//Update health bar and text
 				healthBar.setProgress( (double) character.getHp() / (double) character.getMaxHP() );
 				healthText.setText( "" + character.getHp() + " / " + character.getMaxHP() );
+				
+				//Update key UI
+				if( character.getKey() )
+					keyView.setImage( Asset.key );
+				else
+					keyView.setImage( null );
 					
 	}
 	
@@ -238,14 +252,18 @@ public class Game {
 		healthBar.setStyle( "-fx-accent: red;" );
 		healthBar.setPrefWidth(300);
 		healthBar.setPrefHeight(50);
-		StackPane.setMargin( healthBar, new Insets( 0, 0, 700, 0) );
-		//Create txt for healthbar
+		StackPane.setMargin( healthBar, new Insets( 0, 0, 700, 0 ) );
+		//Create txt inside healthbar
 		healthText = new Text( " -- / -- " );
 		healthText.setFont( Font.font( "Verdana", 20 ) );
-		StackPane.setMargin( healthText, new Insets( 0, 0, 700, 0) );
+		StackPane.setMargin( healthText, new Insets( 0, 0, 700, 0 ) );
 		
+		//Create and add an indicator if hero has a key or not
+		Image keyImage = null;
+		keyView = new ImageView( keyImage );
+		StackPane.setMargin( keyView, new Insets( 0, 400, 700, 0 ) );
 		
-		ui.getChildren().addAll( healthBar, healthText );
+		ui.getChildren().addAll( healthBar, healthText, keyView );
 		
 		
 		gameRoot.setBottom( ui );

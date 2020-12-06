@@ -8,9 +8,12 @@
 package application;
 
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  * This class is simply used to load in texture that will be used for our game,
@@ -39,6 +42,11 @@ public class Asset
 	public static Image bullet;
 	public static Image barrel;
 	public static Image key;
+	public static Image dog;
+	public static Image preacher;
+	
+	public static MediaPlayer hauntedForest;
+	public static MediaPlayer zombieMusic;
 	
 	//Made it static so we don't have to instantiate this class to load all of our images in memory
 	public static void init()
@@ -60,6 +68,11 @@ public class Asset
 		bullet = loadImage("resources/textures/fireball.png");
 		barrel = loadImage("resources/textures/Barrel.png");
 		key = loadImage("resources/textures/key.png");
+		dog = loadImage("resources/textures/dog.png");
+		preacher = loadImage("resources/textures/preacher.png");
+		
+		hauntedForest = loadMedia("resources/music/HauntedForest.mp3");
+		zombieMusic = loadMedia("resources/music/ZombieMusic.mp3");
 		
 	}
 	
@@ -79,6 +92,11 @@ public class Asset
 		
 		return null;
 		
+	}
+	
+	public static MediaPlayer loadMedia( String path )
+	{
+		return new MediaPlayer( new Media( new File(path).toURI().toString() ) );
 	}
 }
 

@@ -32,6 +32,7 @@ public class Door extends Interactable{
 	public void pickup(Character hero) {
 		if (!despawn && isLocked && hero.getKey()) {//if we are not marked for deletion, we are locked, and the hero has a key, we open
 			isLocked = false;
+			hero.setKey( false );
 			
 			int x = (int) xPos;
 			int y = (int) yPos;
