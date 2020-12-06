@@ -80,7 +80,7 @@ public class Game {
 		
 		//Create 5 enemies and link them to our enemies ArrayList
 		enemies = new ArrayList<Entity>(5);
-		Entity e1 = new BasicEnemy( 2 , 3 );
+		Entity e1 = new BruteEnemy( 2 , 3 );
 		enemies.add( e1 );
 		Entity e2 = new BasicEnemy( 5, 7  );
 		enemies.add( e2 );
@@ -115,8 +115,10 @@ public class Game {
 		
 		Gun pistol1 = new Pistol( 1, 1 );
 		interactables.add( pistol1 );
-		Gun shotgun = new Shotgun( 1, 2 );
+		Gun shotgun = new Shotgun( 3, 2 );
 		interactables.add( shotgun );
+		Gun handcannon = new HandCannon( 1, 4 );
+		interactables.add( handcannon );
 		
 		torch = new GameObject[10];
 		for(int x = 0; x < torch.length; x++) {
@@ -233,6 +235,7 @@ public class Game {
 				}
 				
 				character.render(gc);
+				
 		
 	}//close render
 	

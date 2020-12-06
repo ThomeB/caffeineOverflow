@@ -4,8 +4,8 @@ import java.security.SecureRandom;
 
 public class Shotgun extends Gun
 {
-	public static final float SHOTGUN_HEIGHT = 20;
-	public static final float SHOTGUN_WIDTH = 30;
+	public static final float SHOTGUN_HEIGHT = 40;
+	public static final float SHOTGUN_WIDTH = 80;
 	public static final int SHOTGUN_AMMO_CAPACITY = 30;
 	public static final float SHOTGUN_VELOCITY = .08f;
 	
@@ -16,7 +16,7 @@ public class Shotgun extends Gun
 	 *****************/
 	public Shotgun(float xpos, float ypos) 
 	{
-		super(xpos, ypos, SHOTGUN_WIDTH, SHOTGUN_HEIGHT, Asset.pistol, SHOTGUN_AMMO_CAPACITY, SHOTGUN_VELOCITY );
+		super(xpos, ypos, SHOTGUN_WIDTH, SHOTGUN_HEIGHT, Asset.shotgun, SHOTGUN_AMMO_CAPACITY, SHOTGUN_VELOCITY );
 		sr = new SecureRandom();
 		
 	}

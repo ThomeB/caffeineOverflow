@@ -41,8 +41,6 @@ public class Timer
 				onCooldown = false;
 				startTime = System.currentTimeMillis();
 				currentTime = startTime;
-				
-				//System.out.println( elapsedTime / 1000 );
 			}
 		}
 	}
