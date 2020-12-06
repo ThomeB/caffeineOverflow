@@ -20,6 +20,8 @@ public class Character extends Entity {
 	private String name;
 	private float velocityX = 0;
 	private float velocityY = 0;
+	private boolean stopped;
+	private boolean leftFacing;
 	private Gun gun;
 	private final float ACCELERATION = 1;//0.1f;
 	private boolean hasKey = false;
@@ -30,10 +32,16 @@ public class Character extends Entity {
 	 ******************/
 	public Character( float xpos, float ypos, Camera camera ) {
 		
-		super(CHARACTER_HEALTH, CHARACTER_STR, CHARACTER_DEF, xpos, ypos, CHARACTER_WIDTH, CHARACTER_HEIGHT, CHARACTER_WALKSPEED, Asset.bigASSKNIGHT);
+		super(CHARACTER_HEALTH, CHARACTER_STR, CHARACTER_DEF, xpos, ypos, CHARACTER_WIDTH, CHARACTER_HEIGHT, CHARACTER_WALKSPEED, Asset.heroR[0]);
 		this.name = CHARACTER_NAME;
 		this.camera = camera;
 		
+		right = Asset.heroR;
+		left = Asset.heroL;
+		stopped = true;
+		leftFacing = false;
+		t = new Timer(0.1);
+		imgSelect = 0;
 		//gun = new Pistol( xPos, yPos );
 		
 	}
@@ -122,11 +130,23 @@ public class Character extends Entity {
 		//if this doesn't work/feel right, then it can be removed by simply making velX and velY the same as dx and dy immediately after dx and dy are declared
 		// OR setting acceleration to be 1.0f (speed may need to be reduced)
 		// x-coordinates
+		if(dx == 0 && dy == 0) {
+			stopped = true;
+		} else {stopped = false;}
+		
+		if(dx > 0) {
+			leftFacing = false;
+		} else if (dx < 0) {
+			leftFacing = true;
+		}
+		
 		float accel = ACCELERATION * speed;
-		if (dx > velocityX && dx != 0)
+		if (dx > velocityX && dx != 0) {
 			setVelocityX(velocityX+accel);
-		else if (dx < velocityX && dx != 0)
+		}
+		else if (dx < velocityX && dx != 0) {
 			setVelocityX(velocityX-accel);
+		}
 		else if (dx == 0)
 			setVelocityX(velocityX/2);
 		// y-coordinates
@@ -183,14 +203,43 @@ public class Character extends Entity {
 		}
 		
 		//If character is dead, change texture
-		if( !this.isAlive() )
-			img = Asset.doorImage;
+		//if( !this.isAlive() )
+			//System.exit(0);
 			
 	}
 	
 	public void render( GraphicsContext gc )
 	{
-		gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+		if(velocityX == 0 && velocityY == 0 || stopped) {
+			gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+		}
+		
+		if(!leftFacing && !stopped) {
+			img = right[0];
+			if(!t.isOnCooldown()) {
+				imgSelect++;
+				if(imgSelect >= right.length)
+					imgSelect = 0;
+				gc.drawImage(right[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+				t.setOnCooldown(true);
+			} else {
+				gc.drawImage(right[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+			}
+		}
+		
+		if(leftFacing && !stopped) {
+			img = left[0];
+			if(!t.isOnCooldown()) {
+				imgSelect++;
+				if(imgSelect >= left.length)
+					imgSelect = 0;
+				gc.drawImage(left[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+				t.setOnCooldown(true);
+			} else {
+				gc.drawImage(left[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+			}
+		}
+		t.tick();
 		
 		if( gun != null )
 			gun.render( gc );

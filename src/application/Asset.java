@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+
 /**
  * This class is simply used to load in texture that will be used for our game,
  * they should always be static variables and should only be instantiated
@@ -43,15 +44,9 @@ public class Asset
 	public static Image barrel;
 	public static Image key;
 	public static Image[] torchLight;
-	public static Image torchLight1;
-	public static Image torchLight2;
-	public static Image torchLight3;
-	public static Image torchLight4;
-	public static Image torchLight5;
-	public static Image torchLight6;
-	public static Image torchLight7;
-	public static Image torchLight8;
-	
+	public static Image[] barrelExplosion;
+	public static Image[] heroR;
+	public static Image[] heroL;
 	public static Image dog;
 	public static Image preacher;
 	
@@ -78,12 +73,26 @@ public class Asset
 		bullet = loadImage("resources/textures/fireball.png");
 		barrel = loadImage("resources/textures/Barrel.png");
 		key = loadImage("resources/textures/key.png");
+		dog = loadImage("resources/textures/dog.png");
+		preacher = loadImage("resources/textures/preacher.png");
+		
 		torchLight = new Image[9];
 		for(int x = 0; x < torchLight.length; x++) {
 			torchLight[x] = loadImage("resources/textures/torch" + (x+1) + ".png");
 		}
-		dog = loadImage("resources/textures/dog.png");
-		preacher = loadImage("resources/textures/preacher.png");
+		
+		barrelExplosion = new Image[9];
+		for(int x = 0; x < barrelExplosion.length; x++) {
+			barrelExplosion[x] = loadImage("resources/textures/explo" + (x+1) + ".png");
+		}
+		
+		heroR = new Image[11];
+		heroL = new Image[11];
+		for(int x = 0; x < heroR.length; x++) {
+			heroR[x] = loadImage("resources/textures/charr" + (x+1) + ".png");
+			heroL[x] = loadImage("resources/textures/charl" + (x+1) + ".png");
+		}
+		
 		
 		hauntedForest = loadMedia("resources/music/HauntedForest.mp3");
 		zombieMusic = loadMedia("resources/music/ZombieMusic.mp3");
@@ -108,9 +117,11 @@ public class Asset
 		
 	}
 	
-	public static MediaPlayer loadMedia( String path )
-	{
-		return new MediaPlayer( new Media( new File(path).toURI().toString() ) );
-	}
+	
+	  public static MediaPlayer loadMedia( String path ) 
+	  { 
+			  return new MediaPlayer( new Media( new File(path).toURI().toString() ) ); 
+	  }
+	 
 }
 

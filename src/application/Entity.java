@@ -12,6 +12,10 @@ public abstract class Entity extends GameObject {
 	protected int str = 0;
 	protected int def = 0;
 	protected int dmgTaken;
+	protected Image[] left;
+	protected Image[] right;
+	protected Image[] idle;
+	protected Image[] attack;
 	protected boolean tookDmg;
 	//protected Gun wpnEquip = null;
 	private boolean isAlive = true;

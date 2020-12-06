@@ -94,11 +94,11 @@ public class Game {
 		enemies.add( e6 );
 		Entity e7 = new ZippyEnemy( 9 , 8  );
 		enemies.add( e7 );
-		Entity e8 = new ExplodingBarrel(2, 2);
+		Entity e8 = new ExplodingBarrel(2, 2, 0.2);
 		enemies.add(e8);
-		Entity e9 = new ExplodingBarrel(2, 5);
+		Entity e9 = new ExplodingBarrel(2, 5, 0.2);
 		enemies.add(e9);
-		Entity e10 = new ExplodingBarrel(2, 8);
+		Entity e10 = new ExplodingBarrel(2, 8, 0.2);
 		enemies.add(e10);
 		
 		
@@ -206,8 +206,8 @@ public class Game {
 					if( enemy != null && enemy.isAlive() ) //if we want bodies to stay after death, get rid of the isAlive part and instead just change the image somewhere
 						enemy.render( gc );
 					else if (enemy != null) {
-						if(enemy.counter <= 120 && enemy.isATrap()) { //change this to timer class when made -- this is located in Entity as a public int
-							enemy.render(gc);
+						if(enemy.isATrap() && enemy.t != null) { //change this to timer class when made -- this is located in Entity as a public int
+							enemy.dynamicRender(gc);
 							enemy.counter++;
 						} else {
 							enemy = null;

@@ -46,7 +46,6 @@ public class GameObject {
 		images = img;
 		t = new Timer(interval);
 		this.imgSelect = (int)(images.length * Math.random());
-		System.out.println(imgSelect);
 	}//close constructor
 
 	/*************
