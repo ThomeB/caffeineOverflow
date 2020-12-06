@@ -18,6 +18,11 @@ public abstract class Enemy extends Entity{
 	private int iterator;
 	private float [] goalCoords = new float [2];
 	
+	protected boolean movingLeft;
+	protected boolean movingRight;
+	protected boolean attacking;
+	protected boolean idle;
+	
 	/******************
 	 * 	Constructors  *
 	 ******************/
@@ -62,8 +67,29 @@ public abstract class Enemy extends Entity{
 		meleeAbilityTimer.tick();
 		updateDmgTakenTimer();
 		
+		//Zombie will be idle if not near player
+		idle = true;
+		movingLeft = false;
+		movingRight = false;
+		attacking = false;
+		
 		double distance = Utility.getDistance(character, this);
 		if (distance < aggroRange) {//if we are within the range of sight
+			
+			//Check to see if use left or right images array
+			if( character.xPos < xPos ) {
+				movingLeft = true;
+				movingRight = false;
+				attacking = false;
+				idle = false;
+			}
+			else {
+				movingRight = true;
+				movingLeft = false;
+				attacking = false;
+				idle = false;
+			}
+			
 			boolean usePath = false;
 			if (distance > 2) {//we have to justify using path finding. If we are too close then don't use it.
 				if (path == null) { //if we don't have a path, make one.
@@ -99,6 +125,11 @@ public abstract class Enemy extends Entity{
 			}else { //if we are practically touching the character, don't move at all (prevents jitter)
 				goalCoords[0] = xPos;
 				goalCoords[1] = yPos;
+				
+				attacking = true;
+				movingLeft = false;
+				movingRight = false;
+				idle = false;
 				
 				//enemies are also close enough to damage the character
 				if( !meleeAbilityTimer.isOnCooldown() )

@@ -42,7 +42,6 @@ public class Timer
 				startTime = System.currentTimeMillis();
 				currentTime = startTime;
 				
-				System.out.println( elapsedTime / 1000 );
 			}
 		}
 	}

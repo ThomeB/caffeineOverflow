@@ -10,7 +10,7 @@ public class Character extends Entity {
 	//Default hero values
 	public static final float CHARACTER_WIDTH = 64;
 	public static final float CHARACTER_HEIGHT = 64;
-	public static final float CHARACTER_WALKSPEED = 0.08f;
+	public static final float CHARACTER_WALKSPEED = 0.04f;
 	public static final String CHARACTER_NAME = "Bob";
 	public static final int CHARACTER_HEALTH = 300;
 	public static final int CHARACTER_STR = 5;
@@ -177,9 +177,26 @@ public class Character extends Entity {
 		
 		if( gun != null )
 		{
-			gun.setxPos( xPos + 0.6f );
-			gun.setyPos( yPos + 0.5f );
-			gun.update( map );
+			if( gun instanceof HandCannon )
+			{
+				gun.setxPos( xPos + 0.3f );
+				gun.setyPos( yPos + 0.2f );
+				gun.update( map );
+			}
+			
+			if( gun instanceof Pistol )
+			{
+				gun.setxPos( xPos + 0.6f );
+				gun.setyPos( yPos + 0.3f );
+				gun.update( map );
+			}
+			
+			if( gun instanceof Shotgun )
+			{
+				gun.setxPos( xPos + 0.6f );
+				gun.setyPos( yPos + 0.3f );
+				gun.update( map );
+			}
 		}
 		
 		//If character is dead, change texture
