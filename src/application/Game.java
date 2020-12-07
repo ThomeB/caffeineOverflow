@@ -43,6 +43,7 @@ public class Game {
 	public static Character character;
 	//made static to make accessible to gun classes
 	public static ArrayList<Entity> enemies;
+	public static ArrayList<Entity> pendingEnemies;
 	public static ArrayList<Interactable> interactables;
 	public static GameObject[] torch;
 	
@@ -78,6 +79,7 @@ public class Game {
 		camera = new Camera( 1200, 600, map.getPixelWidth(), map.getPixelHeight() );
 		character = new Character(1, 1, camera );
 		
+		pendingEnemies = new ArrayList<Entity>(5);
 		//Create 5 enemies and link them to our enemies ArrayList
 		enemies = new ArrayList<Entity>(5);
 		Entity e1 = new BruteEnemy( 2 , 3 );
@@ -101,14 +103,15 @@ public class Game {
 		Entity e10 = new ExplodingBarrel(2, 8, 0.2);
 		enemies.add(e10);
 		
-		
+		Entity e11 = new Boss(50, 14);
+		enemies.add(e11);
 		
 		//Create a gun on the map
 		
 		interactables = new ArrayList<Interactable>(10);
 		Key i1 = new Key( 10, 10 );
 		interactables.add( i1 );
-		Door i2 = new Door( 44, 20, map );
+		Door i2 = new Door( 40, 12, map );
 		interactables.add( i2 );
 		HealthPack i3 = new HealthPack( 8, 8 );
 		interactables.add( i3 );
@@ -155,6 +158,14 @@ public class Game {
 				character.update(keysPressed, map);
 				
 				//update the enemies
+				
+				for (Entity e : pendingEnemies) {
+					if (e != null){
+						enemies.add(e);
+					}
+				}
+				pendingEnemies.removeAll(pendingEnemies);
+				
 				for (Entity e : enemies) {
 					if (e.isAlive()) {
 						e.update(character);
