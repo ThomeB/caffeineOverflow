@@ -12,7 +12,7 @@ public class Character extends Entity {
 	public static final float CHARACTER_HEIGHT = 64;
 	public static final float CHARACTER_WALKSPEED = 0.04f;
 	public static final String CHARACTER_NAME = "Bob";
-	public static final int CHARACTER_HEALTH = 300;
+	public static final int CHARACTER_HEALTH = 100;
 	public static final int CHARACTER_STR = 5;
 	public static final int CHARACTER_DEF = 1;
 	
@@ -106,7 +106,7 @@ public class Character extends Entity {
 				if (coordY > map.getHeight()-1)
 					coordY = map.getHeight()-1;
 				String tileType = map.getTile( coordX , coordY );
-				if (!tileType.equals(".")) {// we ignore certain wall types for collision checking
+				if (!tileType.equals(".") && !tileType.equals(",")) {// we ignore certain wall types for collision checking
 					canMove = !Utility.collidesWithWall(newHitbox, coordX, coordY); //if we don't collide with a wall, we can still move (inverse relationship)
 					if (!canMove) {
 						break;

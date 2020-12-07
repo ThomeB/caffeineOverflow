@@ -42,31 +42,31 @@ public class BruteEnemy extends Enemy
 			
 			imgSelect++;
 			
-			if( imgSelect > (walkLeftImages.length - 1) * 3 )
+			if( imgSelect > (walkLeftImages.length - 1) * 4 )
 				imgSelect = 0;
 			
 			//See which image should be rendered
 			if( movingLeft )
 			{
-				img = walkLeftImages[ imgSelect / 3 ];
+				img = walkLeftImages[ imgSelect / 4 ];
 			}
 			else if(movingRight)
 			{
-				img = walkRightImages[ imgSelect / 3 ];
+				img = walkRightImages[ imgSelect / 4 ];
 			}
 			else if(attacking)
 			{
-				if( imgSelect > (attackImages.length - 1) * 3 )
+				if( imgSelect > (attackImages.length - 1) * 4 )
 					imgSelect = 0;
 				
-				img = attackImages[ imgSelect / 3 ];
+				img = attackImages[ imgSelect / 4 ];
 			}
 			else
 			{
-				if( imgSelect > ( idleImages.length - 1 ) * 3 )
+				if( imgSelect > ( idleImages.length - 1 ) * 4 )
 					imgSelect = 0;
 				
-				img = idleImages[ imgSelect / 3 ];
+				img = idleImages[ imgSelect / 4 ];
 			}
 			
 			gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);

@@ -47,6 +47,9 @@ public class Asset
 	public static Image handCannon;
 	public static Image shotgun2;
 	public static Image shotgun;
+	public static Image rifle;
+	public static Image charDead;
+	public static Image youDiedTxt;
 	
 	public static Image[] torchLight;
 	public static Image[] barrelExplosion;
@@ -66,6 +69,8 @@ public class Asset
 	
 	public static MediaPlayer hauntedForest;
 	public static MediaPlayer zombieMusic;
+	public static MediaPlayer victoryMusic;
+	public static MediaPlayer youDied;
 	
 	//Made it static so we don't have to instantiate this class to load all of our images in memory
 	public static void init()
@@ -93,6 +98,9 @@ public class Asset
 		bullet2 = loadImage("resources/textures/bullet2.png");
 		shotgun2 = loadImage("resources/textures/shotgun2.png");
 		shotgun = loadImage("resources/textures/shotgun.png");
+		rifle = loadImage("resources/textures/rifle.png");
+		charDead = loadImage("resources/textures/charDead.png");
+		youDiedTxt = loadImage("resources/textures/youDied.png");
 		
 		
 		torchLight = new Image[9];
@@ -187,6 +195,8 @@ public class Asset
 		//SOUND BYTES
 		hauntedForest = loadMedia("resources/music/HauntedForest.mp3");
 		zombieMusic = loadMedia("resources/music/ZombieMusic.mp3");
+		victoryMusic = loadMedia("resources/music/VictoryMusic.mp3");
+		youDied = loadMedia("resources/music/YouDied.mp3");
 		
 	}
 	

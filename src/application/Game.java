@@ -37,7 +37,14 @@ public class Game {
 	private ProgressBar healthBar;
 	private Text healthText;
 	private ImageView keyView;
+	private ImageView gunView;
+	private ImageView youDiedView;
 	//Paint component that should be passed to any render method
+	
+	private MediaPlayer backgroundMusic;
+	private MediaPlayer bossMusic;
+	private MediaPlayer victoryMusic;
+	private MediaPlayer youDiedMusic;
 	
 	public static GraphicsContext gc;
 	public static Character character;
@@ -46,6 +53,7 @@ public class Game {
 	public static ArrayList<Entity> pendingEnemies;
 	public static ArrayList<Interactable> interactables;
 	public static GameObject[] torch;
+	
 	
 	private double height;
 	private double width;
@@ -128,9 +136,22 @@ public class Game {
 			torch[x] = new GameObject((x+1)*2, 0, 32, 90, Asset.torchLight, 0.05);
 		}
 		
-		MediaPlayer backgroundMusic = Asset.hauntedForest;
+		backgroundMusic = Asset.hauntedForest;
 		backgroundMusic.setAutoPlay(true);
 		backgroundMusic.setCycleCount(MediaPlayer.INDEFINITE);
+		backgroundMusic.setVolume( .05 );
+		System.out.println( backgroundMusic.getVolume() );
+		
+		bossMusic = Asset.zombieMusic;
+		bossMusic.setAutoPlay(false);
+		bossMusic.setCycleCount(MediaPlayer.INDEFINITE);
+		
+		victoryMusic = Asset.victoryMusic;
+		victoryMusic.setAutoPlay(false);
+		victoryMusic.setCycleCount(MediaPlayer.INDEFINITE);
+		
+		youDiedMusic = Asset.youDied;
+		youDiedMusic.setAutoPlay(false);
 		
 		createScenes();
 		stage.setScene( gameScene );
@@ -154,50 +175,72 @@ public class Game {
 	public void update() {
 		//--- UPDATE OBJECT VARIABLES ---
 		
-				//update the character
-				character.update(keysPressed, map);
-				
-				//update the enemies
-				
-				for (Entity e : pendingEnemies) {
-					if (e != null){
-						enemies.add(e);
-					}
+		//See if character is dead
+		if( !character.isAlive() )
+			characterDied();
+		
+		//update the character
+		character.update(keysPressed, map);
+		
+		//update the enemies
+		
+		for (Entity e : pendingEnemies) {
+			if (e != null){
+				enemies.add(e);
+			}
+		}
+		pendingEnemies.removeAll(pendingEnemies);
+		
+		for (Entity e : enemies) {
+			if (e.isAlive()) {
+				e.update(character);
+			}
+		}
+		
+		//check for interactions
+		for (int i = 0; i < interactables.size(); i++) {
+			
+			Interactable interactable = interactables.get(i);
+			//check first if we should remove the interactable. Is it tagged to be removed? is it null? 
+			if (interactable == null || interactable.despawn) {
+				interactables.remove(i);
+			}else {
+				//if the key[4] is true, F is being held down. Then do a complicated distance equation to get the centers of entities and characters so the top right of the image isn't the only thing being factored in. (Comparing centers)
+				if (keysPressed[4] == true && Utility.getDistance(character.xPos + character.getWidth()/Tile.TILEWIDTH/2, character.yPos + character.getHeight()/Tile.TILEHEIGHT/2, interactable.xPos + interactable.getWidth()/Tile.TILEWIDTH/2, interactable.yPos + interactable.getHeight()/Tile.TILEHEIGHT/2) < 1) {
+					interactable.pickup(character);
 				}
-				pendingEnemies.removeAll(pendingEnemies);
-				
-				for (Entity e : enemies) {
-					if (e.isAlive()) {
-						e.update(character);
-					}
-				}
-				
-				//check for interactions
-				for (int i = 0; i < interactables.size(); i++) {
-					
-					Interactable interactable = interactables.get(i);
-					//check first if we should remove the interactable. Is it tagged to be removed? is it null? 
-					if (interactable == null || interactable.despawn) {
-						interactables.remove(i);
-					}else {
-						//if the key[4] is true, F is being held down. Then do a complicated distance equation to get the centers of entities and characters so the top right of the image isn't the only thing being factored in. (Comparing centers)
-						if (keysPressed[4] == true && Utility.getDistance(character.xPos + character.getWidth()/Tile.TILEWIDTH/2, character.yPos + character.getHeight()/Tile.TILEHEIGHT/2, interactable.xPos + interactable.getWidth()/Tile.TILEWIDTH/2, interactable.yPos + interactable.getHeight()/Tile.TILEHEIGHT/2) < 1) {
-							interactable.pickup(character);
-						}
-					}
-					
-				}
-				
-				//Update health bar and text
-				healthBar.setProgress( (double) character.getHp() / (double) character.getMaxHP() );
-				healthText.setText( "" + character.getHp() + " / " + character.getMaxHP() );
-				
-				//Update key UI
-				if( character.getKey() )
-					keyView.setImage( Asset.key );
-				else
-					keyView.setImage( null );
-					
+			}
+			
+		}
+		
+		//Change music if near boss
+		if( character.getxPos() > 41 && character.getyPos() > 6 && character.getyPos() < 19 )
+		{
+			backgroundMusic.setMute( true );
+			bossMusic.setAutoPlay(true);
+			
+		}
+		
+		//Change music if escape the prison
+		if( character.getxPos() > 56 )
+		{
+			bossMusic.setMute(true);
+			victoryMusic.setAutoPlay(true);
+		}
+		
+		//Update health bar and text
+		healthBar.setProgress( (double) character.getHp() / (double) character.getMaxHP() );
+		healthText.setText( "" + character.getHp() + " / " + character.getMaxHP() );
+		
+		//Update key UI
+		if( character.getKey() )
+			keyView.setImage( Asset.key );
+		else
+			keyView.setImage( null );
+		
+		//Change gun UI
+		changeGunView();
+		
 	}
 	
 	
@@ -206,46 +249,46 @@ public class Game {
 		
 		//--- RENDER GRAPHICS ---
 		
-				//clears the graphics on the canvas
-				//gc.clearRect( 0, 0, canvas.getWidth(), canvas.getHeight() );
-				
-				//Render the map
-				gc.fillRect(0 , 0, canvas.getWidth(), canvas.getHeight() );
-				map.render( gc );
-				
-				for( int i = 0; i < enemies.size(); i++ )
-				{
-					Entity enemy = enemies.get(i);
-					if( enemy != null && enemy.isAlive() ) //if we want bodies to stay after death, get rid of the isAlive part and instead just change the image somewhere
-						enemy.render( gc );
-					else if (enemy != null) {
-						if(enemy.isATrap() && enemy.t != null) { //change this to timer class when made -- this is located in Entity as a public int
-							enemy.dynamicRender(gc);
-							enemy.counter++;
-						} else {
-							enemy = null;
-							enemies.remove(i);
-						}
-					}
+		//clears the graphics on the canvas
+		//gc.clearRect( 0, 0, canvas.getWidth(), canvas.getHeight() );
+		
+		//Render the map
+		gc.fillRect(0 , 0, canvas.getWidth(), canvas.getHeight() );
+		map.render( gc );
+		
+		for( int i = 0; i < enemies.size(); i++ )
+		{
+			Entity enemy = enemies.get(i);
+			if( enemy != null && enemy.isAlive() ) //if we want bodies to stay after death, get rid of the isAlive part and instead just change the image somewhere
+				enemy.render( gc );
+			else if (enemy != null) {
+				if(enemy.isATrap() && enemy.t != null) { //change this to timer class when made -- this is located in Entity as a public int
+					enemy.dynamicRender(gc);
+					enemy.counter++;
+				} else {
+					enemy = null;
+					enemies.remove(i);
 				}
-				
-				for ( int i = 0; i < interactables.size(); i++ )
-				{
-					Interactable interactable = interactables.get(i);
-					if (interactable != null && !interactable.despawn)
-						interactable.render( gc );
-					
-				}
-				
-				
-				/*
-				 * Torches
-				 */
-				for(int x = 0; x < torch.length; x++) {
-					torch[x].dynamicRender(gc);
-				}
-				
-				character.render(gc);
+			}
+		}
+		
+		for ( int i = 0; i < interactables.size(); i++ )
+		{
+			Interactable interactable = interactables.get(i);
+			if (interactable != null && !interactable.despawn)
+				interactable.render( gc );
+			
+		}
+		
+		
+		/*
+		 * Torches
+		 */
+		for(int x = 0; x < torch.length; x++) {
+			torch[x].dynamicRender(gc);
+		}
+		
+		character.render(gc);
 				
 		
 	}//close render
@@ -264,10 +307,8 @@ public class Game {
 		gc.setFont( Font.font( "Verdana", 40 ) );
 		gc.setStroke( Color.RED );
 		
-	
-		
-		
 		gameRoot.setCenter( canvas );
+		//gameRoot.getCenter().setManaged(false);
 		
 		//Add bottom node for UI
 		StackPane ui = new StackPane();
@@ -286,11 +327,29 @@ public class Game {
 		//Create and add an indicator if hero has a key or not
 		Image keyImage = null;
 		keyView = new ImageView( keyImage );
-		StackPane.setMargin( keyView, new Insets( 0, 400, 700, 0 ) );
+		keyView.setSmooth( true );
+		keyView.setScaleX( 2.0 );
+		keyView.setScaleY( 2.0 );
+		StackPane.setMargin( keyView, new Insets( 0, 500, 700, 0 ) );
 		
-		ui.getChildren().addAll( healthBar, healthText, keyView );
+		//Add an indicator for type of gun the hero has
+		Image gunImage = null;
+		gunView = new ImageView( gunImage );
+		gunView.setSmooth(true);
+		gunView.setManaged(false);
 		
+		//Add an image to be displayed if die
+		Image youDied = null;
+		youDiedView = new ImageView(youDied);
+		youDiedView.setSmooth(true);
+		youDiedView.setManaged(false);
+		youDiedView.setX( 1000 );
+		youDiedView.setY( -400 );
+		youDiedView.setScaleX(.3);
+		youDiedView.setScaleY(.3);
 		
+		//ui.setManaged( false );
+		ui.getChildren().addAll( healthBar, healthText, keyView, gunView, youDiedView );
 		gameRoot.setBottom( ui );
 		gameRoot.setBackground( new Background( new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY ) ) );
 				
@@ -366,6 +425,56 @@ public class Game {
 		
 
 		//*********************************************
+	}
+	
+	public void changeGunView()
+	{
+		//Update gun UI based on what character is holding
+		if(character.getGun() instanceof HandCannon )
+		{
+			gunView.setScaleX( 1.0 );
+			gunView.setScaleY( 0.8 );
+			gunView.setImage( character.getGun().img );
+			gunView.setX( 1550 );
+			gunView.setY( -20 );
+		}
+		
+		if( character.getGun() instanceof Pistol )
+		{
+			gunView.setScaleX( 0.2 );
+			gunView.setScaleY( 0.2 );
+			gunView.setImage( character.getGun().img );
+			gunView.setX( 1000 );
+			gunView.setY( -170 );
+		}
+		
+		if( character.getGun() instanceof Shotgun )
+		{
+			gunView.setScaleX( 2.0 );
+			gunView.setScaleY( 2.0 );
+			gunView.setImage( character.getGun().img );
+			gunView.setX( 1550 );
+			gunView.setY( 0 );
+		}
+	}
+	
+	public void characterDied()
+	{
+		for( int i = 0; i < keysPressed.length; i ++ )
+			keysPressed[i] = false;
+		
+		character.img = Asset.charDead;
+		backgroundMusic.setMute( true );
+		bossMusic.setMute( true );
+		victoryMusic.setMute(true);
+		youDiedMusic.setAutoPlay(true);
+		youDiedView.setImage(Asset.youDiedTxt);
+		
+		if( youDiedView.getScaleX() < 2.6 )
+		{
+			youDiedView.setScaleX( youDiedView.getScaleX() + .003);
+			youDiedView.setScaleY( youDiedView.getScaleY() + .003);
+		}
 	}
 	
 	/*************************************************************

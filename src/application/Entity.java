@@ -117,7 +117,7 @@ public abstract class Entity extends GameObject {
 		
 		//Needed for dmg indicators
 		tookDmg = true;
-		dmgTaken = dmg;
+		dmgTaken += dmg;
 		dmgTakenTimer.reset();
 		dmgTakenTimer.setOnCooldown( true );
 		
@@ -153,7 +153,10 @@ public abstract class Entity extends GameObject {
 			dmgTakenTimer.tick();
 		
 		if( !dmgTakenTimer.isOnCooldown() )
+		{
 			tookDmg = false;
+			dmgTaken = 0;
+		}
 	}
 	
 	//update hitbox - called when movement occurs

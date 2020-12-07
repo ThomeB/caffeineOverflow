@@ -11,17 +11,21 @@ public abstract class Gun extends Interactable
 {
 	protected int ammoCapacity;
 	protected float maxVelocity;
+	protected String gunName;
+	protected Timer fireRateTimer;
 	protected ArrayList<Projectile> projectiles;
 	
 	/** CONSTRUCTOR **/
 		
-	public Gun(float xpos, float ypos, float width, float height, Image image, int ammoCapacity, float maxVelocity ) 
+	public Gun(float xpos, float ypos, float width, float height, Image image, int ammoCapacity, double fireRate, String gunName, float maxVelocity ) 
 	{
 		super( xpos, ypos , width, height, image);
 		
 		this.ammoCapacity = ammoCapacity;
 		this.maxVelocity = maxVelocity;
+		this.gunName = gunName;
 		projectiles = new ArrayList<Projectile>();
+		fireRateTimer = new Timer( fireRate );
 		
 	}
 	
@@ -30,6 +34,9 @@ public abstract class Gun extends Interactable
 	/** FUNCTIONS **/
 	public void update(Map map)
 	{
+		//Used to see if we can shoot again
+		fireRateTimer.tick();
+		
 		for( int i = 0; i < projectiles.size(); i++ )
 		{
 			Projectile p = projectiles.get( i );

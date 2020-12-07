@@ -74,7 +74,7 @@ public abstract class Enemy extends Entity{
 		attacking = false;
 		
 		double distance = Utility.getDistance(character, this);
-		if (distance < aggroRange) {//if we are within the range of sight
+		if (distance < aggroRange && character.isAlive() ) {//if we are within the range of sight
 			
 			//Check to see if use left or right images array
 			if( character.xPos < xPos ) {
