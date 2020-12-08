@@ -341,15 +341,10 @@ public class Game {
 		//Add an image to be displayed if die
 		Image youDied = null;
 		youDiedView = new ImageView(youDied);
-		youDiedView.setSmooth(true);
-		youDiedView.setManaged(false);
-		youDiedView.setX( 1000 );
-		youDiedView.setY( -400 );
-		youDiedView.setScaleX(.3);
-		youDiedView.setScaleY(.3);
+		
 		
 		//ui.setManaged( false );
-		ui.getChildren().addAll( healthBar, healthText, keyView, gunView, youDiedView );
+		ui.getChildren().addAll( healthBar, healthText, keyView, gunView );
 		gameRoot.setBottom( ui );
 		gameRoot.setBackground( new Background( new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY ) ) );
 				
@@ -460,6 +455,12 @@ public class Game {
 	
 	public void characterDied()
 	{
+		youDiedView.setSmooth(true);
+		youDiedView.setManaged(false);
+		youDiedView.setX( 1000 );
+		youDiedView.setY( -400 );
+		youDiedView.setScaleX(.3);
+		youDiedView.setScaleY(.3);
 		for( int i = 0; i < keysPressed.length; i ++ )
 			keysPressed[i] = false;
 		
