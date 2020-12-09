@@ -75,121 +75,121 @@ public class Asset
 	//Made it static so we don't have to instantiate this class to load all of our images in memory
 	public static void init()
 	{
-		grassImage = loadImage( "resources/textures/grass.png" );
-		floorImage = loadImage( "resources/textures/floor.png" );
-		topWallImage = loadImage( "resources/textures/topWall1.png" );
-		cornerImage = loadImage( "resources/textures/corner.png" );
-		bottomWallImage = loadImage( "resources/textures/bottomWall.png" );
-		rightWallImage = loadImage( "resources/textures/rightWall.png" );
-		leftWallImage = loadImage( "resources/textures/leftWall.png" );
-		vertWallImage = loadImage( "resources/textures/vertWall.png" );
-		horzWallImage = loadImage( "resources/textures/horzWall.png" );
-		doorImage = loadImage( "resources/textures/door.png" );
+		grassImage = loadImage( "resources/textures/mapTextures/grass.png" );
+		floorImage = loadImage( "resources/textures/mapTextures/floor.png" );
+		topWallImage = loadImage( "resources/textures/mapTextures/topWall1.png" );
+		cornerImage = loadImage( "resources/textures/mapTextures/corner.png" );
+		bottomWallImage = loadImage( "resources/textures/mapTextures/bottomWall.png" );
+		rightWallImage = loadImage( "resources/textures/mapTextures/rightWall.png" );
+		leftWallImage = loadImage( "resources/textures/mapTextures/leftWall.png" );
+		vertWallImage = loadImage( "resources/textures/mapTextures/vertWall.png" );
+		horzWallImage = loadImage( "resources/textures/mapTextures/horzWall.png" );
+		doorImage = loadImage( "resources/textures/mapTextures/door.png" );
 		bigASSKNIGHT = loadImage("resources/textures/knight.png");
 		ghostAlive = loadImage("resources/textures/ghostAlive.png");
-		pistol = loadImage("resources/textures/pistol.png");
-		grayPotion = loadImage("resources/textures/grayPotion.png");
-		bullet = loadImage("resources/textures/fireball.png");
-		barrel = loadImage("resources/textures/Barrel.png");
-		key = loadImage("resources/textures/key.png");
+		pistol = loadImage("resources/textures/guns/pistol.png");
+		grayPotion = loadImage("resources/textures/interactableTextures/grayPotion.png");
+		bullet = loadImage("resources/textures/guns/bullets/fireball.png");
+		barrel = loadImage("resources/textures/barrel/Barrel.png");
+		key = loadImage("resources/textures//interactableTextures/key.png");
 		dog = loadImage("resources/textures/wolf.png");
-		preacher = loadImage("resources/textures/preacher.png");
-		handCannon = loadImage("resources/textures/HandCannon.png");
-		bullet2 = loadImage("resources/textures/bullet2.png");
-		shotgun2 = loadImage("resources/textures/shotgun2.png");
-		shotgun = loadImage("resources/textures/shotgun.png");
-		rifle = loadImage("resources/textures/rifle.png");
+		preacher = loadImage("resources/textures/guns/preacher.png");
+		handCannon = loadImage("resources/textures/guns/HandCannon.png");
+		bullet2 = loadImage("resources/textures/guns/bullets/bullet2.png");
+		shotgun2 = loadImage("resources/textures/guns/shotgun2.png");
+		shotgun = loadImage("resources/textures/guns/shotgun.png");
+		rifle = loadImage("resources/textures/guns/rifle.png");
 		charDead = loadImage("resources/textures/charDead.png");
 		youDiedTxt = loadImage("resources/textures/youDied.png");
 		
 		
 		torchLight = new Image[9];
 		for(int x = 0; x < torchLight.length; x++) {
-			torchLight[x] = loadImage("resources/textures/torch" + (x+1) + ".png");
+			torchLight[x] = loadImage("resources/textures/mapTextures/Torchlight/torch" + (x+1) + ".png");
 		}
 		
 		barrelExplosion = new Image[9];
 		for(int x = 0; x < barrelExplosion.length; x++) {
-			barrelExplosion[x] = loadImage("resources/textures/explo" + (x+1) + ".png");
+			barrelExplosion[x] = loadImage("resources/textures/barrel/Explosion/explo" + (x+1) + ".png");
 		}
 		
 		heroR = new Image[11];
 		heroL = new Image[11];
 		for(int x = 0; x < heroR.length; x++) {
-			heroR[x] = loadImage("resources/textures/charr" + (x+1) + ".png");
-			heroL[x] = loadImage("resources/textures/charl" + (x+1) + ".png");
+			heroR[x] = loadImage("resources/textures/character/charWalkRight/charr" + (x+1) + ".png");
+			heroL[x] = loadImage("resources/textures/character/charWalkLeft/charl" + (x+1) + ".png");
 		}
 		
 		zombieWalkLeft = new Image[100];
 		for( int i = 0; i < zombieWalkLeft.length; i++ )
 		{
-			zombieWalkLeft[i] = loadImage("resources/textures/zomebieWalkLeft/zombieWalkLeft" + "_" + (i + 1) + ".png" );
+			zombieWalkLeft[i] = loadImage("resources/textures/zombie/zomebieWalkLeft/zombieWalkLeft" + "_" + (i + 1) + ".png" );
 		}
 		
 		zombieWalkRight = new Image[100];
 		for( int i = 0; i < zombieWalkRight.length; i++ )
 		{
-			zombieWalkRight[i] = loadImage("resources/textures/zombieWalkRight/zombieWalkRight" + "_" + (i + 1) + ".png" );
+			zombieWalkRight[i] = loadImage("resources/textures/zombie/zombieWalkRight/zombieWalkRight" + "_" + (i + 1) + ".png" );
 		}
 		
 		zombieAttack = new Image[92];
 		for( int i = 0; i < zombieAttack.length; i++ )
 		{
-			zombieAttack[i] = loadImage("resources/textures/zombieAttack/zombieAttack" + "_" + (i + 1) + ".png" );
+			zombieAttack[i] = loadImage("resources/textures/zombie/zombieAttack/zombieAttack" + "_" + (i + 1) + ".png" );
 		}
 		
 		zombieIdle = new Image[100];
 		for( int i = 0; i < zombieIdle.length; i++ )
 		{
-			zombieIdle[i] = loadImage("resources/textures/zombieIdle/zombieIdle" + "_" + (i + 1) + ".png" );
+			zombieIdle[i] = loadImage("resources/textures/zombie/zombieIdle/zombieIdle" + "_" + (i + 1) + ".png" );
 		}
 		
 		bruteWalkLeft = new Image[126];
 		for( int i = 0; i < bruteWalkLeft.length; i++ )
 		{
 			if( i < 10 )
-				bruteWalkLeft[i] = loadImage("resources/textures/bruteWalkLeft/Armature_run_00" + i + ".png" );
+				bruteWalkLeft[i] = loadImage("resources/textures/brute/bruteWalkLeft/Armature_run_00" + i + ".png" );
 			else if ( i < 100 )
-				bruteWalkLeft[i] = loadImage("resources/textures/bruteWalkLeft/Armature_run_0" + i + ".png" );
+				bruteWalkLeft[i] = loadImage("resources/textures/brute/bruteWalkLeft/Armature_run_0" + i + ".png" );
 			else
-				bruteWalkLeft[i] = loadImage("resources/textures/bruteWalkLeft/Armature_run_" + i + ".png" );
+				bruteWalkLeft[i] = loadImage("resources/textures/brute/bruteWalkLeft/Armature_run_" + i + ".png" );
 		}
 		
 		bruteWalkRight = new Image[126];
 		for( int i = 0; i < bruteWalkRight.length; i++ )
 		{
 			if( i < 10 )
-				bruteWalkRight[i] = loadImage("resources/textures/bruteWalkRight/Armature_run_00" + i + ".png" );
+				bruteWalkRight[i] = loadImage("resources/textures/brute/bruteWalkRight/Armature_run_00" + i + ".png" );
 			else if ( i < 100 )
-				bruteWalkRight[i] = loadImage("resources/textures/bruteWalkRight/Armature_run_0" + i + ".png" );
+				bruteWalkRight[i] = loadImage("resources/textures/brute/bruteWalkRight/Armature_run_0" + i + ".png" );
 			else
-				bruteWalkRight[i] = loadImage("resources/textures/bruteWalkRight/Armature_run_" + i + ".png" );
+				bruteWalkRight[i] = loadImage("resources/textures/brute/bruteWalkRight/Armature_run_" + i + ".png" );
 		}
 		
 		bruteIdle = new Image[61];
 		for( int i = 0; i < bruteIdle.length; i++ )
 		{
 			if( i < 10 )
-				bruteIdle[i] = loadImage("resources/textures/bruteIdle/Armature_idle2_0" + i + ".png" );
+				bruteIdle[i] = loadImage("resources/textures/brute/bruteIdle/Armature_idle2_0" + i + ".png" );
 			else
-				bruteIdle[i] = loadImage("resources/textures/bruteIdle/Armature_idle2_" + i + ".png" );
+				bruteIdle[i] = loadImage("resources/textures/brute/bruteIdle/Armature_idle2_" + i + ".png" );
 		}
 		
 		bruteAttack = new Image[151];
 		for( int i = 0; i < bruteAttack.length; i++ )
 		{
 			if( i < 10 )
-				bruteAttack[i] = loadImage("resources/textures/bruteAttack/Armature_swing_00" + i + ".png" );
+				bruteAttack[i] = loadImage("resources/textures/brute/bruteAttack/Armature_swing_00" + i + ".png" );
 			else if ( i < 100 )
-				bruteAttack[i] = loadImage("resources/textures/bruteAttack/Armature_swing_0" + i + ".png" );
+				bruteAttack[i] = loadImage("resources/textures/brute/bruteAttack/Armature_swing_0" + i + ".png" );
 			else
-				bruteAttack[i] = loadImage("resources/textures/bruteAttack/Armature_swing_" + i + ".png" );
+				bruteAttack[i] = loadImage("resources/textures/brute/bruteAttack/Armature_swing_" + i + ".png" );
 		}
 		
 		waterBullet = new Image[4];
 		for( int i = 0; i < waterBullet.length; i++ )
 		{
-			waterBullet[i] = loadImage("resources/textures/HandcannonProjectile/water" + (i + 1) + ".png" );
+			waterBullet[i] = loadImage("resources/textures/guns/bullets/HandcannonProjectile/water" + (i + 1) + ".png" );
 		}
 		
 		//SOUND BYTES
