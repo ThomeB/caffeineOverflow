@@ -36,7 +36,6 @@ public class Asset
 	public static Image vertWallImage;
 	public static Image horzWallImage;
 	public static Image	doorImage;
-	public static Image bigASSKNIGHT;
 	public static Image ghostAlive;
 	public static Image pistol;
 	public static Image grayPotion;
@@ -48,6 +47,7 @@ public class Asset
 	public static Image shotgun2;
 	public static Image shotgun;
 	public static Image rifle;
+	public static Image rifleLeft;
 	public static Image charDead;
 	public static Image youDiedTxt;
 	
@@ -85,22 +85,22 @@ public class Asset
 		vertWallImage = loadImage( "resources/textures/mapTextures/vertWall.png" );
 		horzWallImage = loadImage( "resources/textures/mapTextures/horzWall.png" );
 		doorImage = loadImage( "resources/textures/mapTextures/door.png" );
-		bigASSKNIGHT = loadImage("resources/textures/knight.png");
-		ghostAlive = loadImage("resources/textures/ghostAlive.png");
+		ghostAlive = loadImage("resources/textures/zombie/ghostAlive.png");
 		pistol = loadImage("resources/textures/guns/pistol.png");
 		grayPotion = loadImage("resources/textures/interactableTextures/grayPotion.png");
 		bullet = loadImage("resources/textures/guns/bullets/fireball.png");
 		barrel = loadImage("resources/textures/barrel/Barrel.png");
 		key = loadImage("resources/textures//interactableTextures/key.png");
 		dog = loadImage("resources/textures/wolf.png");
-		preacher = loadImage("resources/textures/guns/preacher.png");
+		preacher = loadImage("resources/textures/brute/preacher.png");
 		handCannon = loadImage("resources/textures/guns/HandCannon.png");
 		bullet2 = loadImage("resources/textures/guns/bullets/bullet2.png");
 		shotgun2 = loadImage("resources/textures/guns/shotgun2.png");
 		shotgun = loadImage("resources/textures/guns/shotgun.png");
 		rifle = loadImage("resources/textures/guns/rifle.png");
-		charDead = loadImage("resources/textures/charDead.png");
-		youDiedTxt = loadImage("resources/textures/youDied.png");
+		rifleLeft = loadImage("resources/textures/guns/rifleLeft.png");
+		charDead = loadImage("resources/textures/character/charDead.png");
+		youDiedTxt = loadImage("resources/textures/mapTextures/youDied.png");
 		
 		
 		torchLight = new Image[9];

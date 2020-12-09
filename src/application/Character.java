@@ -197,24 +197,42 @@ public class Character extends Entity {
 		
 		if( gun != null )
 		{
-			if( gun instanceof HandCannon )
+			if( gun instanceof HandCannon && leftFacing)
 			{
+				gun.img = Asset.handCannon;
+				gun.setxPos( xPos - 0.3f );
+				gun.setyPos( yPos + 0.12f );
+				gun.update( map );
+			} else if (gun instanceof HandCannon) {
+				gun.img = Asset.handCannon;
 				gun.setxPos( xPos + 0.3f );
-				gun.setyPos( yPos + 0.2f );
+				gun.setyPos( yPos + 0.12f );
 				gun.update( map );
 			}
 			
-			if( gun instanceof Pistol )
+			if( gun instanceof Pistol && leftFacing)
 			{
-				gun.setxPos( xPos + 0.6f );
-				gun.setyPos( yPos + 0.3f );
+				gun.img = Asset.rifleLeft;
+				gun.setxPos( xPos - 0.25f );
+				gun.setyPos( yPos + 0.12f );
+				gun.update( map );
+			} else if (gun instanceof Pistol) {
+				gun.img = Asset.rifle;
+				gun.setxPos( xPos + 0.45f );
+				gun.setyPos( yPos + 0.12f );
 				gun.update( map );
 			}
 			
-			if( gun instanceof Shotgun )
+			if( gun instanceof Shotgun && leftFacing )
 			{
+				gun.img = Asset.shotgun2;
+				gun.setxPos( xPos - 0.6f );
+				gun.setyPos( yPos + 0.12f );
+				gun.update( map );
+			} else if (gun instanceof Shotgun) {
+				gun.img = Asset.shotgun;
 				gun.setxPos( xPos + 0.6f );
-				gun.setyPos( yPos + 0.3f );
+				gun.setyPos( yPos + 0.12f );
 				gun.update( map );
 			}
 		}
