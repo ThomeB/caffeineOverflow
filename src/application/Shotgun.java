@@ -18,7 +18,7 @@ public class Shotgun extends Gun
 	 *****************/
 	public Shotgun(float xpos, float ypos) 
 	{
-		super(xpos, ypos, SHOTGUN_WIDTH, SHOTGUN_HEIGHT, Asset.shotgun, SHOTGUN_AMMO_CAPACITY, SHOTGUN_FIRERATE, SHOTGUN_NAME, SHOTGUN_VELOCITY );
+		super(xpos, ypos, SHOTGUN_WIDTH, SHOTGUN_HEIGHT, Asset.shotgunRight, SHOTGUN_AMMO_CAPACITY, SHOTGUN_FIRERATE, SHOTGUN_NAME, SHOTGUN_VELOCITY );
 		sr = new SecureRandom();
 		
 	}

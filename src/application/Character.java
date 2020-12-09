@@ -199,12 +199,12 @@ public class Character extends Entity {
 		{
 			if( gun instanceof HandCannon && leftFacing)
 			{
-				gun.img = Asset.handCannon;
+				gun.img = Asset.handCannonLeft;
 				gun.setxPos( xPos - 0.3f );
 				gun.setyPos( yPos + 0.12f );
 				gun.update( map );
 			} else if (gun instanceof HandCannon) {
-				gun.img = Asset.handCannon;
+				gun.img = Asset.handCannonRight;
 				gun.setxPos( xPos + 0.3f );
 				gun.setyPos( yPos + 0.12f );
 				gun.update( map );
@@ -217,7 +217,7 @@ public class Character extends Entity {
 				gun.setyPos( yPos + 0.12f );
 				gun.update( map );
 			} else if (gun instanceof Pistol) {
-				gun.img = Asset.rifle;
+				gun.img = Asset.rifleRight;
 				gun.setxPos( xPos + 0.45f );
 				gun.setyPos( yPos + 0.12f );
 				gun.update( map );
@@ -225,12 +225,12 @@ public class Character extends Entity {
 			
 			if( gun instanceof Shotgun && leftFacing )
 			{
-				gun.img = Asset.shotgun2;
+				gun.img = Asset.shotgunLeft;
 				gun.setxPos( xPos - 0.6f );
 				gun.setyPos( yPos + 0.12f );
 				gun.update( map );
 			} else if (gun instanceof Shotgun) {
-				gun.img = Asset.shotgun;
+				gun.img = Asset.shotgunRight;
 				gun.setxPos( xPos + 0.6f );
 				gun.setyPos( yPos + 0.12f );
 				gun.update( map );

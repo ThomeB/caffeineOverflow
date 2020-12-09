@@ -17,7 +17,7 @@ public class Pistol extends Gun{
 	 *****************/
 	public Pistol(float xpos, float ypos) 
 	{
-		super(xpos, ypos, PISTOL_WIDTH, PISTOL_HEIGHT, Asset.rifle, PISTOL_AMMO_CAPACITY, PISTOL_FIRERATE, PISTOL_NAME, PISTOL_VELOCITY );
+		super(xpos, ypos, PISTOL_WIDTH, PISTOL_HEIGHT, Asset.rifleRight, PISTOL_AMMO_CAPACITY, PISTOL_FIRERATE, PISTOL_NAME, PISTOL_VELOCITY );
 		
 	}
 	

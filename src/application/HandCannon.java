@@ -16,7 +16,7 @@ public class HandCannon extends Gun
 	 *****************/
 	public HandCannon(float xpos, float ypos) 
 	{
-		super(xpos, ypos, HANDCANNON_WIDTH, HANDCANNON_HEIGHT, Asset.handCannon, HANDCANNON_AMMO_CAPACITY, HANDCANNON_FIRERATE, HANDCANNON_NAME, HANDCANNON_VELOCITY );
+		super(xpos, ypos, HANDCANNON_WIDTH, HANDCANNON_HEIGHT, Asset.handCannonRight, HANDCANNON_AMMO_CAPACITY, HANDCANNON_FIRERATE, HANDCANNON_NAME, HANDCANNON_VELOCITY );
 		
 	}
 	
