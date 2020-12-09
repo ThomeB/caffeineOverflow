@@ -12,7 +12,6 @@ public class ExplodingBarrel extends Traps{
 	public static final int BARREL_STR = 200;
 	public static final int BARREL_BLAST_RADIUS = 2;
 	public static final Image BARREL_IMAGE = Asset.barrel;
-	public static final Image BARREL_EXPLODED = Asset.bigASSKNIGHT;
 
 	/*****************
 	 * 	Constructor  *
