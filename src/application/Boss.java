@@ -13,7 +13,7 @@ public class Boss extends Enemy {
 	public static final float BOSS_SPEED = 0.02f;
 	public static final float BOSS_WIDTH = 180;
 	public static final float BOSS_HEIGHT = 180;
-	public static final float BOSS_AGGRO_RANGE = 5;
+	public static final float BOSS_AGGRO_RANGE = 7;
 	
 	public static final double BOSS_MELEE_TIMER = 0.5;
 	
@@ -27,12 +27,18 @@ public class Boss extends Enemy {
 	public Boss(float xPos, float yPos ) 
 	{
 		super( BOSS_HP, BOSS_STR, BOSS_DEF, xPos, yPos, BOSS_WIDTH, BOSS_HEIGHT, BOSS_SPEED, Asset.wizardForm1, BOSS_MELEE_TIMER, BOSS_AGGRO_RANGE);
-		rangeAbilityTimerSwirl = new Timer(3);
+		rangeAbilityTimerSwirl = new Timer(2.5);
 		rangeAbilityTimerAim = new Timer(2);
-		spawnAbilityTimer = new Timer(1);
+		spawnAbilityTimer = new Timer(1.5);
 		projectiles = new ArrayList<Projectile>(8);
 		//Need to change hitbox a little bit, because the picture is too big
 		hitBox = new Rectangle( xPos * Tile.TILEWIDTH, yPos * Tile.TILEHEIGHT, width - 30, height - 30 );
+	}
+	
+	@Override
+	public void death() {
+		Key key = new Key( xPos, yPos );
+		Game.interactables.add( key );
 	}
 	
 	@Override
@@ -46,6 +52,7 @@ public class Boss extends Enemy {
 			if (getHp() < getMaxHP()*.33) {
 				phase = 2;
 				img = Asset.wizardForm3;
+				rangeAbilityTimerSwirl.setTimeInterval(rangeAbilityTimerSwirl.getTimeInterval()/2);
 			}
 		}
 		super.update(character);
@@ -72,6 +79,9 @@ public class Boss extends Enemy {
 					//if the character exists, is alive, and we collide with it, then remove the projectile and damage the character
 				if ( character != null && character.isAlive() && Utility.collidesWithGameObject(p, character)) {
 					character.takeDmg(p);//takeDmg is in Entity
+					if (p instanceof BossBigProjectile) {
+						setHp(getHp() + p.damage);
+					}
 					projectiles.remove(i);
 					didHit = true;
 				}
@@ -89,15 +99,15 @@ public class Boss extends Enemy {
 		{
 			float [][] swirlDirections = {
 					{-1,0},
-					{-1,1},
 					{0,-1},
 					{0,1},
 					{1,0},
+					{-1,1},
 					{1,-1},
 					{-1,-1},
 					{1,1}
 			};
-			for (int i = 0; i < swirlDirections.length; i++) {
+			for (int i = 0; i < (phase==0? swirlDirections.length/2 : swirlDirections.length); i++) {
 				float xDir = swirlDirections[i][0];
 				float yDir = swirlDirections[i][1];
 				Projectile p = new BossSlowProjectile(this.xPos,this.yPos,xDir*.1f,yDir*.1f);

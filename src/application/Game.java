@@ -58,7 +58,7 @@ public class Game {
 	private double height;
 	private double width;
 	
-	Timer timer = new Timer( 6 );
+	protected static Timer pickupDebounceTimer;
 	
 	private boolean [] keysPressed = {
 			false,//W [0]
@@ -86,7 +86,7 @@ public class Game {
 		   canvas size to be, this is what will be visible to the player*/
 		camera = new Camera( 1200, 600, map.getPixelWidth(), map.getPixelHeight() );
 		character = new Character(1, 1, camera );
-		
+		pickupDebounceTimer = new Timer( 2 );
 		pendingEnemies = new ArrayList<Entity>(5);
 		//Create 5 enemies and link them to our enemies ArrayList
 		enemies = new ArrayList<Entity>(5);
@@ -123,6 +123,8 @@ public class Game {
 		interactables.add( i2 );
 		HealthPack i3 = new HealthPack( 8, 8 );
 		interactables.add( i3 );
+		Door i4 = new Door( 55, 12, map );
+		interactables.add( i4 );
 		
 		Gun pistol1 = new Pistol( 2, 2 );
 		interactables.add( pistol1 );
@@ -181,7 +183,7 @@ public class Game {
 		
 		//update the character
 		character.update(keysPressed, map);
-		
+		pickupDebounceTimer.tick();
 		//update the enemies
 		
 		for (Entity e : pendingEnemies) {
@@ -218,7 +220,7 @@ public class Game {
 		{
 			backgroundMusic.setMute( true );
 			bossMusic.setAutoPlay(true);
-			
+			map.setTile("V", 40, 12);
 		}
 		
 		//Change music if escape the prison
@@ -477,6 +479,8 @@ public class Game {
 		{
 			youDiedView.setScaleX( youDiedView.getScaleX() + .003);
 			youDiedView.setScaleY( youDiedView.getScaleY() + .003);
+		}else {
+			System.exit(0);//close the game
 		}
 	}
 	

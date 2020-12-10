@@ -13,6 +13,7 @@ public abstract class Gun extends Interactable
 	protected float maxVelocity;
 	protected String gunName;
 	protected Timer fireRateTimer;
+	
 	protected ArrayList<Projectile> projectiles;
 	protected boolean isRightFacing;
 	
@@ -38,6 +39,7 @@ public abstract class Gun extends Interactable
 		isRightFacing = rightFacing;
 		//Used to see if we can shoot again
 		fireRateTimer.tick();
+		
 		
 		for( int i = 0; i < projectiles.size(); i++ )
 		{
@@ -97,15 +99,20 @@ public abstract class Gun extends Interactable
 	@Override
 	public void pickup(Character hero)
 	{
+		if (!Game.pickupDebounceTimer.isOnCooldown()) {
+		
 		//if (!despawn) { //if we are not marked for deletion and the gun the character is holding is not what we are trying to pick up
-			boolean canPickUp = true;
+			boolean canPickUp = false;
 			
 			if (hero.getGun() == null || !hero.getGun().equals(this))
 				canPickUp = true;
 			
-			if (canPickUp) 
+			if (canPickUp) {
 				hero.swapGun(this);
-			
+				Game.pickupDebounceTimer.setOnCooldown( true );
+				Game.pickupDebounceTimer.reset();
+			}
+		}
 		//}
 	};
 	

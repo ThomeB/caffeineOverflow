@@ -53,7 +53,10 @@ public abstract class Enemy extends Entity{
 	
 	//what to do when enemy dies
 	public void death() {
-	
+	if (Math.random() > .9) {
+		HealthPack healthPack = new HealthPack( xPos, yPos );
+		Game.interactables.add( healthPack );
+	}
 	}
 	
 	public boolean isATrap() {
