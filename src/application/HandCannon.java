@@ -50,8 +50,17 @@ public class HandCannon extends Gun
 			//everything is calculated in radians
 		    vx = Math.cos( angle ) * maxVelocity;
 		    vy = Math.sin( angle ) * maxVelocity;
-	
-			projectiles.add( new HandcannonProjectile( xPos, yPos, (float) vx, (float) vy ) );
+		    
+		    //Changes where projectiles will shoot from
+		    if( isRightFacing )
+		    {
+		    	projectiles.add( new HandcannonProjectile( xPos, yPos - .1f, (float) vx, (float) vy ) );
+		    }
+		    else
+		    {
+		    	projectiles.add( new HandcannonProjectile( xPos - .9f, yPos - .1f, (float) vx, (float) vy ) );
+		    }
+			
 		}
 		
 		

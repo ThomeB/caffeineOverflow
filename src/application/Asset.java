@@ -51,6 +51,10 @@ public class Asset
 	public static Image rifleLeft;
 	public static Image charDead;
 	public static Image youDiedTxt;
+	public static Image wizardForm1;
+	public static Image wizardForm2;
+	public static Image wizardForm3;
+
 	
 	public static Image[] torchLight;
 	public static Image[] barrelExplosion;
@@ -65,8 +69,10 @@ public class Asset
 	public static Image[] bruteAttack;
 	public static Image[] bruteIdle;
 	public static Image[] waterBullet;
-	public static Image dog;
-	public static Image preacher;
+	public static Image[] zippyAttack;
+	public static Image[] zippyWalkRight;
+	public static Image[] zippyWalkLeft;
+	public static Image[] zippyIdle;
 	
 	public static MediaPlayer hauntedForest;
 	public static MediaPlayer zombieMusic;
@@ -92,17 +98,18 @@ public class Asset
 		bullet = loadImage("resources/textures/guns/bullets/fireball.png");
 		barrel = loadImage("resources/textures/barrel/Barrel.png");
 		key = loadImage("resources/textures//interactableTextures/key.png");
-		dog = loadImage("resources/textures/wolf.png");
-		preacher = loadImage("resources/textures/brute/preacher.png");
-		handCannonLeft = loadImage("resources/textures/guns/HandCannon.png");
-		handCannonRight = loadImage("resources/textures/guns/HandCannon.png");
+		handCannonLeft = loadImage("resources/textures/guns/handCannonLeft.png");
+		handCannonRight = loadImage("resources/textures/guns/handCannonRight.png");
 		bullet2 = loadImage("resources/textures/guns/bullets/bullet2.png");
-		shotgunLeft = loadImage("resources/textures/guns/pistol2Left.png");
-		shotgunRight = loadImage("resources/textures/guns/pistol2Right.png");
+		shotgunLeft = loadImage("resources/textures/guns/pistolLeft.png");
+		shotgunRight = loadImage("resources/textures/guns/pistolRight.png");
 		rifleRight = loadImage("resources/textures/guns/rifle.png");
 		rifleLeft = loadImage("resources/textures/guns/rifleLeft.png");
 		charDead = loadImage("resources/textures/character/charDead.png");
 		youDiedTxt = loadImage("resources/textures/mapTextures/youDied.png");
+		wizardForm1 = loadImage("resources/textures/wizard/Wizard_Form1.png");
+		wizardForm2 = loadImage("resources/textures/wizard/Wizard_Form2.png");
+		wizardForm3 = loadImage("resources/textures/wizard/Wizard_Form3.png");
 		
 		
 		torchLight = new Image[9];
@@ -192,6 +199,30 @@ public class Asset
 		for( int i = 0; i < waterBullet.length; i++ )
 		{
 			waterBullet[i] = loadImage("resources/textures/guns/bullets/HandcannonProjectile/water" + (i + 1) + ".png" );
+		}
+		
+		zippyAttack = new Image[4];
+		for( int i = 0; i < zippyAttack.length; i++ )
+		{
+			zippyAttack[i] = loadImage("resources/textures/zippy/dogAttack/dogAttack_" + (i + 1) + ".png" );
+		}
+		
+		zippyWalkRight = new Image[7];
+		for( int i = 0; i < zippyWalkRight.length; i++ )
+		{
+			zippyWalkRight[i] = loadImage("resources/textures/zippy/dogRunRight/dogRunRight_" + (i + 1) + ".png" );
+		}
+		
+		zippyWalkLeft = new Image[7];
+		for( int i = 0; i < zippyWalkLeft.length; i++ )
+		{
+			zippyWalkLeft[i] = loadImage("resources/textures/zippy/dogRunLeft/dogRunLeft_" + (i + 1) + ".png" );
+		}
+		
+		zippyIdle = new Image[16];
+		for( int i = 0; i < zippyIdle.length; i++ )
+		{
+			zippyIdle[i] = loadImage("resources/textures/zippy/dogIdle/dogIdle_" + (i + 1) + ".png" );
 		}
 		
 		//SOUND BYTES

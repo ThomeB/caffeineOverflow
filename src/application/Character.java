@@ -3,16 +3,17 @@ package application;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Character extends Entity {
 	
 	
 	//Default hero values
-	public static final float CHARACTER_WIDTH = 64;
-	public static final float CHARACTER_HEIGHT = 64;
+	public static final float CHARACTER_WIDTH = 80;
+	public static final float CHARACTER_HEIGHT = 80;
 	public static final float CHARACTER_WALKSPEED = 0.04f;
 	public static final String CHARACTER_NAME = "Bob";
-	public static final int CHARACTER_HEALTH = 100;
+	public static final int CHARACTER_HEALTH = 5000;
 	public static final int CHARACTER_STR = 5;
 	public static final int CHARACTER_DEF = 1;
 	
@@ -35,7 +36,6 @@ public class Character extends Entity {
 		super(CHARACTER_HEALTH, CHARACTER_STR, CHARACTER_DEF, xpos, ypos, CHARACTER_WIDTH, CHARACTER_HEIGHT, CHARACTER_WALKSPEED, Asset.heroR[0]);
 		this.name = CHARACTER_NAME;
 		this.camera = camera;
-		
 		right = Asset.heroR;
 		left = Asset.heroL;
 		stopped = true;
@@ -200,40 +200,40 @@ public class Character extends Entity {
 			if( gun instanceof HandCannon && leftFacing)
 			{
 				gun.img = Asset.handCannonLeft;
-				gun.setxPos( xPos - 0.3f );
-				gun.setyPos( yPos + 0.12f );
-				gun.update( map );
+				gun.setxPos( xPos - 0.47f );
+				gun.setyPos( yPos -.02f );
+				gun.update( map, false );
 			} else if (gun instanceof HandCannon) {
 				gun.img = Asset.handCannonRight;
-				gun.setxPos( xPos + 0.3f );
-				gun.setyPos( yPos + 0.12f );
-				gun.update( map );
+				gun.setxPos( xPos + 0.38f );
+				gun.setyPos( yPos - 0.02f );
+				gun.update( map, true );
 			}
 			
 			if( gun instanceof Pistol && leftFacing)
 			{
 				gun.img = Asset.rifleLeft;
 				gun.setxPos( xPos - 0.25f );
-				gun.setyPos( yPos + 0.12f );
-				gun.update( map );
+				gun.setyPos( yPos + 0.16f );
+				gun.update( map, false );
 			} else if (gun instanceof Pistol) {
 				gun.img = Asset.rifleRight;
 				gun.setxPos( xPos + 0.45f );
-				gun.setyPos( yPos + 0.12f );
-				gun.update( map );
+				gun.setyPos( yPos + 0.16f );
+				gun.update( map, true );
 			}
 			
 			if( gun instanceof Shotgun && leftFacing )
 			{
 				gun.img = Asset.shotgunLeft;
-				gun.setxPos( xPos - 0.6f );
+				gun.setxPos( xPos - 0.46f );
 				gun.setyPos( yPos + 0.12f );
-				gun.update( map );
+				gun.update( map, false );
 			} else if (gun instanceof Shotgun) {
 				gun.img = Asset.shotgunRight;
-				gun.setxPos( xPos + 0.6f );
+				gun.setxPos( xPos + 0.5f );
 				gun.setyPos( yPos + 0.12f );
-				gun.update( map );
+				gun.update( map, true );
 			}
 		}
 		
@@ -245,6 +245,7 @@ public class Character extends Entity {
 	
 	public void render( GraphicsContext gc )
 	{
+		
 		if(velocityX == 0 && velocityY == 0 || stopped) {
 			gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
 		}
@@ -276,15 +277,15 @@ public class Character extends Entity {
 		}
 		t.tick();
 		
-		if( gun != null )
-			gun.render( gc );
-		
 		if( tookDmg )
 		{
 			gc.setFill( Color.RED );
 			gc.fillText( "" + dmgTaken, xPos * Tile.TILEWIDTH - Camera.xOffset, yPos * Tile.TILEHEIGHT - Camera.yOffset);
 			gc.setFill( Color.BLACK );
 		}
+		
+		if( gun != null )
+			gun.render( gc );
 	}
 	
 	/*****************************
@@ -298,6 +299,14 @@ public class Character extends Entity {
 	
 	public boolean isATrap() {
 		return false;
+	}
+
+	public boolean isLeftFacing() {
+		return leftFacing;
+	}
+
+	public void setLeftFacing(boolean leftFacing) {
+		this.leftFacing = leftFacing;
 	}
 	
 }//close character

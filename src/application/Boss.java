@@ -6,7 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 
 public class Boss extends Enemy {
-	public static final int BOSS_HP = 10000;
+	public static final int BOSS_HP = 2000;
 	public static final int BOSS_STR = 30;
 	public static final int BOSS_DEF = 0;
 	
@@ -26,7 +26,7 @@ public class Boss extends Enemy {
 	
 	public Boss(float xPos, float yPos ) 
 	{
-		super( BOSS_HP, BOSS_STR, BOSS_DEF, xPos, yPos, BOSS_WIDTH, BOSS_HEIGHT, BOSS_SPEED, Asset.dog, BOSS_MELEE_TIMER, BOSS_AGGRO_RANGE);
+		super( BOSS_HP, BOSS_STR, BOSS_DEF, xPos, yPos, BOSS_WIDTH, BOSS_HEIGHT, BOSS_SPEED, Asset.wizardForm1, BOSS_MELEE_TIMER, BOSS_AGGRO_RANGE);
 		rangeAbilityTimerSwirl = new Timer(3);
 		rangeAbilityTimerAim = new Timer(2);
 		spawnAbilityTimer = new Timer(1);
@@ -40,10 +40,12 @@ public class Boss extends Enemy {
 		if (phase == 0) {
 			if (getHp() < getMaxHP()*.66) {
 				phase = 1;
+				img = Asset.wizardForm2;
 			}
 		}else if (phase == 1) {
 			if (getHp() < getMaxHP()*.33) {
 				phase = 2;
+				img = Asset.wizardForm3;
 			}
 		}
 		super.update(character);

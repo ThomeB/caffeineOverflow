@@ -27,7 +27,7 @@ public class BruteEnemy extends Enemy
 	
 	public BruteEnemy(float xPos, float yPos ) 
 	{
-		super( BRUTE_HP, BRUTE_STR, BRUTE_DEF, xPos, yPos, BRUTE_WIDTH, BRUTE_HEIGHT, BRUTE_SPEED, Asset.preacher, BRUTE_MELEE_TIMER, BRUTE_AGGRO_RANGE);
+		super( BRUTE_HP, BRUTE_STR, BRUTE_DEF, xPos, yPos, BRUTE_WIDTH, BRUTE_HEIGHT, BRUTE_SPEED, Asset.bruteIdle[0], BRUTE_MELEE_TIMER, BRUTE_AGGRO_RANGE);
 	
 		imgSelect = 0;
 		walkLeftImages = Asset.bruteWalkLeft;

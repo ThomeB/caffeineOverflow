@@ -4,8 +4,8 @@ import java.security.SecureRandom;
 
 public class Shotgun extends Gun
 {
-	public static final float SHOTGUN_HEIGHT = 40;
-	public static final float SHOTGUN_WIDTH = 80;
+	public static final float SHOTGUN_HEIGHT = 30;
+	public static final float SHOTGUN_WIDTH = 70;
 	public static final int SHOTGUN_AMMO_CAPACITY = 30;
 	public static final float SHOTGUN_VELOCITY = .1f;
 	public static final double SHOTGUN_FIRERATE = 1.0;
@@ -54,6 +54,17 @@ public class Shotgun extends Gun
 			//everything is calculated in radians
 		    vx = Math.cos( angle ) * maxVelocity;
 		    vy = Math.sin( angle ) * maxVelocity;
+		    
+		    if( isRightFacing )
+		    {
+		    	xPos += .5f;
+		    	yPos -= .1f;
+		    }
+		    else
+		    {
+		    	xPos -= 0f;
+		    	yPos -= .1f;
+		    }
 		
 			projectiles.add( new ShotgunProjectile( xPos, yPos, (float) vx, (float) vy ) );
 			
@@ -63,7 +74,7 @@ public class Shotgun extends Gun
 			//Slowly increase our angle, to fire in an arc
 			for( int i = 0; i < 30; i++ )
 			{
-				double variation = -.05 + sr.nextDouble() * .05;
+				double variation = -.05 + sr.nextDouble() * .07;
 				angle += .01745;
 				
 				vx = Math.cos( angle ) * (maxVelocity + variation);

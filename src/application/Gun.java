@@ -14,6 +14,7 @@ public abstract class Gun extends Interactable
 	protected String gunName;
 	protected Timer fireRateTimer;
 	protected ArrayList<Projectile> projectiles;
+	protected boolean isRightFacing;
 	
 	/** CONSTRUCTOR **/
 		
@@ -32,8 +33,9 @@ public abstract class Gun extends Interactable
 	public abstract void fire( float xTarget, float yTarget );
 	
 	/** FUNCTIONS **/
-	public void update(Map map)
+	public void update(Map map, boolean rightFacing)
 	{
+		isRightFacing = rightFacing;
 		//Used to see if we can shoot again
 		fireRateTimer.tick();
 		
@@ -96,7 +98,7 @@ public abstract class Gun extends Interactable
 	public void pickup(Character hero)
 	{
 		//if (!despawn) { //if we are not marked for deletion and the gun the character is holding is not what we are trying to pick up
-			boolean canPickUp = false;
+			boolean canPickUp = true;
 			
 			if (hero.getGun() == null || !hero.getGun().equals(this))
 				canPickUp = true;

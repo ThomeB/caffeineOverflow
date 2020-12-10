@@ -104,13 +104,13 @@ public class Game {
 //		enemies.add( e6 );
 //		Entity e7 = new ZippyEnemy( 9 , 8  );
 //		enemies.add( e7 );
-		Entity e8 = new ExplodingBarrel(2, 2, 0.2);
-		enemies.add(e8);
-		Entity e9 = new ExplodingBarrel(2, 5, 0.2);
-		enemies.add(e9);
-		Entity e10 = new ExplodingBarrel(2, 8, 0.2);
-		enemies.add(e10);
-		
+//		Entity e8 = new ExplodingBarrel(2, 2, 0.2);
+//		enemies.add(e8);
+//		Entity e9 = new ExplodingBarrel(2, 5, 0.2);
+//		enemies.add(e9);
+//		Entity e10 = new ExplodingBarrel(2, 8, 0.2);
+//		enemies.add(e10);
+//		
 		Entity e11 = new Boss(50, 14);
 		enemies.add(e11);
 		
@@ -124,11 +124,11 @@ public class Game {
 		HealthPack i3 = new HealthPack( 8, 8 );
 		interactables.add( i3 );
 		
-		Gun pistol1 = new Pistol( 1, 1 );
+		Gun pistol1 = new Pistol( 2, 2 );
 		interactables.add( pistol1 );
-		Gun shotgun = new Shotgun( 3, 2 );
+		Gun shotgun = new Shotgun( 7, 2 );
 		interactables.add( shotgun );
-		Gun handcannon = new HandCannon( 1, 4 );
+		Gun handcannon = new HandCannon( 13, 2 );
 		interactables.add( handcannon );
 		
 		torch = new GameObject[10];
@@ -341,10 +341,14 @@ public class Game {
 		//Add an image to be displayed if die
 		Image youDied = null;
 		youDiedView = new ImageView(youDied);
+		youDiedView.setSmooth(true);
+		youDiedView.setManaged(false);
+		youDiedView.setScaleX(.3);
+		youDiedView.setScaleY(.3);
 		
 		
 		//ui.setManaged( false );
-		ui.getChildren().addAll( healthBar, healthText, keyView, gunView );
+		ui.getChildren().addAll( healthBar, healthText, keyView, gunView, youDiedView );
 		gameRoot.setBottom( ui );
 		gameRoot.setBackground( new Background( new BackgroundFill( Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY ) ) );
 				
@@ -358,8 +362,10 @@ public class Game {
 		    @Override 
 		    public void handle(MouseEvent mouseEvent) {
 		      
-		    	if( character.getGun() != null )
+		    	if( character.getGun() != null && character.isAlive() )
+		    	{
 		    		character.getGun().fire( (float) mouseEvent.getX() + Camera.xOffset, (float) mouseEvent.getY() + Camera.yOffset );
+		    	}
 		     
 		    }
 		  });
@@ -429,7 +435,7 @@ public class Game {
 		{
 			gunView.setScaleX( 1.0 );
 			gunView.setScaleY( 0.8 );
-			gunView.setImage( character.getGun().img );
+			gunView.setImage( Asset.handCannonRight );
 			gunView.setX( 1550 );
 			gunView.setY( -20 );
 		}
@@ -438,7 +444,7 @@ public class Game {
 		{
 			gunView.setScaleX( 0.2 );
 			gunView.setScaleY( 0.2 );
-			gunView.setImage( character.getGun().img );
+			gunView.setImage( Asset.rifleRight );
 			gunView.setX( 1000 );
 			gunView.setY( -170 );
 		}
@@ -447,7 +453,7 @@ public class Game {
 		{
 			gunView.setScaleX( 2.0 );
 			gunView.setScaleY( 2.0 );
-			gunView.setImage( character.getGun().img );
+			gunView.setImage( Asset.shotgunRight );
 			gunView.setX( 1550 );
 			gunView.setY( 0 );
 		}
@@ -455,15 +461,11 @@ public class Game {
 	
 	public void characterDied()
 	{
-		youDiedView.setSmooth(true);
-		youDiedView.setManaged(false);
-		youDiedView.setX( 1000 );
-		youDiedView.setY( -400 );
-		youDiedView.setScaleX(.3);
-		youDiedView.setScaleY(.3);
+		
 		for( int i = 0; i < keysPressed.length; i ++ )
 			keysPressed[i] = false;
-		
+		youDiedView.setX( 1000 );
+		youDiedView.setY( -400 );
 		character.img = Asset.charDead;
 		backgroundMusic.setMute( true );
 		bossMusic.setMute( true );
