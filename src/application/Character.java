@@ -9,8 +9,8 @@ public class Character extends Entity {
 	
 	
 	//Default hero values
-	public static final float CHARACTER_WIDTH = 80;
-	public static final float CHARACTER_HEIGHT = 80;
+	public static final float CHARACTER_WIDTH = 50;
+	public static final float CHARACTER_HEIGHT = 50;
 	public static final float CHARACTER_WALKSPEED = 0.04f;
 	public static final String CHARACTER_NAME = "Bob";
 	public static final int CHARACTER_HEALTH = 5000;

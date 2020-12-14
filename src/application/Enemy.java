@@ -158,7 +158,7 @@ public abstract class Enemy extends Entity{
 						direction[0] = 0;
 					}
 					if (!yTile.equals(".")&&!yTile.equals("D")) { //same but for Y coordinate
-						direction[0] = 0;
+						direction[1] = 0;
 					}
 				}
 				movement(xPos+direction[0],yPos+direction[1]); //call the movement function (sets x + y positions, updates hit box)

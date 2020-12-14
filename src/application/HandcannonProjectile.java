@@ -7,7 +7,7 @@ public class HandcannonProjectile extends Projectile
 {
 	public static final float HANDCANNON_PROJECTILE_WIDTH = 200;
 	public static final float HANDCANNON_PROJECTILE_HEIGHT = 200;
-	public static final int HANDCANNON_PROJECTILE_DAMAGE = 50;
+	public static final int HANDCANNON_PROJECTILE_DAMAGE = 2;
 	
 	private Image[] waterBullets;
 

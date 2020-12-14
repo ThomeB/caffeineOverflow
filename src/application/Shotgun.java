@@ -8,7 +8,7 @@ public class Shotgun extends Gun
 	public static final float SHOTGUN_WIDTH = 70;
 	public static final int SHOTGUN_AMMO_CAPACITY = 30;
 	public static final float SHOTGUN_VELOCITY = .1f;
-	public static final double SHOTGUN_FIRERATE = 1.0;
+	public static final double SHOTGUN_FIRERATE = 0.7;
 	public static final String SHOTGUN_NAME = "Shotgun";
 	
 	private SecureRandom sr;

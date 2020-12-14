@@ -13,7 +13,7 @@ public class BasicEnemy extends Enemy
 	public static final float ENEMY_SPEED = 0.02f;
 	public static final float ENEMY_WIDTH = 64;
 	public static final float ENEMY_HEIGHT = 64;
-	public static final float ENEMY_AGGRO_RANGE = 5;
+	public static final float ENEMY_AGGRO_RANGE = 6;
 	
 	public static final double ENEMY_MELEE_TIMER = .8;
 	

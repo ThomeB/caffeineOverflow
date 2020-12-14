@@ -10,17 +10,18 @@ public class ExplodingBarrel extends Traps{
 	public static final float BARREL_HEIGHT = 60;
 	public static final float BARREL_WIDTH = 60;
 	public static final int BARREL_STR = 200;
-	public static final int BARREL_BLAST_RADIUS = 2;
+	public static final float BARREL_BLAST_RADIUS = 4;
+	public static final double BARREL_INTERVAL = 0.1;
 	public static final Image BARREL_IMAGE = Asset.barrel;
 	
 
 	/*****************
 	 * 	Constructor  *
 	 *****************/
-	public ExplodingBarrel(float xpos, float ypos, Double interval) {
+	public ExplodingBarrel(float xpos, float ypos) {
 		super(BARREL_STR, xpos, ypos, BARREL_WIDTH, BARREL_HEIGHT, BARREL_BLAST_RADIUS, BARREL_IMAGE);
 		images = Asset.barrelExplosion;
-		t = new Timer(interval);
+		t = new Timer(BARREL_INTERVAL);
 		imgSelect = 0;
 	}
 	
@@ -35,11 +36,11 @@ public class ExplodingBarrel extends Traps{
 	//overloaded render dealing with dynamic images
 		public void dynamicRender(GraphicsContext gc) {
 				if(!t.isOnCooldown() && imgSelect < images.length) {
-					gc.drawImage(images[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset - (width*2.5), yPos*Tile.TILEHEIGHT - Camera.yOffset - (width*2.5), width*6, height*6);
+					gc.drawImage(images[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset - (width*blastRadius*1.25), yPos*Tile.TILEHEIGHT - Camera.yOffset - (width*blastRadius*1.25), width*12, height*12);
 					t.setOnCooldown(true);
 					imgSelect++;
 				} else {
-					gc.drawImage(images[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset - (width*2.5), yPos*Tile.TILEHEIGHT - Camera.yOffset - (width*2.5), width*6, height*6);
+					gc.drawImage(images[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset - (width*blastRadius*1.25), yPos*Tile.TILEHEIGHT - Camera.yOffset - (width*blastRadius*1.25), width*12, height*12);
 				}
 				
 				if(imgSelect >= images.length)

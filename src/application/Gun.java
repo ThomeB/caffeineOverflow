@@ -51,7 +51,7 @@ public abstract class Gun extends Interactable
 			}
 			
 			//first check: should we despawn from distance?
-			if( Utility.getDistance( p.initialXPos, p.initialYPos, p.xPos, p.yPos ) > 6 )
+			if( Utility.getDistance( p.initialXPos, p.initialYPos, p.xPos, p.yPos ) > 5 )
 			{
 				projectiles.remove( i );
 			}//then check: did we hit an enemy?
@@ -61,7 +61,7 @@ public abstract class Gun extends Interactable
 					//if the enemy exists, is alive, and we collide with it, then remove the projectile and damage the enemy
 					if ( enemy != null && enemy.isAlive() && Utility.collidesWithGameObject(p, enemy)) {
 						enemy.takeDmg(p);//takeDmg is in Entity
-						projectiles.remove(i);
+						//projectiles.remove(i);
 						didHit = true;
 						break;
 					}

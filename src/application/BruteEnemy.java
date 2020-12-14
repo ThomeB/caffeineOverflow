@@ -14,7 +14,7 @@ public class BruteEnemy extends Enemy
 	public static final float BRUTE_SPEED = 0.01f;
 	public static final float BRUTE_WIDTH = 200;
 	public static final float BRUTE_HEIGHT = 200;
-	public static final float BRUTE_AGGRO_RANGE = 10;
+	public static final float BRUTE_AGGRO_RANGE = 6;
 	
 	public static final double BRUTE_MELEE_TIMER = 4;
 	

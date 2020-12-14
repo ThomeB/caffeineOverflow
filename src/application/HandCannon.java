@@ -6,7 +6,7 @@ public class HandCannon extends Gun
 	public static final float HANDCANNON_HEIGHT = 60;
 	public static final float HANDCANNON_WIDTH = 90;
 	public static final int HANDCANNON_AMMO_CAPACITY = 30;
-	public static final float HANDCANNON_VELOCITY = .08f;
+	public static final float HANDCANNON_VELOCITY = .05f;
 	public static final double HANDCANNON_FIRERATE = 1.0;
 	public static final String HANDCANNON_NAME = "Hand Cannon";
 	
@@ -65,4 +65,46 @@ public class HandCannon extends Gun
 		
 		
 	}
+	
+	public void update(Map map, boolean rightFacing)
+	{
+		isRightFacing = rightFacing;
+		//Used to see if we can shoot again
+		fireRateTimer.tick();
+		
+		
+		for( int i = 0; i < projectiles.size(); i++ )
+		{
+			Projectile p = projectiles.get( i );
+			
+			if( p != null )
+			{
+				p.update();
+			}
+			
+			//first check: should we despawn from distance?
+			if( Utility.getDistance( p.initialXPos, p.initialYPos, p.xPos, p.yPos ) > 5 )
+			{
+				projectiles.remove( i );
+			}//then check: did we hit an enemy?
+			else {
+				boolean didHit = false;
+				for (Entity enemy : Game.enemies) {
+					//if the enemy exists, is alive, and we collide with it, then remove the projectile and damage the enemy
+					if ( enemy != null && enemy.isAlive() && Utility.collidesWithGameObject(p, enemy)) {
+						enemy.takeDmg(p);//takeDmg is in Entity
+						//projectiles.remove(i);
+						didHit = true;
+						break;
+					}
+				}
+				if (!didHit) {//didn't hit an enemy? Let's see if we are in a wall
+					String tileOn = map.getTile((int)p.xPos, (int)p.yPos);//potential room for error here if we are out of bounds for some reason
+					if (!tileOn.equals(".")) {//if we are not in one of these tiles, then remove the projectile
+						projectiles.remove(i);
+					}
+				}
+			}
+		}
+	};
 }

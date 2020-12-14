@@ -89,27 +89,8 @@ public class Game {
 		pickupDebounceTimer = new Timer( 2 );
 		pendingEnemies = new ArrayList<Entity>(5);
 		//Create 5 enemies and link them to our enemies ArrayList
-		enemies = new ArrayList<Entity>(5);
-//		Entity e1 = new BruteEnemy( 2 , 3 );
-//		enemies.add( e1 );
-//		Entity e2 = new BasicEnemy( 5, 7  );
-//		enemies.add( e2 );
-//		Entity e3 = new ZippyEnemy( 10, 10 );
-//		enemies.add( e3 );
-//		Entity e4 = new BasicEnemy( 8, 4 );
-//		enemies.add( e4 );
-//		Entity e5 = new BruteEnemy( 3 , 6  );
-//		enemies.add( e5 );
-//		Entity e6 = new ZippyEnemy( 10 , 11  );
-//		enemies.add( e6 );
-//		Entity e7 = new ZippyEnemy( 9 , 8  );
-//		enemies.add( e7 );
-//		Entity e8 = new ExplodingBarrel(2, 2, 0.2);
-//		enemies.add(e8);
-//		Entity e9 = new ExplodingBarrel(2, 5, 0.2);
-//		enemies.add(e9);
-//		Entity e10 = new ExplodingBarrel(2, 8, 0.2);
-//		enemies.add(e10);
+		enemies = new ArrayList<Entity>();
+		enemies = createEnemies("resources/maps/enemyMap.txt");
 //		
 		Entity e11 = new Boss(50, 14);
 		enemies.add(e11);
@@ -119,18 +100,22 @@ public class Game {
 		interactables = new ArrayList<Interactable>(10);
 		Key i1 = new Key( 10, 10 );
 		interactables.add( i1 );
+		Key i5 = new Key( 2, 3 );
+		interactables.add( i5 );
 		Door i2 = new Door( 40, 12, map );
 		interactables.add( i2 );
 		HealthPack i3 = new HealthPack( 8, 8 );
 		interactables.add( i3 );
 		Door i4 = new Door( 55, 12, map );
 		interactables.add( i4 );
+		Door i7 = new Door( 3, 6, map );
+		interactables.add( i7 );
 		
 		Gun pistol1 = new Pistol( 2, 2 );
 		interactables.add( pistol1 );
-		Gun shotgun = new Shotgun( 7, 2 );
+		Gun shotgun = new Shotgun( 4, 4 );
 		interactables.add( shotgun );
-		Gun handcannon = new HandCannon( 13, 2 );
+		Gun handcannon = new HandCannon( 1, 4 );
 		interactables.add( handcannon );
 		
 		torch = new GameObject[10];
@@ -482,6 +467,44 @@ public class Game {
 		}else {
 			System.exit(0);//close the game
 		}
+	}
+	
+	public ArrayList<Entity> createEnemies( String path )
+	{
+		ArrayList<Entity> enemies = new ArrayList<Entity>();
+		
+		String[] tokens = Utility.loadTokens(path);
+		
+		int width = Integer.parseInt( tokens[0] );
+		int height = Integer.parseInt( tokens[1] );
+		
+		String[][] map = new String[height][width];
+		
+		for( int y = 0; y < height; y++ )
+		{
+			for( int x = 0; x < width; x++ )
+			{
+				map[y][x] = tokens[ (x + y * width) + 2 ].toString();
+			}
+		}
+		
+		//We have our symbols, now let's see where to load enemies
+		for( int y = 0; y < height; y++ )
+		{
+			for( int x = 0; x < width; x++ )
+			{
+				if(map[y][x].equals("Z") )
+					enemies.add( new ZippyEnemy( x, y) );
+				if(map[y][x].equals("E") )
+					enemies.add( new BasicEnemy( x, y) );
+				if(map[y][x].equals("A") )
+					enemies.add( new BruteEnemy( x, y) );
+				if(map[y][x].equals("P") )
+					enemies.add( new ExplodingBarrel( x, y) );
+			}
+		}
+		
+		return enemies;
 	}
 	
 	/*************************************************************
