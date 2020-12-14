@@ -29,7 +29,7 @@ public class Boss extends Enemy {
 		super( BOSS_HP, BOSS_STR, BOSS_DEF, xPos, yPos, BOSS_WIDTH, BOSS_HEIGHT, BOSS_SPEED, Asset.wizardForm1, BOSS_MELEE_TIMER, BOSS_AGGRO_RANGE);
 		rangeAbilityTimerSwirl = new Timer(2.5);
 		rangeAbilityTimerAim = new Timer(2);
-		spawnAbilityTimer = new Timer(1.5);
+		spawnAbilityTimer = new Timer(2);
 		projectiles = new ArrayList<Projectile>(8);
 		//Need to change hitbox a little bit, because the picture is too big
 		hitBox = new Rectangle( xPos * Tile.TILEWIDTH, yPos * Tile.TILEHEIGHT, width - 30, height - 30 );
@@ -69,7 +69,7 @@ public class Boss extends Enemy {
 			}
 			
 			//first check: should we despawn from distance?
-			if( Utility.getDistance( p.initialXPos, p.initialYPos, p.xPos, p.yPos ) > 6 )
+			if( Utility.getDistance( p.initialXPos, p.initialYPos, p.xPos, p.yPos ) > 10 )
 			{
 				projectiles.remove( i );
 			}//then check: did we hit an enemy?
@@ -110,7 +110,7 @@ public class Boss extends Enemy {
 			for (int i = 0; i < (phase==0? swirlDirections.length/2 : swirlDirections.length); i++) {
 				float xDir = swirlDirections[i][0];
 				float yDir = swirlDirections[i][1];
-				Projectile p = new BossSlowProjectile(this.xPos,this.yPos,xDir*.1f,yDir*.1f);
+				Projectile p = new BossSlowProjectile(this.xPos,this.yPos,xDir*.05f,yDir*.05f);
 				projectiles.add(p);
 			}
 			rangeAbilityTimerSwirl.setOnCooldown( true );
@@ -125,7 +125,7 @@ public class Boss extends Enemy {
 				direction[0] = (dx / magnitude) ; //normalize the vector
 				direction[1] = (dy / magnitude) ; //same but for y
 			}
-			Projectile p = new BossBigProjectile(this.xPos,this.yPos,direction[0]*.1f,direction[1]*.1f);
+			Projectile p = new BossBigProjectile(this.xPos,this.yPos,direction[0]*.03f,direction[1]*.03f);
 			projectiles.add(p);
 			rangeAbilityTimerAim.setOnCooldown(true);
 		}

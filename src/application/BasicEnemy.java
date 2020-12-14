@@ -6,11 +6,11 @@ import javafx.scene.paint.Color;
 
 public class BasicEnemy extends Enemy
 {
-	public static final int ENEMY_HP = 50;
-	public static final int ENEMY_STR = 3;
+	public static final int ENEMY_HP = 150;
+	public static final int ENEMY_STR = 15;
 	public static final int ENEMY_DEF = 0;
 	
-	public static final float ENEMY_SPEED = 0.02f;
+	public static final float ENEMY_SPEED = 0.025f;
 	public static final float ENEMY_WIDTH = 64;
 	public static final float ENEMY_HEIGHT = 64;
 	public static final float ENEMY_AGGRO_RANGE = 6;

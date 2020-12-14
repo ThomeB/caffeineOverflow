@@ -4,7 +4,7 @@ public class PistolProjectile extends Projectile
 {
 	public static final float PISTOL_PROJECTILE_WIDTH = 20;
 	public static final float PISTOL_PROJECTILE_HEIGHT = 20;
-	public static final int PISTOL_PROJECTILE_DAMAGE = 10;
+	public static final int PISTOL_PROJECTILE_DAMAGE = 8;
 
 	public PistolProjectile(float xpos, float ypos, float xVelocity, float yVelocity ) 
 	{

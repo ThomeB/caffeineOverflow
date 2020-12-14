@@ -4,8 +4,8 @@ package application;
 //not much to this class
 public class Pistol extends Gun{
 	
-	public static final float PISTOL_HEIGHT = 30;
-	public static final float PISTOL_WIDTH = 60;
+	public static final float PISTOL_HEIGHT = 20;
+	public static final float PISTOL_WIDTH = 40;
 	public static final int PISTOL_AMMO_CAPACITY = 30;
 	public static final float PISTOL_VELOCITY = .3f;
 	public static final double PISTOL_FIRERATE = 0.01;

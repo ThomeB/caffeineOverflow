@@ -13,7 +13,7 @@ public class Character extends Entity {
 	public static final float CHARACTER_HEIGHT = 50;
 	public static final float CHARACTER_WALKSPEED = 0.04f;
 	public static final String CHARACTER_NAME = "Bob";
-	public static final int CHARACTER_HEALTH = 5000;
+	public static final int CHARACTER_HEALTH = 300;
 	public static final int CHARACTER_STR = 5;
 	public static final int CHARACTER_DEF = 1;
 	
@@ -42,7 +42,7 @@ public class Character extends Entity {
 		leftFacing = false;
 		t = new Timer(0.1);
 		imgSelect = 0;
-		//gun = new Pistol( xPos, yPos );
+		gun = new Pistol( xPos, yPos );
 		
 	}
 	
@@ -213,20 +213,20 @@ public class Character extends Entity {
 			if( gun instanceof Pistol && leftFacing)
 			{
 				gun.img = Asset.rifleLeft;
-				gun.setxPos( xPos - 0.25f );
-				gun.setyPos( yPos + 0.16f );
+				gun.setxPos( xPos - 0.32f );
+				gun.setyPos( yPos + 0.11f );
 				gun.update( map, false );
 			} else if (gun instanceof Pistol) {
 				gun.img = Asset.rifleRight;
 				gun.setxPos( xPos + 0.45f );
-				gun.setyPos( yPos + 0.16f );
+				gun.setyPos( yPos + 0.11f );
 				gun.update( map, true );
 			}
 			
 			if( gun instanceof Shotgun && leftFacing )
 			{
 				gun.img = Asset.shotgunLeft;
-				gun.setxPos( xPos - 0.46f );
+				gun.setxPos( xPos - 0.36f );
 				gun.setyPos( yPos + 0.12f );
 				gun.update( map, false );
 			} else if (gun instanceof Shotgun) {

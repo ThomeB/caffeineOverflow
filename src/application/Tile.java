@@ -38,8 +38,8 @@ public class Tile
 	public static Tile doorTile = new Tile( Asset.doorImage, "D");
 	
 	
-	public static final float TILEWIDTH = 64;
-	public static final float TILEHEIGHT = 64;
+	public static final float TILEWIDTH = 75;
+	public static final float TILEHEIGHT = 75;
 	
 	private Image texture;
 	

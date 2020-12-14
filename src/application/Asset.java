@@ -78,6 +78,7 @@ public class Asset
 	public static MediaPlayer zombieMusic;
 	public static MediaPlayer victoryMusic;
 	public static MediaPlayer youDied;
+	public static MediaPlayer fuckYou;
 	
 	//Made it static so we don't have to instantiate this class to load all of our images in memory
 	public static void init()
@@ -228,8 +229,9 @@ public class Asset
 		//SOUND BYTES
 		hauntedForest = loadMedia("resources/music/HauntedForest.mp3");
 		zombieMusic = loadMedia("resources/music/ZombieMusic.mp3");
-		victoryMusic = loadMedia("resources/music/VictoryMusic.mp3");
+		victoryMusic = loadMedia("resources/music/VictoryMusicV2.m4a");
 		youDied = loadMedia("resources/music/YouDied.mp3");
+		fuckYou = loadMedia("resources/music/fuckYou.m4a");
 		
 	}
 	

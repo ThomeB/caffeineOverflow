@@ -5,8 +5,8 @@ import javafx.scene.image.Image;
 
 public class BossBigProjectile extends Projectile
 {
-	public static final float BOSS_BIG_PROJECTILE_WIDTH = 50;
-	public static final float BOSS_BIG_PROJECTILE_HEIGHT = 50;
+	public static final float BOSS_BIG_PROJECTILE_WIDTH = 100;
+	public static final float BOSS_BIG_PROJECTILE_HEIGHT = 100;
 	public static final int BOSS_BIG_PROJECTILE_DAMAGE = 100;
 
 	private Image[] waterBullets;

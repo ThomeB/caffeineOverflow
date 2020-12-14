@@ -45,6 +45,7 @@ public class Game {
 	private MediaPlayer bossMusic;
 	private MediaPlayer victoryMusic;
 	private MediaPlayer youDiedMusic;
+	private MediaPlayer fuckYou;
 	
 	public static GraphicsContext gc;
 	public static Character character;
@@ -52,7 +53,7 @@ public class Game {
 	public static ArrayList<Entity> enemies;
 	public static ArrayList<Entity> pendingEnemies;
 	public static ArrayList<Interactable> interactables;
-	public static GameObject[] torch;
+	public static ArrayList<GameObject> torch;
 	
 	
 	private double height;
@@ -90,14 +91,16 @@ public class Game {
 		pendingEnemies = new ArrayList<Entity>(5);
 		//Create 5 enemies and link them to our enemies ArrayList
 		enemies = new ArrayList<Entity>();
-		enemies = createEnemies("resources/maps/enemyMap.txt");
+		torch = new ArrayList<GameObject>(30);
+		interactables = new ArrayList<Interactable>(40);
+		createGameObjects("resources/maps/enemyMap.txt");
 //		
 		Entity e11 = new Boss(50, 14);
 		enemies.add(e11);
 		
 		//Create a gun on the map
 		
-		interactables = new ArrayList<Interactable>(10);
+		/*interactables = new ArrayList<Interactable>(10);
 		Key i1 = new Key( 10, 10 );
 		interactables.add( i1 );
 		Key i5 = new Key( 2, 3 );
@@ -116,12 +119,8 @@ public class Game {
 		Gun shotgun = new Shotgun( 4, 4 );
 		interactables.add( shotgun );
 		Gun handcannon = new HandCannon( 1, 4 );
-		interactables.add( handcannon );
+		interactables.add( handcannon );*/
 		
-		torch = new GameObject[10];
-		for(int x = 0; x < torch.length; x++) {
-			torch[x] = new GameObject((x+1)*2, 0, 32, 90, Asset.torchLight, 0.05);
-		}
 		
 		backgroundMusic = Asset.hauntedForest;
 		backgroundMusic.setAutoPlay(true);
@@ -139,6 +138,8 @@ public class Game {
 		
 		youDiedMusic = Asset.youDied;
 		youDiedMusic.setAutoPlay(false);
+		
+		fuckYou = Asset.fuckYou;
 		
 		createScenes();
 		stage.setScene( gameScene );
@@ -205,6 +206,7 @@ public class Game {
 		{
 			backgroundMusic.setMute( true );
 			bossMusic.setAutoPlay(true);
+			fuckYou.setAutoPlay(true);
 			map.setTile("V", 40, 12);
 		}
 		
@@ -271,8 +273,9 @@ public class Game {
 		/*
 		 * Torches
 		 */
-		for(int x = 0; x < torch.length; x++) {
-			torch[x].dynamicRender(gc);
+		for(int x = 0; x < torch.size(); x++) {
+			if( torch.get(x) != null )
+				torch.get(x).dynamicRender(gc);
 		}
 		
 		character.render(gc);
@@ -438,8 +441,8 @@ public class Game {
 		
 		if( character.getGun() instanceof Shotgun )
 		{
-			gunView.setScaleX( 2.0 );
-			gunView.setScaleY( 2.0 );
+			gunView.setScaleX( 0.8 );
+			gunView.setScaleY( 0.8 );
 			gunView.setImage( Asset.shotgunRight );
 			gunView.setX( 1550 );
 			gunView.setY( 0 );
@@ -451,7 +454,7 @@ public class Game {
 		
 		for( int i = 0; i < keysPressed.length; i ++ )
 			keysPressed[i] = false;
-		youDiedView.setX( 1000 );
+		youDiedView.setX( 1100 );
 		youDiedView.setY( -400 );
 		character.img = Asset.charDead;
 		backgroundMusic.setMute( true );
@@ -469,9 +472,9 @@ public class Game {
 		}
 	}
 	
-	public ArrayList<Entity> createEnemies( String path )
+	public void createGameObjects( String path )
 	{
-		ArrayList<Entity> enemies = new ArrayList<Entity>();
+		
 		
 		String[] tokens = Utility.loadTokens(path);
 		
@@ -493,6 +496,7 @@ public class Game {
 		{
 			for( int x = 0; x < width; x++ )
 			{
+				//add enemies
 				if(map[y][x].equals("Z") )
 					enemies.add( new ZippyEnemy( x, y) );
 				if(map[y][x].equals("E") )
@@ -500,11 +504,30 @@ public class Game {
 				if(map[y][x].equals("A") )
 					enemies.add( new BruteEnemy( x, y) );
 				if(map[y][x].equals("P") )
-					enemies.add( new ExplodingBarrel( x, y) );
+					enemies.add( new ExplodingBarrel(x + .5f, y +.5f) );
+				
+				//add interactables
+				if(map[y][x].equals("K") )
+					interactables.add( new Key(x + .5f, y +.5f ) );
+				if(map[y][x].equals("+") )
+					interactables.add( new HealthPack(x + .5f, y +.5f ) );
+				if(map[y][x].equals("D") )
+					interactables.add( new Door(x, y, this.map ) );
+				if(map[y][x].equals("1") )
+					interactables.add( new HandCannon(x + .5f, y +.5f ) );
+				if(map[y][x].equals("2") )
+					interactables.add( new Shotgun(x + .5f, y +.5f) );
+				if(map[y][x].equals("3") )
+					interactables.add( new Pistol(x + .5f, y +.5f) );
+				
+				//Add torches
+				if(map[y][x].equals("X" ) )
+					torch.add( new GameObject( x + 0.5f, y, 16, 45, Asset.torchLight, 0.05) );
+				
 			}
 		}
 		
-		return enemies;
+		
 	}
 	
 	/*************************************************************

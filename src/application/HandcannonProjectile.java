@@ -5,8 +5,8 @@ import javafx.scene.image.Image;
 
 public class HandcannonProjectile extends Projectile
 {
-	public static final float HANDCANNON_PROJECTILE_WIDTH = 200;
-	public static final float HANDCANNON_PROJECTILE_HEIGHT = 200;
+	public static final float HANDCANNON_PROJECTILE_WIDTH = 100;
+	public static final float HANDCANNON_PROJECTILE_HEIGHT = 100;
 	public static final int HANDCANNON_PROJECTILE_DAMAGE = 2;
 	
 	private Image[] waterBullets;
@@ -29,6 +29,9 @@ public class HandcannonProjectile extends Projectile
 		}
 		
 		img = waterBullets[ imgSelect / 40 ];
+		
+		width += 1;
+		height += 1;
 		
 		gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
 	}

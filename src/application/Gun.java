@@ -61,7 +61,7 @@ public abstract class Gun extends Interactable
 					//if the enemy exists, is alive, and we collide with it, then remove the projectile and damage the enemy
 					if ( enemy != null && enemy.isAlive() && Utility.collidesWithGameObject(p, enemy)) {
 						enemy.takeDmg(p);//takeDmg is in Entity
-						//projectiles.remove(i);
+						projectiles.remove(i);
 						didHit = true;
 						break;
 					}
