@@ -10,14 +10,14 @@ public class Traps extends Entity{
 	public static final int TRAP_DEF = 0;
 	public static final float TRAP_WALKSPEED = 0.0f;
 	
-	protected int blastRadius;
+	protected float blastRadius;
 	
 	
 	/*****************
 	 *  Constructor  *
 	 *****************/
 	//specific traps will need to implement their Strength, Position, Size and Image
-	public Traps(int str, float xpos, float ypos, float width, float height, int blastRadius, Image img) {
+	public Traps(int str, float xpos, float ypos, float width, float height, float blastRadius, Image img) {
 		super(TRAP_HP, str, TRAP_DEF, xpos, ypos, width, height, TRAP_WALKSPEED, img);
 		
 		this.blastRadius = blastRadius;

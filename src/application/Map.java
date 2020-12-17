@@ -6,9 +6,6 @@
  ********************/
 package application;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 import javafx.scene.canvas.GraphicsContext;
 
@@ -25,11 +22,12 @@ public class Map
 	private int width;
 	private int height;
 	private String[][] map;
-	private String path = "";
+	private String[] tokens;
+	
 	
 	public Map( String path )
 	{
-		this.path = path;
+		tokens = Utility.loadTokens(path);
 		loadMap();
 	}
 	
@@ -56,29 +54,7 @@ public class Map
 	
 	private void loadMap()
 	{
-		StringBuilder builder = new StringBuilder();
 		
-		//load map as a string
-		try 
-		{
-			BufferedReader br = new BufferedReader( new FileReader( path ) );
-			String line;
-			
-			while( ( line = br.readLine() ) != null )
-				builder.append( line + "\n" );
-			
-			br.close();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-			System.out.println( "Unable to load map file." );
-			System.exit( 1 );
-		}
-		
-		//Iterate through string and add tileID's to String[][] tiles
-		String file = builder.toString();
-		String[] tokens = file.split( "\\s+" );
 		width = Integer.parseInt( tokens[0] );
 		height = Integer.parseInt( tokens[1] );
 		

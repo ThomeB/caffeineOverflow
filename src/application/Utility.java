@@ -1,7 +1,10 @@
 package application;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -201,6 +204,39 @@ public class Utility {
 		}
 	}
 	
+	public static String[] loadTokens(String path)
+	{
+		
+		StringBuilder builder = new StringBuilder();
+		
+		//load map as a string
+		try 
+		{
+			BufferedReader br = new BufferedReader( new FileReader( path ) );
+			String line;
+			
+			while( ( line = br.readLine() ) != null )
+				builder.append( line + "\n" );
+			
+			br.close();
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+			System.out.println( "Unable to load map file." );
+			System.exit( 1 );
+		}
+		
+		//Iterate through string and add tileID's to String[][] tiles
+		String file = builder.toString();
+		String[] tokens = file.split( "\\s+" );
+		
+		
+		return tokens;
+	}
+
+	
+	
 }
 
 class dStarEntry{
@@ -215,5 +251,7 @@ class dStarEntry{
 		this.coords = coords;
 		this.id = id;
 	}
+	
+	
 	
 }

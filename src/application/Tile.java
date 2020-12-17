@@ -27,6 +27,7 @@ public class Tile
 	public static HashMap<String, Tile> tiles = new HashMap<String, Tile>(20);
 	
 	public static Tile floorTile = new Tile( Asset.floorImage, ".");
+	public static Tile grassTile = new Tile( Asset.grassImage, ",");
 	public static Tile topWallTile = new Tile( Asset.topWallImage, "T");
 	public static Tile cornerTile = new Tile( Asset.cornerImage, "C");
 	public static Tile bottomWallTile = new Tile( Asset.bottomWallImage, "B");
@@ -37,8 +38,8 @@ public class Tile
 	public static Tile doorTile = new Tile( Asset.doorImage, "D");
 	
 	
-	public static final float TILEWIDTH = 90;
-	public static final float TILEHEIGHT = 90;
+	public static final float TILEWIDTH = 75;
+	public static final float TILEHEIGHT = 75;
 	
 	private Image texture;
 	

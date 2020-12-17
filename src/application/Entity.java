@@ -12,10 +12,14 @@ public abstract class Entity extends GameObject {
 	protected int str = 0;
 	protected int def = 0;
 	protected int dmgTaken;
+	protected Image[] left;
+	protected Image[] right;
+	protected Image[] idle;
+	protected Image[] attack;
 	protected boolean tookDmg;
 	//protected Gun wpnEquip = null;
 	private boolean isAlive = true;
-	private float walkSpeed = 1.0f;
+	protected float walkSpeed = 1.0f;
 	
 	public int counter = 0;
 	
@@ -113,7 +117,7 @@ public abstract class Entity extends GameObject {
 		
 		//Needed for dmg indicators
 		tookDmg = true;
-		dmgTaken = dmg;
+		dmgTaken += dmg;
 		dmgTakenTimer.reset();
 		dmgTakenTimer.setOnCooldown( true );
 		
@@ -149,7 +153,10 @@ public abstract class Entity extends GameObject {
 			dmgTakenTimer.tick();
 		
 		if( !dmgTakenTimer.isOnCooldown() )
+		{
 			tookDmg = false;
+			dmgTaken = 0;
+		}
 	}
 	
 	//update hitbox - called when movement occurs

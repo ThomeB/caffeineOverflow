@@ -4,33 +4,34 @@ import java.util.ArrayList;
 
 import javafx.scene.image.Image;
 
-public class Enemy extends Entity{
+public abstract class Enemy extends Entity{
 	//class variables
-	public static final int ENEMY_HP = 50;
-	public static final int ENEMY_STR = 3;
-	public static final int ENEMY_DEF = 0;
 	
-	public static final float ENEMY_SPEED = 0.05f;
-	public static final float ENEMY_WIDTH = 64;
-	public static final float ENEMY_HEIGHT = 64;
-	public static final float ENEMY_AGGRO_RANGE = 5;
 	
 	public static Map map; //one time setup, could've been in the constructor but this might make things quicker
 	
+	protected Timer meleeAbilityTimer;
+	protected float aggroRange;
+	
 	//path related variables
-	private Timer meleeAbilityTimer;
 	private ArrayList<float[]> path;
 	private int iterator;
 	private float [] goalCoords = new float [2];
 	
+	protected boolean movingLeft;
+	protected boolean movingRight;
+	protected boolean attacking;
+	protected boolean idle;
+	
 	/******************
 	 * 	Constructors  *
 	 ******************/
-	public Enemy( float xPos, float yPos)
+	public Enemy( int health, int str, int def, float xPos, float yPos, float width, float height, float speed, Image img, double timerDuration, float aggroRange )
 	{
-		super( ENEMY_HP, ENEMY_STR, ENEMY_DEF,  xPos, yPos, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_SPEED, Asset.ghostAlive );
+		super( health, str, def,  xPos, yPos, width, height, speed, img );
 		
-		meleeAbilityTimer = new Timer(6);
+		meleeAbilityTimer = new Timer( timerDuration );
+		this.aggroRange = aggroRange;
 	}
 	
 
@@ -52,7 +53,10 @@ public class Enemy extends Entity{
 	
 	//what to do when enemy dies
 	public void death() {
-	
+	if (Math.random() > .9) {
+		HealthPack healthPack = new HealthPack( xPos, yPos );
+		Game.interactables.add( healthPack );
+	}
 	}
 	
 	public boolean isATrap() {
@@ -66,8 +70,29 @@ public class Enemy extends Entity{
 		meleeAbilityTimer.tick();
 		updateDmgTakenTimer();
 		
+		//Zombie will be idle if not near player
+		idle = true;
+		movingLeft = false;
+		movingRight = false;
+		attacking = false;
+		
 		double distance = Utility.getDistance(character, this);
-		if (distance < ENEMY_AGGRO_RANGE) {//if we are within the range of sight
+		if (distance < aggroRange && character.isAlive() ) {//if we are within the range of sight
+			
+			//Check to see if use left or right images array
+			if( character.xPos < xPos ) {
+				movingLeft = true;
+				movingRight = false;
+				attacking = false;
+				idle = false;
+			}
+			else {
+				movingRight = true;
+				movingLeft = false;
+				attacking = false;
+				idle = false;
+			}
+			
 			boolean usePath = false;
 			if (distance > 2) {//we have to justify using path finding. If we are too close then don't use it.
 				if (path == null) { //if we don't have a path, make one.
@@ -104,6 +129,11 @@ public class Enemy extends Entity{
 				goalCoords[0] = xPos;
 				goalCoords[1] = yPos;
 				
+				attacking = true;
+				movingLeft = false;
+				movingRight = false;
+				idle = false;
+				
 				//enemies are also close enough to damage the character
 				if( !meleeAbilityTimer.isOnCooldown() )
 				{
@@ -119,8 +149,8 @@ public class Enemy extends Entity{
 			float [] direction = {dx, dy}; //turn that into a vector
 			float magnitude = (float) Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)); //get the magnitude of the vector
 			if (magnitude > 0) { //if magnitude == 0, we are not moving, so we can ignore
-				direction[0] = (dx / magnitude) * ENEMY_SPEED; //normalize the vector, then multiply it by the speed
-				direction[1] = (dy / magnitude) * ENEMY_SPEED; //same but for y
+				direction[0] = (dx / magnitude) * walkSpeed; //normalize the vector, then multiply it by the speed
+				direction[1] = (dy / magnitude) * walkSpeed; //same but for y
 				if (!usePath) { //we can ignore walls if using paths because our paths already check for walls
 					String xTile = map.getTile((int) (xPos + direction[0]), (int) yPos); //check our x updated position to see if it's bumping into a wall
 					String yTile = map.getTile((int) xPos, (int) (yPos + direction[1])); //check our y updated position to see if it's bumping into a wall
@@ -128,7 +158,7 @@ public class Enemy extends Entity{
 						direction[0] = 0;
 					}
 					if (!yTile.equals(".")&&!yTile.equals("D")) { //same but for Y coordinate
-						direction[0] = 0;
+						direction[1] = 0;
 					}
 				}
 				movement(xPos+direction[0],yPos+direction[1]); //call the movement function (sets x + y positions, updates hit box)

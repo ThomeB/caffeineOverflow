@@ -3,14 +3,15 @@ package application;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Character extends Entity {
 	
 	
 	//Default hero values
-	public static final float CHARACTER_WIDTH = 64;
-	public static final float CHARACTER_HEIGHT = 64;
-	public static final float CHARACTER_WALKSPEED = 0.1f;
+	public static final float CHARACTER_WIDTH = 50;
+	public static final float CHARACTER_HEIGHT = 50;
+	public static final float CHARACTER_WALKSPEED = 0.04f;
 	public static final String CHARACTER_NAME = "Bob";
 	public static final int CHARACTER_HEALTH = 300;
 	public static final int CHARACTER_STR = 5;
@@ -18,9 +19,10 @@ public class Character extends Entity {
 	
 	//class variables
 	private String name;
-	private int keys;
 	private float velocityX = 0;
 	private float velocityY = 0;
+	private boolean stopped;
+	private boolean leftFacing;
 	private Gun gun;
 	private final float ACCELERATION = 1;//0.1f;
 	private boolean hasKey = false;
@@ -31,12 +33,16 @@ public class Character extends Entity {
 	 ******************/
 	public Character( float xpos, float ypos, Camera camera ) {
 		
-		super(CHARACTER_HEALTH, CHARACTER_STR, CHARACTER_DEF, xpos, ypos, CHARACTER_WIDTH, CHARACTER_HEIGHT, CHARACTER_WALKSPEED, Asset.bigASSKNIGHT);
+		super(CHARACTER_HEALTH, CHARACTER_STR, CHARACTER_DEF, xpos, ypos, CHARACTER_WIDTH, CHARACTER_HEIGHT, CHARACTER_WALKSPEED, Asset.heroR[0]);
 		this.name = CHARACTER_NAME;
-		keys = 0;
 		this.camera = camera;
-		
-		//gun = new Pistol( xPos, yPos );
+		right = Asset.heroR;
+		left = Asset.heroL;
+		stopped = true;
+		leftFacing = false;
+		t = new Timer(0.1);
+		imgSelect = 0;
+		gun = new Pistol( xPos, yPos );
 		
 	}
 	
@@ -100,7 +106,7 @@ public class Character extends Entity {
 				if (coordY > map.getHeight()-1)
 					coordY = map.getHeight()-1;
 				String tileType = map.getTile( coordX , coordY );
-				if (!tileType.equals(".")) {// we ignore certain wall types for collision checking
+				if (!tileType.equals(".") && !tileType.equals(",")) {// we ignore certain wall types for collision checking
 					canMove = !Utility.collidesWithWall(newHitbox, coordX, coordY); //if we don't collide with a wall, we can still move (inverse relationship)
 					if (!canMove) {
 						break;
@@ -124,11 +130,23 @@ public class Character extends Entity {
 		//if this doesn't work/feel right, then it can be removed by simply making velX and velY the same as dx and dy immediately after dx and dy are declared
 		// OR setting acceleration to be 1.0f (speed may need to be reduced)
 		// x-coordinates
+		if(dx == 0 && dy == 0) {
+			stopped = true;
+		} else {stopped = false;}
+		
+		if(dx > 0) {
+			leftFacing = false;
+		} else if (dx < 0) {
+			leftFacing = true;
+		}
+		
 		float accel = ACCELERATION * speed;
-		if (dx > velocityX && dx != 0)
+		if (dx > velocityX && dx != 0) {
 			setVelocityX(velocityX+accel);
-		else if (dx < velocityX && dx != 0)
+		}
+		else if (dx < velocityX && dx != 0) {
 			setVelocityX(velocityX-accel);
+		}
 		else if (dx == 0)
 			setVelocityX(velocityX/2);
 		// y-coordinates
@@ -179,23 +197,85 @@ public class Character extends Entity {
 		
 		if( gun != null )
 		{
-			gun.setxPos( xPos + 0.6f );
-			gun.setyPos( yPos + 0.5f );
-			gun.update( map );
+			if( gun instanceof HandCannon && leftFacing)
+			{
+				gun.img = Asset.handCannonLeft;
+				gun.setxPos( xPos - 0.47f );
+				gun.setyPos( yPos -.02f );
+				gun.update( map, false );
+			} else if (gun instanceof HandCannon) {
+				gun.img = Asset.handCannonRight;
+				gun.setxPos( xPos + 0.38f );
+				gun.setyPos( yPos - 0.02f );
+				gun.update( map, true );
+			}
+			
+			if( gun instanceof Pistol && leftFacing)
+			{
+				gun.img = Asset.rifleLeft;
+				gun.setxPos( xPos - 0.32f );
+				gun.setyPos( yPos + 0.11f );
+				gun.update( map, false );
+			} else if (gun instanceof Pistol) {
+				gun.img = Asset.rifleRight;
+				gun.setxPos( xPos + 0.45f );
+				gun.setyPos( yPos + 0.11f );
+				gun.update( map, true );
+			}
+			
+			if( gun instanceof Shotgun && leftFacing )
+			{
+				gun.img = Asset.shotgunLeft;
+				gun.setxPos( xPos - 0.36f );
+				gun.setyPos( yPos + 0.12f );
+				gun.update( map, false );
+			} else if (gun instanceof Shotgun) {
+				gun.img = Asset.shotgunRight;
+				gun.setxPos( xPos + 0.5f );
+				gun.setyPos( yPos + 0.12f );
+				gun.update( map, true );
+			}
 		}
 		
 		//If character is dead, change texture
-		if( !this.isAlive() )
-			img = Asset.doorImage;
+		//if( !this.isAlive() )
+			//System.exit(0);
 			
 	}
 	
 	public void render( GraphicsContext gc )
 	{
-		gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
 		
-		if( gun != null )
-			gun.render( gc );
+		if(velocityX == 0 && velocityY == 0 || stopped) {
+			gc.drawImage(img, xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+		}
+		
+		if(!leftFacing && !stopped) {
+			img = right[0];
+			if(!t.isOnCooldown()) {
+				imgSelect++;
+				if(imgSelect >= right.length)
+					imgSelect = 0;
+				gc.drawImage(right[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+				t.setOnCooldown(true);
+			} else {
+				gc.drawImage(right[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+			}
+		}
+		
+		if(leftFacing && !stopped) {
+			img = left[0];
+			if(!t.isOnCooldown()) {
+				imgSelect++;
+				if(imgSelect >= left.length)
+					imgSelect = 0;
+				gc.drawImage(left[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+				t.setOnCooldown(true);
+			} else {
+				gc.drawImage(left[imgSelect], xPos *Tile.TILEWIDTH - Camera.xOffset, yPos*Tile.TILEHEIGHT - Camera.yOffset, width, height);
+			}
+		}
+		t.tick();
 		
 		if( tookDmg )
 		{
@@ -203,6 +283,9 @@ public class Character extends Entity {
 			gc.fillText( "" + dmgTaken, xPos * Tile.TILEWIDTH - Camera.xOffset, yPos * Tile.TILEHEIGHT - Camera.yOffset);
 			gc.setFill( Color.BLACK );
 		}
+		
+		if( gun != null )
+			gun.render( gc );
 	}
 	
 	/*****************************
@@ -216,6 +299,14 @@ public class Character extends Entity {
 	
 	public boolean isATrap() {
 		return false;
+	}
+
+	public boolean isLeftFacing() {
+		return leftFacing;
+	}
+
+	public void setLeftFacing(boolean leftFacing) {
+		this.leftFacing = leftFacing;
 	}
 	
 }//close character
